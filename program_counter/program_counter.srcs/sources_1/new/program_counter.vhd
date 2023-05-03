@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: FAU
--- Engineer: Cerdic + Vittorio
+-- Engineer: Cedric + Vittorio
 -- 
 -- Create Date: 05/01/2023 10:52:38 AM
 -- Design Name: 
