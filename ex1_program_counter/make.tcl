@@ -15,24 +15,6 @@
 #   run results please launch the synthesis/implementation runs as needed.
 #
 #*****************************************************************************************
-# NOTE: In order to use this script for source control purposes, please make sure that the
-#       following files are added to the source control system:-
-#
-# 1. This project restoration tcl script (make.tcl) that was generated.
-#
-# 2. The following source(s) files that were local or imported into the original project.
-#    (Please see the '$orig_proj_dir' and '$origin_dir' variable setting below at the start of the script)
-#
-#    "/home/rzlin/lo69qeve/cpu_vhdl/ex1_program_counter/vivado/ex1_program_counter.srcs/utils_1/imports/synth_1/program_counter_demo.dcp"
-#
-# 3. The following remote source files that were added to the original project:-
-#
-#    "/home/rzlin/lo69qeve/cpu_vhdl/ex1_program_counter/src/program_counter.vhd"
-#    "/home/rzlin/lo69qeve/cpu_vhdl/ex1_program_counter/src/program_counter_tb.vhd"
-#    "/home/rzlin/lo69qeve/cpu_vhdl/ex1_program_counter/src/program_counter_demo.vhd"
-#    "/home/rzlin/lo69qeve/cpu_vhdl/ex1_program_counter/src/zedboard_master_XDC_RevC_D_v2.xdc"
-#
-#*****************************************************************************************
 
 # Check file required for this script exists
 proc checkRequiredFiles { origin_dir} {
