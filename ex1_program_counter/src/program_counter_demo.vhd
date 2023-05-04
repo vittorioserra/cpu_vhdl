@@ -7,14 +7,13 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity program_counter_demo is
     Port (
         clock : IN std_logic;
         btn_c, btn_u, btn_r, btn_d, btn_l : IN std_logic;
-        switch : IN std_logic_vector(0 to 7);
-        led : OUT std_logic_vector(0 to 7));
+        switch : IN std_logic_vector(7 downto 0);
+        led : OUT std_logic_vector(7 downto 0));
 end program_counter_demo;
 
 architecture bh of program_counter_demo is
@@ -31,8 +30,9 @@ begin
 			load => btn_c,
 			load_value => load_value,
 			pc_value => pc_value);
-
-    led <= pc_value(31 downto 24);
-    load_value(31 downto 24) <= switch;
+    
+    reset_n <= not btn_d; 
+    led(7 downto 0) <= pc_value(31 downto 24);
+    load_value(31 downto 24) <= switch(7 downto 0);
     load_value(23 downto 0) <= (others => '0');
 end bh;
