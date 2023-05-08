@@ -1,21 +1,8 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 05/08/2023 07:15:19 PM
--- Design Name: 
--- Module Name: regfile - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Company: FAU Erlangen - Nuernberg
+-- Engineer: Vittorio Serra and Cedric Donges
+--
+-- Description: register file, version 1.0, single async port
 ----------------------------------------------------------------------------------
 
 
@@ -47,16 +34,28 @@ end regfile;
 
 architecture bh of regfile is
     type t_register_battery is array (num_registers -1 downto 0) of std_logic_vector(port_width -1 downto 0);
-    signal tmp_address_number : std_logic_vector(address_width -1 downto 0);
-    signal tmp_reg_value_read : std_logic_vector(port_width -1 downto 0);
-    signal registers : t_register_battery; 
+    signal tmp_address_number_read : std_logic_vector(address_width -1 downto 0) := b"00000";
+    signal tmp_reg_value_read : std_logic_vector(port_width -1 downto 0) := x"00000000";
+    signal tmp_address_number_write : std_logic_vector(address_width -1 downto 0) := b"00000";
+    signal tmp_reg_value_write : std_logic_vector(port_width -1 downto 0) := x"00000000";
+    signal register_array : t_register_battery := (others=>(others=>'0')); 
 begin
     
-    process(async_read_address)
+    async_read : process(async_read_address)
     begin   
-        tmp_address_number <= (async_read_address);
-        tmp_reg_value_read <= registers(to_integer(tmp_address_number));
-        );
+        tmp_address_number_read <= async_read_address;
+        tmp_reg_value_read <= register_array(to_integer(unsigned(tmp_address_number_read)));
+        async_output <= tmp_reg_value_read;
+    end process;
+
+    sync_write : process(clock)
+    begin
+    if(rising_edge(clock) and enable = '1') then
+        tmp_address_number_write <= sync_write_address;
+        tmp_reg_value_write <= input_dataport;
+        register_array(to_integer(unsigned(tmp_address_number_write)))<=tmp_reg_value_write;    
+    end if;
+    
     end process;
 
 end bh;

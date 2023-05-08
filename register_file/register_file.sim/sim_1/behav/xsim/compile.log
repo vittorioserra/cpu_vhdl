@@ -1,0 +1,4 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'regfile'
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'program_counter_tb'

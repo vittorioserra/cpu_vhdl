@@ -20,3 +20,90 @@ add_files /home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources
 close [ open /home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd w ]
 add_files /home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd
 update_compile_order -fileset sources_1
+launch_simulation
+launch_simulation
+source program_counter_tb.tcl
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 46
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 46
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 46
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 47
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 48
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+run all
+run all
+run all
+run all
+run all
+run all
+run all
+run all
+run all
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 46
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 47
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 48
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 46
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 47
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 47
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 48
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 47
+run all
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run all
+run all
+run all
+close_sim
+launch_simulation
+source program_counter_tb.tcl
+run all
+run all
+run all
+run all
+run all
+run all
+run all
+run all
+run all
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 46
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 47
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 48
+close_sim
+launch_simulation
+source program_counter_tb.tcl
