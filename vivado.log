@@ -855,3 +855,324 @@ source program_counter_tb.tcl
 # run 1000ns
 INFO: [USF-XSim-96] XSim completed. Design snapshot 'program_counter_tb_behav' loaded.
 INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'program_counter_tb'
+WARNING: [Vivado 12-12986] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools.remote/xilinx/Vivado/2021.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'program_counter_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xvhdl --incr --relax -prj program_counter_tb_vhdl.prj
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'regfile'
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'program_counter_tb'
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+INFO: [Vivado 12-5357] 'elaborate' step aborted
+launch_simulation: Time (s): cpu = 00:00:02 ; elapsed = 00:00:51 . Memory (MB): peak = 8334.312 ; gain = 0.000 ; free physical = 22553 ; free virtual = 42736
+INFO: [Common 17-344] 'launch_simulation' was cancelled
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'program_counter_tb'
+WARNING: [Vivado 12-12986] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools.remote/xilinx/Vivado/2021.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'program_counter_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xvhdl --incr --relax -prj program_counter_tb_vhdl.prj
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'program_counter_tb'
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log
+Vivado Simulator v2021.2
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: /tools.remote/xilinx/Vivado/2021.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.numeric_std
+Compiling architecture bh of entity xil_defaultlib.regfile [regfile_default]
+Compiling architecture tb of entity xil_defaultlib.program_counter_tb
+Built simulation snapshot program_counter_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "program_counter_tb_behav -key {Behavioral:sim_1:Functional:program_counter_tb} -tclbatch {program_counter_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source program_counter_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'program_counter_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 46
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 47
+add_bp {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} 48
+run all
+run: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 8341.312 ; gain = 0.000 ; free physical = 22393 ; free virtual = 42726
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'program_counter_tb'
+WARNING: [Vivado 12-12986] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools.remote/xilinx/Vivado/2021.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'program_counter_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xvhdl --incr --relax -prj program_counter_tb_vhdl.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log
+Vivado Simulator v2021.2
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: /tools.remote/xilinx/Vivado/2021.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "program_counter_tb_behav -key {Behavioral:sim_1:Functional:program_counter_tb} -tclbatch {program_counter_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source program_counter_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'program_counter_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:04 ; elapsed = 00:00:50 . Memory (MB): peak = 8341.312 ; gain = 0.000 ; free physical = 22482 ; free virtual = 42698
+run 10 us
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+run 10 us
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'program_counter_tb'
+WARNING: [Vivado 12-12986] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools.remote/xilinx/Vivado/2021.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'program_counter_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xvhdl --incr --relax -prj program_counter_tb_vhdl.prj
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'regfile'
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'program_counter_tb'
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log
+Vivado Simulator v2021.2
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: /tools.remote/xilinx/Vivado/2021.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.numeric_std
+Compiling architecture bh of entity xil_defaultlib.regfile [regfile_default]
+Compiling architecture tb of entity xil_defaultlib.program_counter_tb
+Built simulation snapshot program_counter_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "program_counter_tb_behav -key {Behavioral:sim_1:Functional:program_counter_tb} -tclbatch {program_counter_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source program_counter_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'program_counter_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:04 ; elapsed = 00:00:50 . Memory (MB): peak = 8362.324 ; gain = 5.000 ; free physical = 22461 ; free virtual = 42677
+run 10 us
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'program_counter_tb'
+WARNING: [Vivado 12-12986] Compiled library path does not exist: ''
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools.remote/xilinx/Vivado/2021.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'program_counter_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xvhdl --incr --relax -prj program_counter_tb_vhdl.prj
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'regfile'
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile_tb.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'program_counter_tb'
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log
+Vivado Simulator v2021.2
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: /tools.remote/xilinx/Vivado/2021.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot program_counter_tb_behav xil_defaultlib.program_counter_tb -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.numeric_std
+Compiling architecture bh of entity xil_defaultlib.regfile [regfile_default]
+Compiling architecture tb of entity xil_defaultlib.program_counter_tb
+Built simulation snapshot program_counter_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "program_counter_tb_behav -key {Behavioral:sim_1:Functional:program_counter_tb} -tclbatch {program_counter_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source program_counter_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'program_counter_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+run 10 us
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 0 fs : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 10 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 46
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 47
+run 10 us
+Stopped at time : 30 ns : File "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd" Line 48
+run 10 us
+run 10 us
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 46
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 47
+remove_bps -file {/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.srcs/sources_1/new/regfile.vhd} -line 48

@@ -38,12 +38,12 @@ architecture bh of regfile is
     signal tmp_reg_value_read : std_logic_vector(port_width -1 downto 0) := x"00000000";
     signal tmp_address_number_write : std_logic_vector(address_width -1 downto 0) := b"00000";
     signal tmp_reg_value_write : std_logic_vector(port_width -1 downto 0) := x"00000000";
-    signal register_array : t_register_battery := (others=>(others=>'0')); 
+    signal register_array : t_register_battery := (others=>(x"a5a5a5a5")); 
 begin
     
     async_read : process(async_read_address)
     begin   
-        tmp_address_number_read <= async_read_address;
+        tmp_address_number_read <= b"00001";--async_read_address;
         tmp_reg_value_read <= register_array(to_integer(unsigned(tmp_address_number_read)));
         async_output <= tmp_reg_value_read;
     end process;
