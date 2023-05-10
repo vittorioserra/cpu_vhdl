@@ -1,0 +1,280 @@
+/*
+
+Xilinx Vivado v2021.2 (64-bit) [Major: 2021, Minor: 2]
+SW Build: 3367213 on Tue Oct 19 02:47:39 MDT 2021
+IP Build: 3369179 on Thu Oct 21 08:25:16 MDT 2021
+
+Process ID (PID): 745576
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Wed May 10 12:13:31 CEST 2023
+Time zone: 	Central European Standard Time (Europe/Berlin)
+
+OS: Red Hat Enterprise release 8.7 (Green Obsidian)
+OS Version: 4.18.0-425.19.2.el8_7.x86_64
+OS Architecture: amd64
+Available processors (cores): 8
+
+Display: 0
+Screen size: 1920x1200
+Screen resolution (DPI): 100
+Available screens: 1
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+Scale size: 12
+
+Java version: 	11.0.11 64-bit
+Java home: 	/tools.remote/xilinx/Vivado/2021.2/tps/lnx64/jre11.0.11_9
+Java executable: 	/tools.remote/xilinx/Vivado/2021.2/tps/lnx64/jre11.0.11_9/bin/java
+Java arguments: 	[-Dsun.java2d.pmoffscreen=false, -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2, -Dsun.java2d.xrender=false, -Djdk.gtk.version=2, -Dsun.java2d.uiScale.enabled=false, -Xverify:none, -Dswing.aatext=true, -XX:-UsePerfData, -Djdk.map.althashing.threshold=512, -XX:StringTableSize=4072, --add-opens=java.base/java.nio=ALL-UNNAMED, --add-opens=java.desktop/sun.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.desktop/com.sun.awt=ALL-UNNAMED, --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED, -XX:NewSize=60m, -XX:MaxNewSize=60m, -Xms256m, -Xmx3072m, -Xss5m, -Xrs]
+Java initial memory (-Xms): 	256 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	ko92vuzu
+User home directory: /home/rzlin/ko92vuzu
+User working directory: /home/rzlin/ko92vuzu/cpu_vhdl
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /tools.remote/xilinx/Vivado
+HDI_APPROOT: /tools.remote/xilinx/Vivado/2021.2
+RDI_DATADIR: /tools.remote/xilinx/Vivado/2021.2/data
+RDI_BINDIR: /tools.remote/xilinx/Vivado/2021.2/bin
+
+Vivado preferences file: /home/rzlin/ko92vuzu/.Xilinx/Vivado/2021.2/vivado.xml
+Vivado preferences directory: /home/rzlin/ko92vuzu/.Xilinx/Vivado/2021.2/
+Vivado layouts directory: /home/rzlin/ko92vuzu/.Xilinx/Vivado/2021.2/data/layouts
+PlanAhead jar file: 	/tools.remote/xilinx/Vivado/2021.2/lib/classes/planAhead.jar
+Vivado log file: 	/home/rzlin/ko92vuzu/cpu_vhdl/vivado.log
+Vivado journal file: 	/home/rzlin/ko92vuzu/cpu_vhdl/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-745576-multipro-r1p1
+
+Xilinx Environment Variables
+----------------------------
+LMOD_FAMILY_VIVADO: Core/vivado
+LMOD_FAMILY_VIVADO_VERSION: vivado2021.2
+XILINX: /tools.remote/xilinx/Vivado/2021.2/ids_lite/ISE
+XILINX_DSP: /tools.remote/xilinx/Vivado/2021.2/ids_lite/ISE
+XILINX_HLS: /tools.remote/xilinx/Vitis_HLS/2021.2
+XILINX_LICENSE_FILE: 2100@eplicense.e-technik.uni-erlangen.de
+XILINX_PLANAHEAD: /tools.remote/xilinx/Vivado/2021.2
+XILINX_SDK: /tools.remote/xilinx/Vitis/2021.2
+XILINX_VITIS: /tools.remote/xilinx/Vitis/2021.2
+XILINX_VIVADO: /tools.remote/xilinx/Vivado/2021.2
+XILINX_VIVADO_HLS: /tools.remote/xilinx/Vivado/2021.2
+
+
+GUI allocated memory:	308 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,932 MB
+
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,878 MB. GUI used memory: 57 MB. Current time: 5/10/23, 12:13:32 PM CEST
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // al
+selectMenu(PAResourceItoN.MainMenuMgr_OPEN_RECENT_PROJECT, "Open Recent"); // al
+selectMenuItem(PAResourceItoN.MainMenuMgr_OPEN_RECENT_PROJECT, "/home/rzlin/ko92vuzu/cpu_vhdl/register_file/register_file.xpr"); // ao
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
+// HOptionPane Error: 'Can't open project 'register_file'. Please verify that the project still exists. (Open Project)'
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
+selectMenu(PAResourceItoN.MainMenuMgr_FLOW, "Flow"); // ag
+dismissMenu(PAResourceItoN.MainMenuMgr_FLOW, "Flow"); // ag
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // al
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // al
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // al
+selectMenuItem(PAResourceCommand.PACommandNames_OPEN_PROJECT, "Open..."); // ao
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // ag
+// Run Command: PAResourceCommand.PACommandNames_OPEN_PROJECT
+setFileChooser("/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/ex2_register_file/ex2_register_file.xpr");
+// [GUI Memory]: 98 MB (+100473kb) [00:00:33]
+// [Engine Memory]: 1,894 MB (+1834662kb) [00:00:33]
+// Opening Vivado Project: /home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/ex2_register_file/ex2_register_file.xpr. Version: Vivado v2021.2 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// TclEventType: FLOW_ADDED
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_NEW
+// Tcl Message: open_project /home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/ex2_register_file/ex2_register_file.xpr 
+// Tcl Message: INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/ex2_register_file/ex2_register_file.gen/sources_1'. 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified 
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 124 MB (+21885kb) [00:00:36]
+// WARNING: HEventQueue.dispatchEvent() is taking  2109 ms.
+// Tcl Message: INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools.remote/xilinx/Vivado/2021.2/data/ip'. 
+// Project name: ex2_register_file; location: /home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/ex2_register_file; part: xc7z020clg484-1
+dismissDialog("Open Project"); // bA
+// HMemoryUtils.trashcanNow. Engine heap size: 1,980 MB. GUI used memory: 65 MB. Current time: 5/10/23, 12:14:02 PM CEST
+// [Engine Memory]: 2,018 MB (+30923kb) [00:00:39]
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 17 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design]", 18, true); // n - Node
+// Run Command: PAResourceCommand.PACommandNames_GOTO_IMPLEMENTED_DESIGN
+// Tcl Message: open_run impl_1 
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 2,049 MB. GUI used memory: 73 MB. Current time: 5/10/23, 12:14:40 PM CEST
+// TclEventType: DESIGN_NEW
+// DeviceModel: Load Xgds SwingWorker Join Forever elapsed time: 0.7s
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// [Engine Memory]: 2,187 MB (+71224kb) [00:01:17]
+// [GUI Memory]: 137 MB (+7355kb) [00:01:18]
+// DeviceView Instantiated
+// WARNING: HEventQueue.dispatchEvent() is taking  2195 ms.
+// Tcl Message: INFO: [Device 21-403] Loading part xc7z020clg484-1 
+// Tcl Message: Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 8075.613 ; gain = 0.000 ; free physical = 13909 ; free virtual = 39276 
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 256 Unisim elements for replacement INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds 
+// Tcl Message: INFO: [Project 1-479] Netlist was created with Vivado 2021.2 INFO: [Project 1-570] Preparing netlist for logic optimization 
+// Tcl Message: Reading XDEF placement. Reading placer database... Reading XDEF routing. 
+// Tcl Message: Read XDEF File: Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.12 . Memory (MB): peak = 8075.613 ; gain = 0.000 ; free physical = 13881 ; free virtual = 39250 
+// Tcl Message: Restored from archive | CPU: 0.110000 secs | Memory: 2.206261 MB | 
+// Tcl Message: Finished XDEF File Restore: Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.13 . Memory (MB): peak = 8075.613 ; gain = 0.000 ; free physical = 13881 ; free virtual = 39250 Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8092.559 ; gain = 0.000 ; free physical = 12366 ; free virtual = 37734 
+// Tcl Message: INFO: [Project 1-111] Unisim Transformation Summary: No Unisim elements were transformed.  
+// TclEventType: CURR_DESIGN_SET
+// Device view-level: 0.0
+// [GUI Memory]: 151 MB (+7061kb) [00:01:19]
+// Tcl Message: open_run: Time (s): cpu = 00:00:13 ; elapsed = 00:00:23 . Memory (MB): peak = 8281.016 ; gain = 205.453 ; free physical = 12794 ; free virtual = 38162 
+// TclEventType: DRC_ADDED
+// TclEventType: METHODOLOGY_ADDED
+// TclEventType: POWER_UPDATED
+// [GUI Memory]: 162 MB (+3572kb) [00:01:19]
+// TclEventType: TIMING_SUMMARY_UPDATED
+// 'el' command handler elapsed time: 26 seconds
+// [GUI Memory]: 171 MB (+1347kb) [00:01:21]
+// Elapsed time: 26 seconds
+dismissDialog("Open Implemented Design"); // bA
+// RouteApi::initDelayMediator elapsed time: 4s
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// [Engine Memory]: 2,355 MB (+61170kb) [00:01:25]
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Open Synthesized Design]", 15, true); // n - Node
+// Run Command: PAResourceCommand.PACommandNames_GOTO_NETLIST_DESIGN
+selectButton(PAResourceAtoD.ClosePlanner_YES, "Yes"); // a
+dismissDialog("Close Design"); // g
+// TclEventType: DESIGN_CLOSE
+// HMemoryUtils.trashcanNow. Engine heap size: 2,362 MB. GUI used memory: 103 MB. Current time: 5/10/23, 12:14:51 PM CEST
+// TclEventType: TIMING_RESULTS_UNLOAD
+// Engine heap size: 2,363 MB. GUI used memory: 104 MB. Current time: 5/10/23, 12:14:51 PM CEST
+// TclEventType: CURR_DESIGN_SET
+// TclEventType: DESIGN_CLOSE
+// Tcl Message: close_design 
+// TclEventType: DESIGN_CLOSE
+dismissDialog("Close"); // bA
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 2,303 MB. GUI used memory: 79 MB. Current time: 5/10/23, 12:14:53 PM CEST
+// Tcl Message: open_run synth_1 -name synth_1 
+// Tcl Message: Design is defaulting to impl run constrset: constrs_1 Design is defaulting to synth run part: xc7z020clg484-1 
+// TclEventType: DESIGN_NEW
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// DeviceView Instantiated
+// TclEventType: CURR_DESIGN_SET
+// Tcl Message: Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 8315.891 ; gain = 0.000 ; free physical = 10510 ; free virtual = 35926 
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 256 Unisim elements for replacement INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds 
+// Tcl Message: INFO: [Project 1-479] Netlist was created with Vivado 2021.2 INFO: [Project 1-570] Preparing netlist for logic optimization INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s). 
+// Tcl Message: Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8315.891 ; gain = 0.000 ; free physical = 10424 ; free virtual = 35841 
+// Tcl Message: INFO: [Project 1-111] Unisim Transformation Summary: No Unisim elements were transformed.  
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// Device view-level: 0.0
+// 'el' command handler elapsed time: 5 seconds
+dismissDialog("Open Synthesized Design"); // bA
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Open Synthesized Design, Schematic]", 27, false); // n
+// Run Command: PAResourceCommand.PACommandNames_SCHEMATIC
+// [Engine Memory]: 2,635 MB (+169895kb) [00:01:37]
+collapseTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Open Elaborated Design]", 12); // n
+expandTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Open Elaborated Design]", 12); // n
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis, Open Elaborated Design, Schematic]", 16, false); // n
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a
+dismissDialog("Elaborate Design"); // A
+// TclEventType: ELABORATE_START
+// Tcl Message: synth_design -rtl -rtl_skip_mlo -name rtl_1 
+// Tcl Message: Command: synth_design -rtl -rtl_skip_mlo -name rtl_1 Starting synth_design Using part: xc7z020clg484-1 Top: regfile 
+// TclEventType: ELABORATE_FINISH
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 2,861 MB. GUI used memory: 112 MB. Current time: 5/10/23, 12:15:11 PM CEST
+// [Engine Memory]: 2,861 MB (+98623kb) [00:01:47]
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// TclEventType: DESIGN_NEW
+// TclEventType: CURR_DESIGN_SET
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8564.316 ; gain = 233.762 ; free physical = 6427 ; free virtual = 31790 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: INFO: [Synth 8-638] synthesizing module 'regfile' [/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile.vhd:26] 
+// Tcl Message: INFO: [Synth 8-256] done synthesizing module 'regfile' (1#1) [/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile.vhd:26] 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 8606.316 ; gain = 275.762 ; free physical = 6470 ; free virtual = 31833 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: --------------------------------------------------------------------------------- Start Handling Custom Attributes --------------------------------------------------------------------------------- --------------------------------------------------------------------------------- 
+// Tcl Message: Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 8621.160 ; gain = 290.605 ; free physical = 6463 ; free virtual = 31827 
+// Tcl Message: --------------------------------------------------------------------------------- --------------------------------------------------------------------------------- 
+// Tcl Message: Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 8621.160 ; gain = 290.605 ; free physical = 6463 ; free virtual = 31827 
+// Tcl Message: --------------------------------------------------------------------------------- 
+// Tcl Message: Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8621.160 ; gain = 0.000 ; free physical = 6455 ; free virtual = 31819 
+// Tcl Message: INFO: [Project 1-570] Preparing netlist for logic optimization 
+// Tcl Message:  Processing XDC Constraints Initializing timing engine Completed Processing XDC Constraints  
+// Tcl Message: Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8762.898 ; gain = 0.000 ; free physical = 6375 ; free virtual = 31739 
+// Tcl Message: INFO: [Project 1-111] Unisim Transformation Summary: No Unisim elements were transformed.  
+// Tcl Message: RTL Elaboration Complete:  : Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 8796.715 ; gain = 466.160 ; free physical = 6399 ; free virtual = 31773 
+// Tcl Message: 4 Infos, 3 Warnings, 0 Critical Warnings and 0 Errors encountered. synth_design completed successfully 
+// Tcl Message: synth_design: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 8796.715 ; gain = 466.160 ; free physical = 6399 ; free virtual = 31773 
+// Run Command: PAResourceCommand.PACommandNames_SCHEMATIC
+dismissDialog("Open Elaborated Design"); // bA
+// HMemoryUtils.trashcanNow. Engine heap size: 2,922 MB. GUI used memory: 118 MB. Current time: 5/10/23, 12:16:32 PM CEST
+// Elapsed time: 150 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Project Manager, IP Catalog]", 4, false); // n
+// Run Command: PAResourceCommand.PACommandNames_CORE_GEN
+dismissDialog("Open IP Catalog"); // bA
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "ddr"); // OverlayTextField
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "Platform Shell Address Remapper ; AXI4 ; Production ; Included ; xilinx.com:ip:shell_utils_addr_remap:1.0", 9, "Platform Shell Address Remapper", 0, false); // L
+// [GUI Memory]: 204 MB (+25064kb) [00:04:28]
+// Elapsed time: 31 seconds
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", "axi mem"); // OverlayTextField
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI Memory Mapped to Stream Mapper ; AXI4, AXI4-Stream ; Production ; Included ; xilinx.com:ip:axi_mm2s_mapper:1.1", 5, "AXI Memory Mapped to Stream Mapper", 0, false); // L
+selectTreeTable(PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE, "AXI Multi Channel Direct Memory Access ; AXI4, AXI4-Stream ; Production ; Included ; xilinx.com:ip:axi_mcdma:1.1", 6, "AXI Multi Channel Direct Memory Access", 0, false); // L
+// Elapsed time: 37 seconds
+setText("PAResourceAtoD.CoreTreeTablePanel_CORE_TREE_TABLE_SEARCH_FIELD", (String) null); // OverlayTextField
+// Elapsed time: 146 seconds
+selectTab((HResource) null, (HResource) null, "Sources", 0); // aL
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, regfile(bh) (regfile.vhd)]", 1, false); // D
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, regfile(bh) (regfile.vhd)]", 1, false, false, false, false, false, true); // D - Double Click
+// WARNING: HEventQueue.dispatchEvent() is taking  1614 ms.
+dismissDialog("Opening Editor"); // bA
+// Elapsed time: 95 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Open Synthesized Design, Report Utilization]", 29, false); // n
+// TclEventType: CURR_DESIGN_SET
+// Run Command: PAResourceCommand.PACommandNames_RESOURCE_UTILIZATION
+// Tcl Message: current_design synth_1 
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a
+dismissDialog("Report Utilization"); // a
+// TclEventType: UTILIZATION_RESULT_GENERATED
+// HMemoryUtils.trashcanNow. Engine heap size: 2,941 MB. GUI used memory: 141 MB. Current time: 5/10/23, 12:23:09 PM CEST
+// Tcl Message: report_utilization -name utilization_1 
+dismissDialog("Report Utilization"); // bA
