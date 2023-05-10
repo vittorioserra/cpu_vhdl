@@ -1,0 +1,7 @@
+0.7
+2020.2
+Oct 19 2021
+02:56:52
+/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile.vhd,1683703166,vhdl,/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile_tb.vhd,,,regfile,,,,,,,,
+/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile_tb.vhd,1683703166,vhdl,,,,regfile_tb,,,,,,,,
+/home/rzlin/ko92vuzu/cpu_vhdl/global_src/utils.vhd,1683703166,vhdl,/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile.vhd;/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile_tb.vhd,,,utils,,,,,,,,
