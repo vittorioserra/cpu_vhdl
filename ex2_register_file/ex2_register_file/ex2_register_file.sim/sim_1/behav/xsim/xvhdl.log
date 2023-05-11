@@ -1,5 +1,0 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/global_src/utils.vhd" into library xil_defaultlib
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'regfile'
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/rzlin/ko92vuzu/cpu_vhdl/ex2_register_file/src/regfile_tb.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'regfile_tb'
