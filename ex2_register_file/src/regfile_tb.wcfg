@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,000.000 ns"></ZoomEndTime>
-      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+      <ZoomStartTime time="874.060 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,003.261 ns"></ZoomEndTime>
+      <Cursor1Time time="931.960 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="144"></NameColumnWidth>
-      <ValueColumnWidth column_width="120"></ValueColumnWidth>
+      <ValueColumnWidth column_width="116"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="9" />
    <wvobject type="logic" fp_name="/regfile_tb/clock">
@@ -27,6 +27,10 @@
    <wvobject type="logic" fp_name="/regfile_tb/reset_n">
       <obj_property name="ElementShortName">reset_n</obj_property>
       <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/regfile_tb/w_enable">
+      <obj_property name="ElementShortName">w_enable</obj_property>
+      <obj_property name="ObjectShortName">w_enable</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/regfile_tb/r1_select">
       <obj_property name="ElementShortName">r1_select[4:0]</obj_property>
@@ -43,10 +47,6 @@
    <wvobject type="array" fp_name="/regfile_tb/r2_value">
       <obj_property name="ElementShortName">r2_value[31:0]</obj_property>
       <obj_property name="ObjectShortName">r2_value[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/regfile_tb/w_enable">
-      <obj_property name="ElementShortName">w_enable</obj_property>
-      <obj_property name="ObjectShortName">w_enable</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/regfile_tb/w_select">
       <obj_property name="ElementShortName">w_select[4:0]</obj_property>
