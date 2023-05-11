@@ -4,7 +4,7 @@
 # 
 #  Description: Universal Project Creation Script for CPU_VHDL Project.
 #               Copy this file into the project directory and execute it from vivado.
-#               Imports only .xdc and .vhd files from local and global src folder.
+#               Imports only .xdc, .wcfg .vhd files from local and global src folder.
 #               Fileformat: *_tb.vhd is Top of Simulation
 #               Fileformat: *_top.vhd is Top of Synthesis
 # --------------------------------------------------------------------------------
@@ -89,5 +89,9 @@ foreach file $srcFiles {
         add_files -norecurse -fileset $constrsSet $file
         set_property -name "file_type" -value "XDC" -objects \
             [get_files -of_objects $constrsSet [list "*$file"]]
+    } elseif {[string equal $fileExt ".wcfg"]} {
+        # Waveform config
+        puts [concat "Waveform config:" $file]
+        add_files -norecurse -fileset $simSet $file
     }
 }
