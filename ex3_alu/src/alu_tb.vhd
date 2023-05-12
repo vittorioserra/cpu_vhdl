@@ -1,43 +1,66 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 05/10/2023 01:14:56 PM
--- Design Name: 
--- Module Name: alu_tb - bh
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Company: FAU Erlangen - Nuernberg
+-- Engineer: Vittorio Serra and Cedric Donges
+--
+-- Description: testbench for the ALU
 ----------------------------------------------------------------------------------
-
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+library work;
+use work.utils.ALL;
+use work.alu_types.ALL;
 
 entity alu_tb is
---  Port ( );
 end alu_tb;
 
-architecture bh of alu_tb is
+architecture tb of alu_tb is
+    constant CLOCK_PERIOD : time := 10 ns;
+    constant PORT_WIDTH : positive := 32;
 
+    signal clock, reset_n : std_logic;
+    signal func : alu_func;
+    signal op1, op2 : std_logic_vector(PORT_WIDTH - 1 downto 0);
+    signal async_lsb : std_logic;
+    signal res : std_logic_vector(PORT_WIDTH - 1 downto 0);
 begin
+    DUT : entity work.alu
+        generic map (
+            port_width => PORT_WIDTH)
+        port map (
+            reset_n => reset_n,
+            clock => clock,
+            func => func,
+            op1 => op1,
+            op2 => op2,
+            async_lsb => async_lsb,
+            res => res);
 
+    gen_clk : process
+    begin
+        clock <= '1';
+        wait for CLOCK_PERIOD / 2;
+        clock <= '0';
+        wait for CLOCK_PERIOD / 2;
+    end process;
 
-end bh;
+    stimuli : process
+    begin
+        reset_n <= '1';
+        wait for CLOCK_PERIOD;
+        
+        reset_n <= '0';
+        wait for CLOCK_PERIOD;
+        
+        reset_n <= '1';
+        op1 <= ui2vec(77, PORT_WIDTH);
+        op2 <= ui2vec(55, PORT_WIDTH);
+        func <= func_add;
+        wait for CLOCK_PERIOD;
+        
+        wait;
+
+    end process;
+end tb;
