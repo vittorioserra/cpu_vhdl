@@ -11,13 +11,13 @@ use IEEE.NUMERIC_STD.ALL;
 use IEEE.MATH_REAL.ALL;
 
 package utils is
-    function getAddressSize(width : positive) return positive;   
+    function getBitCount(width : positive) return positive;   
     function vec2ui(x : std_logic_vector) return integer;    
     function ui2vec(x : integer; width : positive) return std_logic_vector;    
 end package utils;
 
 package body utils is
-    function getAddressSize(width : positive) return positive is
+    function getBitCount(width : positive) return positive is
         begin
             return integer(ceil(log2(real(width))));
         end function;   

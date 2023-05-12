@@ -13,8 +13,8 @@ entity program_counter_tb is
 end program_counter_tb;
 
 architecture tb of program_counter_tb is
-	constant CLOCK_PERIOD  : time := 10 ns;
-	constant PC_WIDTH  : positive := 32;
+	constant CLOCK_PERIOD : time := 10 ns;
+	constant PC_WIDTH : positive := 32;
 
 	signal clock, reset_n, enable, load : std_logic;
 	signal load_value, pc_value : std_logic_vector(PC_WIDTH - 1 downto 0);

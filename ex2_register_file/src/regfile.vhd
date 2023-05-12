@@ -18,7 +18,7 @@ entity regfile is
         reg_count : positive := 32);
     Port(
         clock, reset_n, w_enable : IN std_logic;
-        r1_select, r2_select, w_select : IN std_logic_vector(getAddressSize(reg_count) - 1 downto 0);
+        r1_select, r2_select, w_select : IN std_logic_vector(getBitCount(reg_count) - 1 downto 0);
         r1_value, r2_value : OUT std_logic_vector(port_width - 1 downto 0);
         w_value : IN std_logic_vector(port_width - 1 downto 0));
 end regfile;
