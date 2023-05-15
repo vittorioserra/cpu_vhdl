@@ -11,9 +11,9 @@ package alu_types is
         func_sub,   -- Subtraction
         func_slts,  -- Set (lowest bit) when less than (signed)
         func_sltu,  -- Set (lowest bit) when less than (unsigned)
-        func_xor,   -- bitvise XOR
-        func_or,    -- bitvise OR
-        func_and,   -- bitvise AND
+        func_xor,   -- bitwise XOR
+        func_or,    -- bitwise OR
+        func_and,   -- bitwise AND
         func_sll,   -- Shift left logically
         func_srl,   -- Shift right logically
         func_sra);  -- Shift right arithmetically
