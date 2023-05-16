@@ -58,11 +58,13 @@ architecture bh of alu is
     signal dff_op2 : input_buffer_t := (others => (others => '0'));
 
     signal async_result : std_logic_vector(port_width - 1 downto 0);
-    signal op1u : unsigned(port_width - 1 downto 0);
-    signal op1s : signed(port_width - 1 downto 0);
-    signal op2u : unsigned(port_width - 1 downto 0);
-    signal op2s : signed(port_width - 1 downto 0);
-    signal op2ui : integer;
+    
+    --signal op1u : unsigned(port_width - 1 downto 0);
+    --signal op1s : signed(port_width - 1 downto 0);
+    --signal op2u : unsigned(port_width - 1 downto 0);
+    --signal op2s : signed(port_width - 1 downto 0);
+    --signal op2ui : integer;
+    
 begin
 
 
@@ -104,12 +106,82 @@ begin
         elsif (rising_edge(clock)) then
             res <= async_result;
             
-            for i in 0 to (num_operations -1) loop
+            if func = func_add then
             
-                dff_op1(i) <= op1;
-                dff_op2(i) <= op2;
+                dff_op1(0) <= op1;  
+                dff_op2(0) <= op2;  
             
-            end loop;
+            end if;
+            
+            if func = func_sub then
+            
+                dff_op1(1) <= op1;  
+                dff_op2(1) <= op2;  
+            
+            end if;
+            
+            if func = func_slts then
+            
+                dff_op1(2) <= op1;  
+                dff_op2(2) <= op2;  
+            
+            end if;
+            
+            if func = func_sltu then
+            
+                dff_op1(3) <= op1;  
+                dff_op2(3) <= op2;  
+            
+            end if;
+            
+            if func = func_xor then
+            
+                dff_op1(4) <= op1;  
+                dff_op2(4) <= op2;  
+            
+            end if;
+            
+            if func = func_or then
+            
+                dff_op1(5) <= op1;  
+                dff_op2(5) <= op2;  
+            
+            end if;
+            
+            if func = func_and then
+            
+                dff_op1(6) <= op1;  
+                dff_op2(6) <= op2;  
+            
+            end if;
+            
+            if func = func_sll then
+            
+                dff_op1(7) <= op1;  
+                dff_op2(7) <= op2;  
+            
+            end if;
+            
+            if func = func_srl then
+            
+                dff_op1(8) <= op1;  
+                dff_op2(8) <= op2;  
+            
+            end if;
+            
+            if func = func_sra then
+            
+                dff_op1(9) <= op1;  
+                dff_op2(9) <= op2;  
+            
+            end if;
+            
+            --for i in 0 to (num_operations -1) loop
+            
+             --   dff_op1(i) <= op1;
+             --   dff_op2(i) <= op2;
+            
+            --end loop;
             
         end if;
     end process;
