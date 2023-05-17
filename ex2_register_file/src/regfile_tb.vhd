@@ -22,8 +22,8 @@ architecture tb of regfile_tb is
 	constant SEL_WIDTH : positive := get_bit_count(REG_COUNT);
 
 	signal clock, reset_n, w_enable : std_logic;
-    signal r1_select, r2_select, w_select : std_logic_vector(SEL_WIDTH-1 downto 0);
-    signal r1_value, r2_value, w_value : std_logic_vector(PORT_WIDTH-1 downto 0);
+    signal r1_select, r2_select, w_select : std_logic_vector(SEL_WIDTH - 1 downto 0);
+    signal r1_value, r2_value, w_value : std_logic_vector(PORT_WIDTH - 1 downto 0);
 begin
 	DUT : entity work.regfile
 		generic map (
@@ -59,21 +59,21 @@ begin
 	    
 	    w_value <= x"DEADCAFE";
 	    w_enable <= '1';
-	    for i in 0 to REG_COUNT-1 loop
+	    for i in 0 to REG_COUNT - 1 loop
             w_select <= ui2vec(i, SEL_WIDTH);
             wait for CLOCK_PERIOD;
 		end loop;
 		
 	    w_value <= x"CAFEBEEF";
 	    w_enable <= '0';
-	    for i in 0 to REG_COUNT-1 loop
+	    for i in 0 to REG_COUNT - 1 loop
             w_select <= ui2vec(i, SEL_WIDTH);
             wait for CLOCK_PERIOD;
 		end loop;
 		
 	    w_enable <= '1';
-	    for i in 0 to REG_COUNT-1 loop
-            r1_select <= ui2vec(i-1, SEL_WIDTH);
+	    for i in 0 to REG_COUNT - 1 loop
+            r1_select <= ui2vec(i - 1, SEL_WIDTH);
             r2_select <= ui2vec(i, SEL_WIDTH);
 	        w_value <= ui2vec(i, PORT_WIDTH);
             w_select <= ui2vec(i, SEL_WIDTH);
