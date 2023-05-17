@@ -23,12 +23,12 @@ entity data_mem is
             port_width : positive := 32;
             block_length : positive := 256;
             addr_width : positive := 8);
-    Port (clock : IN std_logic;
-          addr1, addr2 : IN std_logic_vector(addr_width -1 downto 0);
-          pen1, pen2 : IN std_logic;
-          wen1, wen2 : IN std_logic;
-          wwrd1, wwrd2 : IN std_logic_vector(port_width -1 downto 0);
-          out1, out2 : OUT std_logic_vector(port_width -1 downto 0)   
+    Port (clock : IN std_logic;                                       --clocking signal
+          addr1, addr2 : IN std_logic_vector(addr_width -1 downto 0); --addresses
+          ren1, ren2 : IN std_logic;                                  --port enable, for reading
+          wen1, wen2 : IN std_logic;                                  --write enable
+          wwrd1, wwrd2 : IN std_logic_vector(port_width -1 downto 0); --write_word (word that ha to be written to address)
+          out1, out2 : OUT std_logic_vector(port_width -1 downto 0)   --output words
     );
 end data_mem;
 
@@ -45,22 +45,37 @@ begin
     
         --first address
     
-        if(pen1 = '1' and wen1 = '0') then --only read in this addr1
+        --if(ren1 = '1') then --only read in this addr1
             out1 <= memory(to_integer(unsigned(addr1)));
+        --end if;
+        
+        if(ren1 = '1' and wen1 = '1') then --write in this addr1
+            --if(addr1 /= addr2) then
+                memory(to_integer(unsigned(addr1))) := wwrd1;
+            --end if;         
+        end if;
         end if;
         
-        if(pen1 = '1' and wen1 = '1') then --write in this addr1
-            memory(to_integer(unsigned(addr1))) := wwrd1;
-        end if;
+    end process;    
+    
+    process(clock)
+    begin
+
+    if(rising_edge(clock)) then
+
         
         --second addres
         
-        if(pen2 = '1' and wen2 = '0') then --only read in this addr1
+        --if(ren2 = '1') then --only read in this addr1
             out2 <= memory(to_integer(unsigned(addr2)));
-        end if;
+        --end if;
         
-        if(pen1 = '1' and wen1 = '1') then --write in this addr1
-            memory(to_integer(unsigned(addr2))) := wwrd2;
+        if(ren2 = '1' and wen2 = '1') then --write in this addr1
+            
+            --if(addr2 /= addr1) then
+                memory(to_integer(unsigned(addr2))) := wwrd2;
+            --end if;
+                
         end if;
         
     end if;
