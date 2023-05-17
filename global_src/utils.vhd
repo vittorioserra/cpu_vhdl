@@ -11,16 +11,16 @@ use IEEE.NUMERIC_STD.ALL;
 use IEEE.MATH_REAL.ALL;
 
 package utils is
-    function getBitCount(width : positive) return positive;   
-    function vec2ui(x : std_logic_vector) return integer;    
-    function ui2vec(x : integer; width : positive) return std_logic_vector;    
+    function get_bit_count(width : positive) return positive;
+    function vec2ui(x : std_logic_vector) return integer;
+    function ui2vec(x : integer; width : positive) return std_logic_vector;
 end package utils;
 
 package body utils is
-    function getBitCount(width : positive) return positive is
+    function get_bit_count(width : positive) return positive is
         begin
             return integer(ceil(log2(real(width))));
-        end function;   
+        end function;
     function vec2ui(x : std_logic_vector) return integer is
         begin
             return to_integer(unsigned(x));
@@ -28,5 +28,5 @@ package body utils is
     function ui2vec(x : integer; width : positive) return std_logic_vector is
         begin
             return std_logic_vector(to_unsigned(x, width));
-        end function;    
+        end function;
 end package body utils;

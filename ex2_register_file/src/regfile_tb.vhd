@@ -19,7 +19,7 @@ architecture tb of regfile_tb is
 	constant CLOCK_PERIOD : time := 10 ns;
 	constant PORT_WIDTH : positive := 32;
 	constant REG_COUNT : positive := 32;
-	constant SEL_WIDTH : positive := getBitCount(REG_COUNT);
+	constant SEL_WIDTH : positive := get_bit_count(REG_COUNT);
 
 	signal clock, reset_n, w_enable : std_logic;
     signal r1_select, r2_select, w_select : std_logic_vector(SEL_WIDTH-1 downto 0);
