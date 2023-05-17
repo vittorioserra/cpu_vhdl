@@ -2,7 +2,7 @@
 -- Company: FAU Erlangen - Nuernberg
 -- Engineer: Vittorio Serra and Cedric Donges
 --
--- Description: ALU with sync result and async lowest bit of result
+-- Description: ALU for RISC-V 32I
 ----------------------------------------------------------------------------------
 
 package alu_types is
@@ -11,6 +11,7 @@ package alu_types is
         func_sub,   -- Subtraction
         func_slts,  -- Set (lowest bit) when less than (signed)
         func_sltu,  -- Set (lowest bit) when less than (unsigned)
+        func_seq,   -- Set (lowest bit) when equal
         func_xor,   -- bitwise XOR
         func_or,    -- bitwise OR
         func_and,   -- bitwise AND
@@ -32,157 +33,66 @@ use work.alu_types.ALL;
 
 entity alu is
     Generic(
-        port_width : positive := 32;
-        num_operations : positive := 12);
+        port_width : positive := 32);
     Port(
         reset_n : IN std_logic;
         clock: IN std_logic;
         func : IN alu_func;
         op1, op2 : IN std_logic_vector(port_width - 1 downto 0);
-        async_lsb : OUT std_logic;
         res : OUT std_logic_vector(port_width - 1 downto 0));
 end alu;
 
 architecture bh of alu is
-    function set_lsb(value: boolean) return std_logic_vector is
-    begin
-        if (value) then
-            return (port_width - 1 downto 1 => '0') & '1';
-        else
-            return (port_width - 1 downto 0 => '0');
-        end if;
-    end function;
-    
-    type input_buffer_t is array (num_operations - 1 downto 0) of std_logic_vector(port_width - 1 downto 0);
-    signal dff_op1 : input_buffer_t := (others => (others => '0'));
-    signal dff_op2 : input_buffer_t := (others => (others => '0'));
-
-    signal async_result : std_logic_vector(port_width - 1 downto 0);
-    
-    --signal op1u : unsigned(port_width - 1 downto 0);
-    --signal op1s : signed(port_width - 1 downto 0);
-    --signal op2u : unsigned(port_width - 1 downto 0);
-    --signal op2s : signed(port_width - 1 downto 0);
-    --signal op2ui : integer;
-    
+    constant func_count : positive := alu_func'pos(alu_func'high) + 1;
+    type op_reg_t is array (func_count - 1 downto 0) of std_logic_vector(port_width - 1 downto 0);
+    signal op1_reg : op_reg_t;
+    signal op2_reg : op_reg_t;
+    signal func_reg : alu_func;
 begin
-
-
-    --p1u <= unsigned(op1);
-    --op1s <= signed(op1);
-    --op2u <= unsigned(op2);
-    --op2s <= signed(op2);
-    --op2ui <= vec2ui(op2);
-
-    with func select async_result <=
-        --std_logic_vector(op1u + op2u)              when func_add,
-        --std_logic_vector(op1u - op2u)              when func_sub,
-        --set_lsb(op1s < op2s)                       when func_slts,
-        --set_lsb(op1u < op2u)                       when func_sltu,
-        --op1 xor op2                                when func_xor,
-        --op1 or op2                                 when func_or,
-        --op1 and op2                                when func_and,
-        --std_logic_vector(shift_left(op1u, op2ui))  when func_sll,
-        --std_logic_vector(shift_right(op1u, op2ui)) when func_srl,
-        --std_logic_vector(shift_right(op1s, op2ui)) when func_sra,
-        std_logic_vector(unsigned(dff_op1(0)) + unsigned(dff_op2(0)))           when func_add,
-        std_logic_vector(unsigned(dff_op1(1)) - unsigned(dff_op2(1)))           when func_sub,
-        set_lsb(signed(dff_op1(2)) < signed(dff_op2(2)))                        when func_slts,
-        set_lsb(unsigned(dff_op1(3)) < unsigned(dff_op2(3)))                    when func_sltu,
-        dff_op1(4) xor dff_op2(4)                                               when func_xor,
-        dff_op1(5) or dff_op2(5)                                                when func_or,
-        dff_op1(6) and dff_op2(6)                                               when func_and,
-        std_logic_vector(shift_left(unsigned(dff_op1(7)), vec2ui(dff_op2(7))))  when func_sll,
-        std_logic_vector(shift_right(unsigned(dff_op1(8)), vec2ui(dff_op2(8)))) when func_srl,
-        std_logic_vector(shift_right(signed(dff_op1(9)), vec2ui(dff_op2(9))))   when func_sra,
-        (others => '0')                                                         when others;
-    
-    async_lsb <= async_result(0) when reset_n = '1' else '0';
-
-    process(clock, reset_n)
+    process (clock, reset_n)
     begin
         if (reset_n = '0') then
-            res <= (others => '0');
+            op1_reg <= (others => (others => '0'));
+            op2_reg <= (others => (others => '0'));
+            func_reg <= func_add;
         elsif (rising_edge(clock)) then
-            res <= async_result;
-            
-            if func = func_add then
-            
-                dff_op1(0) <= op1;  
-                dff_op2(0) <= op2;  
-            
-            end if;
-            
-            if func = func_sub then
-            
-                dff_op1(1) <= op1;  
-                dff_op2(1) <= op2;  
-            
-            end if;
-            
-            if func = func_slts then
-            
-                dff_op1(2) <= op1;  
-                dff_op2(2) <= op2;  
-            
-            end if;
-            
-            if func = func_sltu then
-            
-                dff_op1(3) <= op1;  
-                dff_op2(3) <= op2;  
-            
-            end if;
-            
-            if func = func_xor then
-            
-                dff_op1(4) <= op1;  
-                dff_op2(4) <= op2;  
-            
-            end if;
-            
-            if func = func_or then
-            
-                dff_op1(5) <= op1;  
-                dff_op2(5) <= op2;  
-            
-            end if;
-            
-            if func = func_and then
-            
-                dff_op1(6) <= op1;  
-                dff_op2(6) <= op2;  
-            
-            end if;
-            
-            if func = func_sll then
-            
-                dff_op1(7) <= op1;  
-                dff_op2(7) <= op2;  
-            
-            end if;
-            
-            if func = func_srl then
-            
-                dff_op1(8) <= op1;  
-                dff_op2(8) <= op2;  
-            
-            end if;
-            
-            if func = func_sra then
-            
-                dff_op1(9) <= op1;  
-                dff_op2(9) <= op2;  
-            
-            end if;
-            
-            --for i in 0 to (num_operations -1) loop
-            
-             --   dff_op1(i) <= op1;
-             --   dff_op2(i) <= op2;
-            
-            --end loop;
-            
+            op1_reg(alu_func'pos(func)) <= op1;
+            op2_reg(alu_func'pos(func)) <= op2;
+            func_reg <= func;
         end if;
+    end process;
+
+    process (op1_reg, op2_reg, func_reg)
+        function get_v(op: op_reg_t; index: alu_func) return std_logic_vector is
+        begin
+            return op(alu_func'pos(index));
+        end function;
+        function get_u(op: op_reg_t; index: alu_func) return unsigned is
+        begin
+            return unsigned(op(alu_func'pos(index)));
+        end function;
+        function get_s(op: op_reg_t; index: alu_func) return signed is
+        begin
+            return signed(op(alu_func'pos(index)));
+        end function;
+        function get_ui(op: op_reg_t; index: alu_func) return integer is
+        begin
+            return to_integer(unsigned(op(alu_func'pos(index))));
+        end function;
+    begin
+        case func_reg is
+            when func_add  => res <= std_logic_vector(get_u(op1_reg, func_add) + get_u(op2_reg, func_add));
+            when func_sub  => res <= std_logic_vector(get_u(op1_reg, func_sub) - get_u(op2_reg, func_sub));
+            when func_slts => res <= bool2vec(get_s(op1_reg, func_slts) < get_s(op2_reg, func_slts), port_width);
+            when func_sltu => res <= bool2vec(get_u(op1_reg, func_sltu) < get_u(op2_reg, func_sltu), port_width);
+            when func_seq  => res <= bool2vec(get_u(op1_reg, func_seq)  = get_u(op2_reg, func_seq),  port_width);
+            when func_xor  => res <= get_v(op1_reg, func_xor) xor get_v(op2_reg, func_xor);
+            when func_or   => res <= get_v(op1_reg, func_or)  or  get_v(op2_reg, func_or);
+            when func_and  => res <= get_v(op1_reg, func_and) and get_v(op2_reg, func_and);
+            when func_sll  => res <= std_logic_vector(shift_left( get_u(op1_reg, func_sll), get_ui(op2_reg, func_sll)));
+            when func_srl  => res <= std_logic_vector(shift_right(get_u(op1_reg, func_srl), get_ui(op2_reg, func_srl)));
+            when func_sra  => res <= std_logic_vector(shift_right(get_s(op1_reg, func_sra), get_ui(op2_reg, func_sra)));
+            when others    => res <= (others => '0');
+        end case;
     end process;
 end bh;

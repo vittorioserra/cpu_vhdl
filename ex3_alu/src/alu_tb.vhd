@@ -23,7 +23,6 @@ architecture tb of alu_tb is
     signal clock, reset_n : std_logic;
     signal func : alu_func;
     signal op1, op2 : std_logic_vector(PORT_WIDTH - 1 downto 0);
-    signal async_lsb : std_logic;
     signal res : std_logic_vector(PORT_WIDTH - 1 downto 0);
 begin
     DUT : entity work.alu
@@ -35,7 +34,6 @@ begin
             func => func,
             op1 => op1,
             op2 => op2,
-            async_lsb => async_lsb,
             res => res);
 
     gen_clk : process

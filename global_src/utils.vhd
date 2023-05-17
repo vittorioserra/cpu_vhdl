@@ -14,6 +14,7 @@ package utils is
     function get_bit_count(width : positive) return positive;
     function vec2ui(x : std_logic_vector) return integer;
     function ui2vec(x : integer; width : positive) return std_logic_vector;
+    function bool2vec(value: boolean; width: positive) return std_logic_vector;
 end package utils;
 
 package body utils is
@@ -29,4 +30,12 @@ package body utils is
         begin
             return std_logic_vector(to_unsigned(x, width));
         end function;
+    function bool2vec(value: boolean; width: positive) return std_logic_vector is
+    begin
+        if (value) then
+            return ui2vec(1, width);
+        else
+            return ui2vec(0, width);
+        end if;
+    end function;
 end package body utils;
