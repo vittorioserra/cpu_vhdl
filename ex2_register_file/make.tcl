@@ -4,6 +4,7 @@
 # 
 #  Description: Universal Project Creation Script for CPU_VHDL Project.
 #               Copy this file into the project directory and execute it from vivado.
+#               CAUTION: This script will delete an existing vivado project folder.
 #               Imports only .xdc, .wcfg .vhd files from local and global src folder.
 #               Fileformat: *_tb.vhd is Top of Simulation
 #               Fileformat: *_top.vhd is Top of Synthesis
@@ -15,6 +16,9 @@ set projectName [file tail $scriptPath]
 set projectPath [file normalize [file join $scriptPath ./vivado]]
 set globalSrcPath [file normalize [file join $scriptPath ../global_src]]
 set localSrcPath [file normalize [file join $scriptPath ./src]]
+
+# Remove existing Vivado Project
+file delete -force -- $projectPath
 
 # Create Vivado Project
 file mkdir $projectPath
