@@ -58,9 +58,9 @@ end memories_and_pc;
 
 architecture bh of memories_and_pc is
 
-variable pc_reg = std_logic_vector(pc_width - 1 downto 0);
-
-                                                              
+signal memory_address : std_logic_vector(addr_width-1 downto 0);
+signal pc_val : std_logic_vector(pc_width-1 downto 0);
+                                                   
 begin
 
     INSTR_MEM : entity work.instr_mem
@@ -87,8 +87,15 @@ begin
                  reset_n=>reset_n,
                  load=>load,
                  load_value=>load_value,
-                 pc_value=>pc_value);
+                 --pc_value=>pc_value,
+                 pc_value=>pc_val);
                  
                  
+    process(clock)
+    begin
+    
+        --only take 8 bits from mem, put it in the read port, then read the output and put it in the read_from_mem port
+    
+    end process;
     
 end bh;
