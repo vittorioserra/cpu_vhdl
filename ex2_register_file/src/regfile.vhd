@@ -27,8 +27,8 @@ architecture bh of regfile is
     type t_reg is array (reg_count - 1 downto 0) of std_logic_vector(port_width - 1 downto 0);
     signal reg : t_reg := (others => (others => '0'));
 begin
-    r1_value <= reg(to_integer(unsigned(r1_select)));
-    r2_value <= reg(to_integer(unsigned(r2_select)));
+    r1_value <= reg(vec2ui(r1_select));
+    r2_value <= reg(vec2ui(r2_select));
 
     process(clock)
     begin
