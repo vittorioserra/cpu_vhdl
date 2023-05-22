@@ -36,10 +36,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity data_mem_tb is
-end data_mem_tb;
+entity instr_mem_tb is
+end instr_mem_tb;
 
-architecture tb of data_mem_tb is
+architecture tb of instr_mem_tb is
 
     constant CLOCK_PERIOD : time := 10 ns;
 
@@ -56,7 +56,7 @@ architecture tb of data_mem_tb is
                                                                      
 begin
 
-    DUT : entity work.data_mem 
+    DUT : entity work.instr_mem 
         generic map(port_width => PORT_WIDTH,
                     block_length => BLOCK_LENGTH,
                     addr_width => ADDR_WIDTH

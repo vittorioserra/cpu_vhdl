@@ -19,7 +19,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity data_mem is
+entity instr_mem is
     Generic(
             port_width : positive := 32;
             block_length : positive := 256;
@@ -31,9 +31,9 @@ entity data_mem is
           wwrd1, wwrd2 : IN std_logic_vector(port_width -1 downto 0); --write_word (word that ha to be written to address)
           out1, out2 : OUT std_logic_vector(port_width -1 downto 0)   --output words
     );
-end data_mem;
+end instr_mem;
 
-architecture bh of data_mem is
+architecture bh of instr_mem is
 type memory_block is array (block_length-1 downto 0) of std_logic_vector(port_width -1 downto 0);
 shared variable memory : memory_block;
 begin
