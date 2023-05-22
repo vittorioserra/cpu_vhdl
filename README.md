@@ -10,8 +10,7 @@ We plan to get RV32GC working on Machine Level. We will see... :)
 ### How to create a new Project Folder
 1) Create a folder under the root. Give it the desired project name.
 2) Inside this folder create an "src" named folder and put your project local files in there.
-3) Copy also the "make_backup.tcl" Script from the "global_src" folder in the new project folder.
-4) Rename it to "make.tcl" for consistency.
+3) Copy also the "make.tcl" Script from the "global_src" folder in the new project folder.
 5) If you want to create a vivado project, goto: "How to create a local Vivado Project".
 
 ### How to (re)create a local Vivado Project
