@@ -15,21 +15,22 @@ package utils is
     function vec2ui(x : std_logic_vector) return integer;
     function ui2vec(x : integer; width : positive) return std_logic_vector;
     function bool2vec(value: boolean; width: positive) return std_logic_vector;
+    function ends_with(haystack: string; needle: string) return boolean;
 end package utils;
 
 package body utils is
     function get_bit_count(width : positive) return positive is
-        begin
-            return integer(ceil(log2(real(width))));
-        end function;
+    begin
+        return integer(ceil(log2(real(width))));
+    end function;
     function vec2ui(x : std_logic_vector) return integer is
-        begin
-            return to_integer(unsigned(x));
-        end function;
+    begin
+        return to_integer(unsigned(x));
+    end function;
     function ui2vec(x : integer; width : positive) return std_logic_vector is
-        begin
-            return std_logic_vector(to_unsigned(x, width));
-        end function;
+    begin
+        return std_logic_vector(to_unsigned(x, width));
+    end function;
     function bool2vec(value: boolean; width: positive) return std_logic_vector is
     begin
         if (value) then
@@ -37,5 +38,20 @@ package body utils is
         else
             return ui2vec(0, width);
         end if;
+    end function;
+    function ends_with(haystack: string; needle: string) return boolean is
+        variable needle_cursor : integer := 1;
+    begin
+        if (haystack'length < needle'length or needle'length = 0) then
+            return false;
+        end if;
+        for hay_cursor in haystack'range loop
+            if (haystack(hay_cursor) = needle(needle_cursor)) then
+                needle_cursor := needle_cursor + 1;
+            else
+                needle_cursor := 1;
+            end if;
+        end loop;
+        return needle_cursor = needle'length + 1;
     end function;
 end package body utils;
