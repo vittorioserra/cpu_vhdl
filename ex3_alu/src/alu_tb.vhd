@@ -47,96 +47,95 @@ begin
 	
 	stimuli : process
 	begin
-	
-	   --general reset
-	   reset_n <= '0';
-	   wait for CLOCK_PERIOD;
-	   
-	   --addition
-	   reset_n <= '1';
-	   op1 <= x"00000042";
-	   op2 <= x"00000042";
-	   func <= func_add;
-	   wait for CLOCK_PERIOD;
-	   
-	   --subtraction
-	   op1 <= x"00000042";
-	   op2 <= x"00000042";
-	   func <= func_sub;
-	   wait for CLOCK_PERIOD;
-	   
-	   --slts
-	   op1 <= x"00000042";
-	   op2 <= x"F0000042";
-	   func <= func_slts;
-	   wait for CLOCK_PERIOD;
-	   
-	   op1 <= x"F0000042";
-	   op2 <= x"00000042";
-	   func <= func_slts;
-	   wait for CLOCK_PERIOD;
-	   
-       --sltu
-	   op1 <= x"00000042";
-	   op2 <= x"00000041";
-	   func <= func_sltu;
-	   wait for CLOCK_PERIOD;
-	   
-	   op1 <= x"00000041";
-	   op2 <= x"00000042";
-	   func <= func_sltu;
-	   wait for CLOCK_PERIOD;
-	   
-	   --seq
-	   op1 <= x"00000042";
-	   op2 <= x"00000042";
-	   func <= func_seq;
-	   wait for CLOCK_PERIOD;
-	   
-	   op1 <= x"00000041";
-	   op2 <= x"00000042";
-	   func <= func_seq;
-	   wait for CLOCK_PERIOD;
-	   
-	   --xor
-	   op1 <= x"a5a5a5a5";
-	   op2 <= x"5a5a5a5a";
-	   func <= func_xor;
-	   wait for CLOCK_PERIOD;
-	   
-	   --or
-	   op1 <= x"DEAD0000";
-	   op2 <= x"0000BEEF";
-	   func <= func_or;
-	   wait for CLOCK_PERIOD;
-	   
-	   --and
-	   op1 <= x"a5a5a5a5";
-	   op2 <= x"5a5a5a5a";
-	   func <= func_and;
-	   wait for CLOCK_PERIOD;
-	   
-	   --sll
-	   op1 <= x"FDEADBEE";
-	   op2 <= x"00000004";
-	   func <= func_sll;
-	   wait for CLOCK_PERIOD;
-	   
-	   --srl
-	   op1 <= x"C01DCAFE";
-	   op2 <= x"00000008";
-	   func <= func_srl;
-	   wait for CLOCK_PERIOD;
-	   
-	   --sra
-	   op1 <= x"FFFFFFF0";
-	   op2 <= x"00000004";
-	   func <= func_sra;
-	   wait for CLOCK_PERIOD;
-	   
-       --general reset
-	   reset_n <= '0';
-	   wait for CLOCK_PERIOD;
+		-- general reset
+		reset_n <= '0';
+		wait for CLOCK_PERIOD;
+		
+		-- addition
+		reset_n <= '1';
+		op1 <= x"00000042";
+		op2 <= x"00000042";
+		func <= func_add;
+		wait for CLOCK_PERIOD;
+		
+		-- subtraction
+		op1 <= x"00000042";
+		op2 <= x"00000042";
+		func <= func_sub;
+		wait for CLOCK_PERIOD;
+		
+		-- slts
+		op1 <= x"00000042";
+		op2 <= x"F0000042";
+		func <= func_slts;
+		wait for CLOCK_PERIOD;
+		
+		op1 <= x"F0000042";
+		op2 <= x"00000042";
+		func <= func_slts;
+		wait for CLOCK_PERIOD;
+		
+		-- sltu
+		op1 <= x"00000042";
+		op2 <= x"00000041";
+		func <= func_sltu;
+		wait for CLOCK_PERIOD;
+		
+		op1 <= x"00000041";
+		op2 <= x"00000042";
+		func <= func_sltu;
+		wait for CLOCK_PERIOD;
+		
+		-- seq
+		op1 <= x"00000042";
+		op2 <= x"00000042";
+		func <= func_seq;
+		wait for CLOCK_PERIOD;
+		
+		op1 <= x"00000041";
+		op2 <= x"00000042";
+		func <= func_seq;
+		wait for CLOCK_PERIOD;
+		
+		-- xor
+		op1 <= x"a5a5a5a5";
+		op2 <= x"5a5a5a5a";
+		func <= func_xor;
+		wait for CLOCK_PERIOD;
+		
+		-- or
+		op1 <= x"DEAD0000";
+		op2 <= x"0000BEEF";
+		func <= func_or;
+		wait for CLOCK_PERIOD;
+		
+		-- and
+		op1 <= x"a5a5a5a5";
+		op2 <= x"5a5a5a5a";
+		func <= func_and;
+		wait for CLOCK_PERIOD;
+		
+		-- sll
+		op1 <= x"FDEADBEE";
+		op2 <= x"00000004";
+		func <= func_sll;
+		wait for CLOCK_PERIOD;
+		
+		-- srl
+		op1 <= x"C01DCAFE";
+		op2 <= x"00000008";
+		func <= func_srl;
+		wait for CLOCK_PERIOD;
+		
+		-- sra
+		op1 <= x"FFFFFFF0";
+		op2 <= x"00000004";
+		func <= func_sra;
+		wait for CLOCK_PERIOD;
+		
+		-- general reset
+		reset_n <= '0';
+		wait for CLOCK_PERIOD;
 
 		wait;
 	end process;

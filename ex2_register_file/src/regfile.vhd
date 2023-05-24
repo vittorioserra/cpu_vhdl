@@ -24,8 +24,8 @@ entity regfile is
 end regfile;
 
 architecture bh of regfile is
-    type t_reg is array (reg_count - 1 downto 0) of std_logic_vector(port_width - 1 downto 0);
-    signal reg : t_reg := (others => (others => '0'));
+    type reg_t is array (reg_count - 1 downto 0) of std_logic_vector(port_width - 1 downto 0);
+    signal reg : reg_t := (others => (others => '0'));
 begin
     r1_value <= reg(vec2ui(r1_select));
     r2_value <= reg(vec2ui(r2_select));
