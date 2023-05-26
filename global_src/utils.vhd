@@ -14,8 +14,9 @@ package utils is
     function get_bit_count(width : positive) return positive;
     function vec2ui(x : std_logic_vector) return integer;
     function ui2vec(x : integer; width : positive) return std_logic_vector;
-    function bool2vec(value: boolean; width: positive) return std_logic_vector;
-    function ends_with(haystack: string; needle: string) return boolean;
+    function bool2vec(value : boolean; width : positive) return std_logic_vector;
+    function ends_with(haystack : string; needle : string) return boolean;
+    function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean;
 end package utils;
 
 package body utils is
@@ -53,5 +54,9 @@ package body utils is
             end if;
         end loop;
         return needle_cursor = needle'length + 1;
+    end function;
+    function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean is
+    begin
+        return addr(addr'high downto addr'high - chip_addr'length + 1) = chip_addr;
     end function;
 end package body utils;
