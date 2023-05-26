@@ -4,7 +4,12 @@
 --
 -- Description: Dual port Memory for CPU, read port for instr, rw port for data
 --              Memory can be initalized with file content.
+--              The bytes of the block that will be written are selectable.
 ----------------------------------------------------------------------------------
+
+-- TODO we can buildin a shadow-rom which holds the contents of the init-file
+--      during reset this rom could be copied in the memory.
+--      a copy_done signal should report the en of copying
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -13,23 +18,24 @@ use STD.TEXTIO.ALL;
 
 library work;
 use work.utils.ALL;
+use work.rv32i_defs.ALL;
 
 entity mem is
     Generic(
-        port_width : positive := 32;
+        chip_addr : std_logic_vector := x"00";
         block_count : positive := 512;
         project_path : string := "";
         mem_init_file : string := "");
     Port(
         clock : IN std_logic;
-        p1_enable, p2_enable, p2_write_enable : IN std_logic;
-        p1_addr, p2_addr : IN std_logic_vector(get_bit_count(block_count) - 1 downto 0);
-        p2_val_in : IN std_logic_vector(port_width - 1 downto 0);
-        p1_val_out, p2_val_out : OUT std_logic_vector(port_width - 1 downto 0));
+        d_bus_in : IN d_bus_mosi;
+        d_bus_out : OUT d_bus_miso;
+        i_bus_in : IN i_bus_mosi;
+        i_bus_out : OUT i_bus_miso);
 end mem;
 
 architecture bh of mem is
-    type mem_block_t is array (block_count - 1 downto 0) of std_logic_vector(port_width - 1 downto 0);
+    type mem_block_t is array (0 to block_count - 1) of std_logic_vector(xlen_range);
     impure function file2mem(filename : string) return mem_block_t is
         file file_handler : text;
         variable file_status : file_open_status;
@@ -48,12 +54,12 @@ architecture bh of mem is
         if (file_status /= open_ok) then
             return ret;
         elsif (ends_with(filename, ".o")) then
-            for block_index in ret'low to ret'high loop
+            for block_index in ret'range loop
                 if endfile(file_handler) then
                     exit;
                 end if;
                 readline(file_handler, row);
-                for line_index in port_width / 4 - 1 downto 0 loop
+                for line_index in xlen / 4 - 1 downto 0 loop
                     if (row'length = 0) then
                         exit;
                     end if;
@@ -87,19 +93,21 @@ architecture bh of mem is
 begin
     PORT1 : process(clock)
     begin
-        if (rising_edge(clock) and p1_enable = '1') then
-            p1_val_out <= mem_block(vec2ui(p1_addr));
+        if (rising_edge(clock) and is_selected(chip_addr, i_bus_in.addr)) then
+            i_bus_out.data <= mem_block(vec2ui(i_bus_in.addr));
         end if;
     end process;
 
     PORT2 : process(clock)
     begin
-        if (rising_edge(clock) and p2_enable = '1') then
-            if (p2_write_enable = '1') then
-                mem_block(vec2ui(p2_addr)) := p2_val_in;
-            else
-                p2_val_out <= mem_block(vec2ui(p2_addr));
-            end if;
+        if (rising_edge(clock) and is_selected(chip_addr, d_bus_in.addr)) then
+            d_bus_out.data <= mem_block(vec2ui(d_bus_in.addr));
+            for i in d_bus_in.write_enable'range loop
+                if (d_bus_in.write_enable(i) = '1') then
+                    mem_block(vec2ui(d_bus_in.addr))(i * 8 + 7 downto i * 8)
+                        := d_bus_in.data(i * 8 + 7 downto i * 8);
+                end if;
+            end loop;
         end if;
     end process;
 end bh;
