@@ -27,12 +27,6 @@ package rv32i_defs is
     constant funct3len : positive := 3;
     subtype funct3_range is natural range funct3len - 1 downto 0;
     
-    type result_ctrl is(
-        alu_res,  --00
-        data_mem, --01
-        prog_ctr_up --10
-    );
-    
     type d_bus_mosi is record
         addr            : std_logic_vector(addr_range);
         data            : std_logic_vector(xlen_range);
@@ -98,8 +92,22 @@ package rv32i_defs is
         i_type,             --i type instrutcion --00
         b_type,             --b type instruction --10
         s_type,             --s type instruction --01
-        j_type);            --j type instruction --11
+        j_type,              --j type instruction --11
+        complement
+        );
         
+     type result_ctrl is(
+        alu_res,  --00
+        data_mem, --01
+        prog_ctr_up --10
+    );
+    
+    type internal_alu_op is (
+        immediate_add, --00
+        immediate_sub, --01
+        decode_from_funct3 -- others
+        );
+    
 end rv32i_defs;
 
 package body rv32i_defs is
