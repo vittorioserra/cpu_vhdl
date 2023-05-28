@@ -38,9 +38,7 @@ architecture bh of control_unit is
     shared variable branch : std_logic;
     shared variable internal_op : internal_alu_op; 
     
-function alu_decode(alu_op : internal_alu_op; funct3_in : std_logic_vector(funct3_range); op : std_logic_vector(oplen_range); funct7b5 : std_logic
-
-) return alu_func is variable decoded_alu_func : alu_func;
+    function alu_decode(alu_op : internal_alu_op; funct3_in : std_logic_vector(funct3_range); op : std_logic_vector(oplen_range); funct7b5 : std_logic) return alu_func is variable decoded_alu_func : alu_func;
     begin
     
     case alu_op is 
@@ -64,7 +62,7 @@ function alu_decode(alu_op : internal_alu_op; funct3_in : std_logic_vector(funct
                 end case;
     end case;
 
-    return func_add;
+    return decoded_alu_func;
     end function;
     
 begin
@@ -74,40 +72,43 @@ main_dec : process(operation) begin --main decoder program
     --lw
     when "0000011" =>
         --single_main_controls <= "10010010000";
-        regfile_wen <= '0';
-        extension_unit_ctrl <= s_type;
+        regfile_wen <= '1';
+        extension_unit_ctrl <= i_type;
         alu_op2_mux_sel <= select_imm;
-        data_mem_we <= '1';
+        data_mem_we <= '0';
         result_out_mux_sel <= data_mem;
         branch:='0';
         internal_op := immediate_add;
-        alu_ctrl <= alu_decode(internal_op, operation, funct3_field, funct7b5_field);
+        alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         jump<='0';
+        pc_enable <= '1';
     --sw
     when "0100011" =>
         --single_main_controls <= "00111000000";
         regfile_wen <= '0';
         extension_unit_ctrl <= s_type;
-        alu_op2_mux_sel <= select_rs2;
+        alu_op2_mux_sel <= select_imm;
         data_mem_we<='1';
         result_out_mux_sel <= alu_res;
         branch := '0';
         internal_op := immediate_add;
-        alu_ctrl <= alu_decode(internal_op, operation, funct3_field, funct7b5_field);      
+        alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);      
         jump<='0';
+        pc_enable <= '1';
     --R type
-    when "00110011" =>
+    when "0110011" =>
         --single_main_controls <= "1--00000100";
         regfile_wen <= '1';
         extension_unit_ctrl <= complement;
         alu_op2_mux_sel <= select_rs2;
-        data_mem_we<='1';
+        data_mem_we<='0';
         result_out_mux_sel <= alu_res;
-        branch := '1';
+        branch := '0';
         internal_op := decode_from_funct3;
-        alu_ctrl <= alu_decode(internal_op, operation, funct3_field, funct7b5_field);
+        alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_add; -- add is R type, so this should be fine, imho
         jump<='0';
+        pc_enable <= '1';
     --beq
     when "1100011" =>
         --single_main_controls <= "01000001010";
@@ -116,11 +117,12 @@ main_dec : process(operation) begin --main decoder program
         alu_op2_mux_sel <= select_rs2;
         data_mem_we<='0';
         result_out_mux_sel <= data_mem;
-        branch := '0';
-        internal_op := decode_from_funct3;
-        alu_ctrl <= alu_decode(internal_op, operation, funct3_field, funct7b5_field);
+        branch := '1';
+        internal_op := decode_from_funct3; --here they use sub in the book, actually we compare in a different way, tomorrow I will see what actually makes more sense to do here
+        alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_seq; -- set lowest bit when equal, in the book i think they use the zero port on the alu for this...
         jump<='0';
+        pc_enable <= '1';
     --I type
     when "0010011" => 
         --single_main_controls <= "10010000100";
@@ -131,9 +133,10 @@ main_dec : process(operation) begin --main decoder program
         result_out_mux_sel <= alu_res;
         branch := '0';
         internal_op := decode_from_funct3;
-        alu_ctrl <= alu_decode(internal_op, operation, funct3_field, funct7b5_field);
+        alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_add; -- add is R type, so this should be fine, imho
         jump<='0';
+        pc_enable <= '1';
     --jal 
     when "1101111" => 
         --single_main_controls <= "11100100001";
@@ -144,9 +147,10 @@ main_dec : process(operation) begin --main decoder program
         result_out_mux_sel <= data_mem;
         branch := '0';
         internal_op := immediate_add;
-        alu_ctrl <= alu_decode(internal_op, operation, funct3_field, funct7b5_field);
+        alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_add; -- add is R type, so this should be fine, imho
         jump<='1';
+        pc_enable <= '1';
     --invalid instruction, all don't cares
     when others =>
         single_main_controls <=(10 downto 0 => '-');

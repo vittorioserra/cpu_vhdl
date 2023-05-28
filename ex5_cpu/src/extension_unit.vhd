@@ -35,7 +35,7 @@ process(input_to_extend, select_extension) begin
         extended_output<=(31 downto 12 => input_to_extend(31)) & input_to_extend(7) & input_to_extend(30 downto 25) & input_to_extend(11 downto 8) & '0';
     --J type
     when j_type =>
-        extended_output<=(31 downto 12 => input_to_extend(31))& input_to_extend(19 downto 12) & input_to_extend(20) & input_to_extend(30 downto 21) & '0';
+        extended_output<=(31 downto 20 => input_to_extend(31))& input_to_extend(19 downto 12) & input_to_extend(20) & input_to_extend(30 downto 21) & '0';
     when others =>
         extended_output<=(31 downto 0 => '-');
     end case;

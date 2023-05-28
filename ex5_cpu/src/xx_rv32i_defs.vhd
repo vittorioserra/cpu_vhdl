@@ -92,19 +92,19 @@ package rv32i_defs is
         i_type,             --i type instrutcion --00
         b_type,             --b type instruction --10
         s_type,             --s type instruction --01
-        j_type,              --j type instruction --11
-        complement
+        j_type,             --j type instruction --11
+        complement          -- this is equal to "--"
         );
         
      type result_ctrl is(
-        alu_res,  --00
-        data_mem, --01
+        alu_res,    --00
+        data_mem,   --01
         prog_ctr_up --10
     );
     
     type internal_alu_op is (
-        immediate_add, --00
-        immediate_sub, --01
+        immediate_add,     --00
+        immediate_sub,     --01
         decode_from_funct3 -- others
         );
     
