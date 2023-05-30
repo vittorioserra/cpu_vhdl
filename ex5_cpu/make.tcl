@@ -8,6 +8,7 @@
 #               Imports only .xdc, .wcfg .vhd files from local and global src folder.
 #               Fileformat: *_tb.vhd is Top of Simulation
 #               Fileformat: *_top.vhd is Top of Synthesis
+#               Fileformat: *_old.* will not be added to the project
 # --------------------------------------------------------------------------------
 
 # Set User Output Strings
@@ -73,7 +74,9 @@ set srcFiles [list \
 foreach file $srcFiles {
     set fileExt [file extension $file]
     set fileTitle [file rootname [file tail $file]]
-    if {[string equal $fileExt ".vhd"]} {
+    if {[string match "*_old" $fileTitle]} {
+        # skip this file
+    } elseif {[string equal $fileExt ".vhd"]} {
         if {[string match "*_tb" $fileTitle]} {
             # Top Level Source of Simulation
             puts [concat $textFileSourceSimTop $file]
