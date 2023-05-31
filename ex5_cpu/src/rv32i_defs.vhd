@@ -17,7 +17,6 @@ package rv32i_defs is
     constant xlen_addr_width : positive := get_bit_count(xlen / 8);         -- 2
     subtype xlen_range is natural range xlen - 1 downto 0;                  -- 31 downto 0
     subtype addr_range is natural range xlen - 1 downto xlen_addr_width;    -- 31 downto 2
-    subtype pc_range is natural range xlen - 1 downto 1;                    -- 31 downto 1
     subtype instr_range is natural range 31 downto 0;                       -- 32 bits for instructions
     subtype reg_range is natural range 4 downto 0;                          -- 5 bits for register select
 
@@ -27,21 +26,21 @@ package rv32i_defs is
     constant funct3len : positive := 3;
     subtype funct3_range is natural range funct3len - 1 downto 0;
     
-    type d_bus_mosi is record
+    type d_bus_mosi_rec is record
         addr            : std_logic_vector(addr_range);
         data            : std_logic_vector(xlen_range);
         write_enable    : std_logic_vector(xlen / 8 - 1 downto 0);
     end record;
 
-    type d_bus_miso is record
+    type d_bus_miso_rec is record
         data            : std_logic_vector(xlen_range);
     end record;
 
-    type i_bus_mosi is record
+    type i_bus_mosi_rec is record
         addr            : std_logic_vector(addr_range);
     end record;
 
-    type i_bus_miso is record
+    type i_bus_miso_rec is record
         data            : std_logic_vector(xlen_range);
     end record;
     
