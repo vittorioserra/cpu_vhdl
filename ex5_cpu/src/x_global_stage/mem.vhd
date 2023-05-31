@@ -101,7 +101,7 @@ begin
         end if;
     end process;
 
-    SYNC_PORT2 : process(clock)
+    SYNC_PORT2 : process(clock, d_bus_in)
     begin
         if (rising_edge(clock) and is_selected(chip_addr, d_bus_in.addr)) then
             d_bus_out.data <= mem_block(vec2ui(d_bus_in.addr(mem_addr_range)));
