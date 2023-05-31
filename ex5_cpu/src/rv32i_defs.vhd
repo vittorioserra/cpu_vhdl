@@ -13,12 +13,14 @@ library work;
 use work.utils.ALL;
 
 package rv32i_defs is
-    constant xlen : positive := 32;                                         -- 32
-    constant xlen_addr_width : positive := get_bit_count(xlen / 8);         -- 2
-    subtype xlen_range is natural range xlen - 1 downto 0;                  -- 31 downto 0
-    subtype addr_range is natural range xlen - 1 downto xlen_addr_width;    -- 31 downto 2
-    subtype instr_range is natural range 31 downto 0;                       -- 32 bits for instructions
-    subtype reg_range is natural range 4 downto 0;                          -- 5 bits for register select
+    constant xlen : positive := 32;                                             -- 32 bit busses and mem blocks
+    constant xlen_addr_width : positive := get_bit_count(xlen / 8);             -- 2
+    subtype xlen_range is natural range xlen - 1 downto 0;                      -- 31 downto 0
+    subtype addr_range is natural range xlen - 1 downto xlen_addr_width;        -- 31 downto 2
+    subtype instr_range is natural range 31 downto 0;                           -- 32 bits for instructions
+    
+    constant reg_count : positive := 32;                                        -- 32 registers
+    subtype reg_range is natural range get_bit_count(reg_count) - 1 downto 0;   -- 4 downto 0
 
     constant oplen : positive := 7;
     subtype oplen_range is natural range oplen - 1 downto 0;
