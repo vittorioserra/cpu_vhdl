@@ -14,15 +14,15 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity fetch_unit_tb is
+    Generic(PROJECT_PATH : string);
 end fetch_unit_tb;
 
 architecture tb of fetch_unit_tb is
     constant CLOCK_PERIOD   : time := 10 ns;
     signal clock            : std_logic;
 	
-    constant MEM_INIT_FILE      : string := "../src/fetch_unit_tb_testcode.o";
+    constant MEM_INIT_FILE      : string := "../src/1_fetch_stage/fetch_unit_tb_testcode.o";
     constant PC_OF_ENTRY        : std_logic_vector(xlen_range) := (others => '0');
-    
     
     signal enable, reset_n  : std_logic;
     signal i_bus_miso       : i_bus_miso_rec;
@@ -52,6 +52,7 @@ begin
 
     MEM : entity work.mem
         generic map (
+            project_path => PROJECT_PATH,
             mem_init_file => MEM_INIT_FILE)
         port map (
             clock => clock,

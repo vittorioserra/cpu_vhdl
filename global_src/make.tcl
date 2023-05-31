@@ -47,17 +47,6 @@ set_property -name "sim.ip.auto_export_scripts" -value "1" -objects $obj
 set_property -name "simulator_language" -value "VHDL" -objects $obj
 set_property -name "target_language" -value "VHDL" -objects $obj
 
-# Create filesets
-if {[string equal [get_filesets -quiet sources_1] ""]} {
-    create_fileset -srcset sources_1
-}
-set sourcesSet [get_filesets sources_1]
-
-if {[string equal [get_filesets -quiet constrs_1] ""]} {
-    create_fileset -constrset constrs_1
-}
-set constrsSet [get_filesets constrs_1]
-
 # Search for Remote Files
 proc findFilesRecursive { basedir pattern } {
     set basedir [string trimright [file join [file normalize $basedir] { }]]
@@ -84,7 +73,13 @@ set srcFiles [list \
     {*}[findFilesRecursive $globalSrcPath/ *.*] \
     {*}[findFilesRecursive $localSrcPath/ *.*]]
 
-# Link Remote Files to filesets
+# sort the remote files
+set sourceFiles {}
+set constrFiles {}
+set sourceTopFiles {}
+set simTopFiles {}
+set simWaveFiles {}
+
 foreach file $srcFiles {
     set fileExt [file extension $file]
     set fileTitle [file rootname [file tail $file]]
@@ -92,60 +87,78 @@ foreach file $srcFiles {
         # skip this file
     } elseif {[string equal $fileExt ".vhd"]} {
         if {[string match "*_tb" $fileTitle]} {
-            # Top Level Source of Simulation
-            
-            # Load the simset with the name of the testbench
-            if {[string equal [get_filesets -quiet sim_$fileTitle] ""]} {
-                create_fileset -simset sim_$fileTitle
-            }
-            set simSet [get_filesets sim_$fileTitle]
-            set_property -name "top_lib" -value "xil_defaultlib" -objects $simSet
-            current_fileset -simset $simSet
-
-            puts [concat $textFileSourceSimTop $file]
-            add_files -norecurse -fileset $simSet $file
-            set_property -name "file_type" -value "VHDL" -objects \
-                [get_files -of_objects $simSet [list "*$file"]]
-            set_property -name "top" -value $fileTitle -objects $simSet
+            lappend simTopFiles $file
         } elseif {[string match "*_top" $fileTitle]} {
-            # Top Level Source of Synthesis
-            puts [concat $textFileSourceSynthTop $file]
-            add_files -norecurse -fileset $sourcesSet $file
-            set_property -name "file_type" -value "VHDL" -objects \
-                [get_files -of_objects $sourcesSet [list "*$file"]]
-            set_property -name "top" -value $fileTitle -objects $sourcesSet
+            lappend sourceTopFiles $file
+            lappend sourceFiles $file
         } else {
-            # Simple Source
-            puts [concat $textFileSource $file]
-            add_files -norecurse -fileset $sourcesSet $file
-            set_property -name "file_type" -value "VHDL" -objects \
-                [get_files -of_objects $sourcesSet [list "*$file"]]
+            lappend sourceFiles $file
         }
     } elseif {[string equal $fileExt ".xdc"]} {
-        # Constraints file
-        puts [concat $textFileSourceConstr $file]
-        add_files -norecurse -fileset $constrsSet $file
-        set_property -name "file_type" -value "XDC" -objects \
-            [get_files -of_objects $constrsSet [list "*$file"]]
+        lappend constrFiles $file
     } elseif {[string equal $fileExt ".wcfg"]} {
-        # Waveform config
-
-        # Load the simset with the name of the testbench
-        if {[string equal [get_filesets -quiet sim_$fileTitle] ""]} {
-            create_fileset -simset sim_$fileTitle
-        }
-        set simSet [get_filesets sim_$fileTitle]
-        set_property -name "top_lib" -value "xil_defaultlib" -objects $simSet
-        current_fileset -simset $simSet
-
-        puts [concat $textFileSourceWaveform $file]
-        add_files -norecurse -fileset $simSet $file
+        lappend simWaveFiles $file
     }
 }
 
-# delete the unneccesary fileset sim_1
+# Create filesets
+if {[string equal [get_filesets -quiet sources_1] ""]} {
+    create_fileset -srcset sources_1
+}
+set sourcesSet [get_filesets sources_1]
+
+if {[string equal [get_filesets -quiet constrs_1] ""]} {
+    create_fileset -constrset constrs_1
+}
+set constrsSet [get_filesets constrs_1]
+
+# Link Remote Files to filesets
+foreach file $constrFiles {
+    puts [concat $textFileSourceConstr $file]
+    add_files -norecurse -fileset $constrsSet $file
+    set_property -name "file_type" -value "XDC" -objects [get_files -of_objects $constrsSet [list "*$file"]]
+}
+
+foreach file $sourceFiles {
+    puts [concat $textFileSource $file]
+    add_files -norecurse -fileset $sourcesSet $file
+    set_property -name "file_type" -value "VHDL" -objects [get_files -of_objects $sourcesSet [list "*$file"]]
+}
+set_property -name "generic" -value "project_path=$projectPath/" -objects $sourcesSet
+
+foreach file $sourceTopFiles {
+    set fileTitle [file rootname [file tail $file]]
+    set_property -name "top" -value $fileTitle -objects $sourcesSet
+}
+
+foreach file $simTopFiles {
+    set fileTitle [file rootname [file tail $file]]
+
+    if {[string equal [get_filesets -quiet sim_$fileTitle] ""]} {
+        create_fileset -simset sim_$fileTitle
+    }
+    set simSet [get_filesets sim_$fileTitle]
+    current_fileset -simset $simSet
+
+    puts [concat $textFileSourceSimTop $file]
+    add_files -norecurse -fileset $simSet $file
+    set_property -name "file_type" -value "VHDL" -objects [get_files -of_objects $simSet [list "*$file"]]
+    set_property -name "top" -value $fileTitle -objects $simSet
+    set_property -name "generic" -value "project_path=$projectPath/" -objects $simSet
+    set_property -name "INCREMENTAL" -value "false" -objects $simSet
+}
+
+foreach file $simWaveFiles {
+    set fileTitle [file rootname [file tail $file]]
+    set simSet [get_filesets sim_$fileTitle]
+
+    puts [concat $textFileSourceWaveform $file]
+    add_files -norecurse -fileset $simSet $file
+}
+
+# delete the unneccesary simset sim_1
 delete_fileset -quiet sim_1
 
-# Set generic for project path (to read files relative to the project)
-set_property -name "generic" -value "project_path=$projectPath/" -objects $sourcesSet
-set_property -name "vhdl_generic" -value "project_path=$projectPath/" -objects $sourcesSet
+# disable incremental compilation (because this cause problems with files which get loaded during init methods of vhdl code)
+set_property -name "AUTO_INCREMENTAL_CHECKPOINT" -value "0" -objects [get_runs synth_1]
+set_property -name "AUTO_INCREMENTAL_CHECKPOINT" -value "0" -objects [get_runs impl_1]
