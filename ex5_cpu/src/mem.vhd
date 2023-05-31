@@ -2,14 +2,14 @@
 -- Company: FAU Erlangen - Nuernberg
 -- Engineer: Cedric Donges and Vittorio Serra
 --
--- Description: Dual port Memory for CPU, read port for instr, rw port for data
+-- Description: Dual port Memory for CPU, async read port for instr, sync rw port for data
 --              Memory can be initalized with file content.
 --              The bytes of the block that will be written are selectable.
 ----------------------------------------------------------------------------------
 
 -- TODO we can buildin a shadow-rom which holds the contents of the init-file
 --      during reset this rom could be copied in the memory.
---      a copy_done signal should report the en of copying
+--      a copy_done signal should report the end of copying
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -28,10 +28,10 @@ entity mem is
         mem_init_file : string := "");
     Port(
         clock : IN std_logic;
-        d_bus_in : IN d_bus_mosi;
-        d_bus_out : OUT d_bus_miso;
-        i_bus_in : IN i_bus_mosi;
-        i_bus_out : OUT i_bus_miso);
+        d_bus_in : IN d_bus_mosi_rec;
+        d_bus_out : OUT d_bus_miso_rec;
+        i_bus_in : IN i_bus_mosi_rec;
+        i_bus_out : OUT i_bus_miso_rec);
 end mem;
 
 architecture bh of mem is
@@ -90,21 +90,24 @@ architecture bh of mem is
         return ret;
     end function;
     shared variable mem_block : mem_block_t := file2mem(mem_init_file);
+    subtype mem_addr_range is natural range get_bit_count(block_count) + addr_range'low - 1 downto addr_range'low;
 begin
-    PORT1 : process(clock)
+    ASYNC_PORT1 : process(i_bus_in)
     begin
-        if (rising_edge(clock) and is_selected(chip_addr, i_bus_in.addr)) then
-            i_bus_out.data <= mem_block(vec2ui(i_bus_in.addr));
+        if (is_selected(chip_addr, i_bus_in.addr)) then
+            i_bus_out.data <= mem_block(vec2ui(i_bus_in.addr(mem_addr_range)));
+        else
+            i_bus_out.data <= (others => '0');
         end if;
     end process;
 
-    PORT2 : process(clock)
+    SYNC_PORT2 : process(clock)
     begin
         if (rising_edge(clock) and is_selected(chip_addr, d_bus_in.addr)) then
-            d_bus_out.data <= mem_block(vec2ui(d_bus_in.addr));
+            d_bus_out.data <= mem_block(vec2ui(d_bus_in.addr(mem_addr_range)));
             for i in d_bus_in.write_enable'range loop
                 if (d_bus_in.write_enable(i) = '1') then
-                    mem_block(vec2ui(d_bus_in.addr))(i * 8 + 7 downto i * 8)
+                    mem_block(vec2ui(d_bus_in.addr(mem_addr_range)))(i * 8 + 7 downto i * 8)
                         := d_bus_in.data(i * 8 + 7 downto i * 8);
                 end if;
             end loop;
