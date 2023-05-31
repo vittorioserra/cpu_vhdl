@@ -39,19 +39,18 @@ architecture bh of fetch_unit is
     signal combine_this_low_half_with_last_high_half, misaligned, instr_prefetched : std_logic;
 	signal pc_now_reg : std_logic_vector(xlen_range);
 	signal pc_next_int : std_logic_vector(xlen_range);
-	signal i_bus_out_addr_reg : std_logic_vector(xlen_range);
+	signal i_bus_out_pc_reg : std_logic_vector(xlen_range);
 	signal pc_plus_2 : std_logic_vector(xlen_range);
 	signal pc_plus_4 : std_logic_vector(xlen_range);
-	signal i_bus_out_addr_plus_4 : std_logic_vector(xlen_range);
+	signal i_bus_out_pc_plus_4 : std_logic_vector(xlen_range);
 	signal last_i_bus_data_high_half : std_logic_vector(15 downto 0);
 begin
 	pc_now <= pc_now_reg;
 	pc_next <= pc_next_int;
-    i_bus_out.addr <= i_bus_out_addr_reg(addr_range);
 
     pc_plus_2 <= std_logic_vector(unsigned(pc_now_reg) + 2);
     pc_plus_4 <= std_logic_vector(unsigned(pc_now_reg) + 4);
-    i_bus_out_addr_plus_4 <= std_logic_vector(unsigned(i_bus_out_addr_reg) + 4);
+    i_bus_out_pc_plus_4 <= std_logic_vector(unsigned(i_bus_out_pc_reg) + 4);
 
     instr_processing : process(combine_this_low_half_with_last_high_half, last_i_bus_data_high_half,
         pc_plus_2, pc_plus_4, i_bus_in, pc_now_reg)
@@ -104,7 +103,7 @@ begin
                 -- load the entry point
                 last_i_bus_data_high_half <= (others => '0');
                 pc_now_reg <= pc_of_entry;
-                i_bus_out_addr_reg <= pc_of_entry;
+                i_bus_out_pc_reg <= pc_of_entry;
                 instr_prefetched <= '0';
                 combine_this_low_half_with_last_high_half <= '0';
             elsif (enable = '1') then
@@ -113,13 +112,13 @@ begin
                 if (jump_enable = '1') then
                     -- jump to the target address
                     pc_now_reg <= jump_target(xlen - 1 downto 1) & '0';
-                    i_bus_out_addr_reg <= jump_target(xlen - 1 downto 1) & '0';
+                    i_bus_out_pc_reg <= jump_target(xlen - 1 downto 1) & '0';
                     instr_prefetched <= '0';
                     combine_this_low_half_with_last_high_half <= '0';
                 elsif (misaligned = '1') then
                     -- the current 32 bit instruction is misaligned
                     -- fetch the second half of the current instruction and combine the instruction
-                    i_bus_out_addr_reg <= i_bus_out_addr_plus_4;
+                    i_bus_out_pc_reg <= i_bus_out_pc_plus_4;
                     combine_this_low_half_with_last_high_half <= '1';
                     instr_prefetched <= '1';
 
@@ -130,11 +129,28 @@ begin
                 else
                     -- the current instruction (16 or 32 bit) is not misaligned, so operate normal
                     pc_now_reg <= pc_next_int;
-                    i_bus_out_addr_reg <= pc_next_int;
+                    i_bus_out_pc_reg <= pc_next_int;
                     instr_prefetched <= '1';
                     combine_this_low_half_with_last_high_half <= '0';
                 end if;
             end if;
 		end if;
+	end process;
+
+	i_bus_addr_generate : process(reset_n, enable, jump_enable, jump_target, misaligned, i_bus_out_pc_plus_4, pc_next_int)
+	begin
+        -- this generates the address for the memory without the register stage
+        -- because mem has its own registers (to be able to infer BRAM)
+		if (reset_n = '0') then
+            i_bus_out.addr <= pc_of_entry(addr_range);
+        elsif (enable = '1') then
+            if (jump_enable = '1') then
+                i_bus_out.addr <= jump_target(xlen - 1 downto addr_range'low);
+            elsif (misaligned = '1') then
+                i_bus_out.addr <= i_bus_out_pc_plus_4(addr_range);
+            else
+                i_bus_out.addr <= pc_next_int(addr_range);
+            end if;
+        end if;
 	end process;
 end bh;
