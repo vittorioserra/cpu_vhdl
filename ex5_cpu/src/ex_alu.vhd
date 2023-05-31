@@ -19,7 +19,8 @@ entity alu is
         clock: IN std_logic;
         func : IN alu_func;
         op1, op2 : IN std_logic_vector(xlen_range);
-        res : OUT std_logic_vector(xlen_range));
+        res : OUT std_logic_vector(xlen_range);
+        zero_flag : OUT std_logic);
 end alu;
 
 architecture bh of alu is
@@ -28,6 +29,7 @@ architecture bh of alu is
     signal op1_reg : op_reg_t;
     signal op2_reg : op_reg_t;
     signal func_reg : alu_func;
+    signal zero_flag_int : std_logic;
 begin
     process (clock, reset_n)
     begin
@@ -42,7 +44,7 @@ begin
         end if;
     end process;
 
-    process (op1_reg, op2_reg, func_reg)
+   ALU_OPERATION : process (op1_reg, op2_reg, func_reg)
         function get_v(op: op_reg_t; index: alu_func) return std_logic_vector is
         begin
             return op(alu_func'pos(index));
@@ -75,4 +77,16 @@ begin
             when others    => res <= (others => '0');
         end case;
     end process;
+    
+    COMPARE_FLAG : process(op1_reg, op2_reg) --not a real zero flag, it is a compare flag here...
+    begin
+    
+        if (op1_reg = op2_reg) then
+            zero_flag <= '1';
+        else 
+            zero_flag <= '0';
+        end if;
+    
+    end process;
+    
 end bh;

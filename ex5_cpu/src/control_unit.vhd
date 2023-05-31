@@ -148,7 +148,6 @@ main_dec : process(operation) begin --main decoder program
         branch := '0';
         internal_op := immediate_add;
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
-        --alu_ctrl <= func_add; -- add is R type, so this should be fine, imho
         jump<='1';
         pc_enable <= '1';
     --invalid instruction, all don't cares
