@@ -21,6 +21,8 @@ architecture tb of fetch_unit_tb is
     constant CLOCK_PERIOD   : time := 10 ns;
     signal clock            : std_logic;
 	
+    constant MEM_BLOCK_COUNT    : positive := 1024;
+    constant MEM_BLOCK_ADDR     : std_logic_vector(31 downto 12) := x"00000";
     constant MEM_INIT_FILE      : string := "../src/1_fetch_stage/fetch_unit_tb_testcode.o";
     constant PC_OF_ENTRY        : std_logic_vector(xlen_range) := (others => '0');
     
@@ -52,10 +54,12 @@ begin
 
     MEM : entity work.mem
         generic map (
+            block_count => MEM_BLOCK_COUNT,
             project_path => PROJECT_PATH,
             mem_init_file => MEM_INIT_FILE)
         port map (
             clock => clock,
+            chip_addr => MEM_BLOCK_ADDR,
             d_bus_in => (others => (others => '0')),
             d_bus_out => open,
             i_bus_in => i_bus_mosi,
