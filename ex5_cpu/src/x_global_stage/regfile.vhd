@@ -32,10 +32,12 @@ begin
 
     process(clock)
     begin
-        if (reset_n = '0') then
-            reg <= (others => (others => '0'));
-        elsif (rising_edge(clock) and rd_write_enable = '1' and unsigned(rd_select) /= 0) then
-            reg(to_integer(unsigned(rd_select))) <= rd_value;  
+        if (rising_edge(clock)) then
+            if (reset_n = '0') then
+                reg <= (others => (others => '0'));
+            elsif (rd_write_enable = '1' and unsigned(rd_select) /= 0) then
+                reg(to_integer(unsigned(rd_select))) <= rd_value;  
+            end if;
         end if;
     end process;
 end bh;
