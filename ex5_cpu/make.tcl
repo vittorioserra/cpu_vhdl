@@ -58,17 +58,31 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 }
 set constrsSet [get_filesets constrs_1]
 
-if {[string equal [get_filesets -quiet sim_1] ""]} {
-    create_fileset -simset sim_1
-}
-set simSet [get_filesets sim_1]
-set_property -name "top_lib" -value "xil_defaultlib" -objects $simSet
-set_property -name "top_auto_set" -value "0" -objects $simSet
-
 # Search for Remote Files
+proc findFilesRecursive { basedir pattern } {
+    set basedir [string trimright [file join [file normalize $basedir] { }]]
+    set fileList {}
+
+    # search in the basedir for files: {f r}
+    foreach fileName [glob -nocomplain -type {f r} -path $basedir $pattern] {
+        lappend fileList $fileName
+    }
+
+    # search in the basedir for directories: {d r}
+    foreach dirName [glob -nocomplain -type {d r} -path $basedir *] {
+        # call the routine recursively for each folder
+        set subDirList [findFilesRecursive $dirName $pattern]
+        if { [llength $subDirList] > 0 } {
+            foreach subDirFile $subDirList {
+                lappend fileList $subDirFile
+            }
+        }
+    }
+    return $fileList
+}
 set srcFiles [list \
-    {*}[glob -nocomplain -- $globalSrcPath/*.*] \
-    {*}[glob -nocomplain -- $localSrcPath/*.*]]
+    {*}[findFilesRecursive $globalSrcPath/ *.*] \
+    {*}[findFilesRecursive $localSrcPath/ *.*]]
 
 # Link Remote Files to filesets
 foreach file $srcFiles {
@@ -79,6 +93,15 @@ foreach file $srcFiles {
     } elseif {[string equal $fileExt ".vhd"]} {
         if {[string match "*_tb" $fileTitle]} {
             # Top Level Source of Simulation
+            
+            # Load the simset with the name of the testbench
+            if {[string equal [get_filesets -quiet sim_$fileTitle] ""]} {
+                create_fileset -simset sim_$fileTitle
+            }
+            set simSet [get_filesets sim_$fileTitle]
+            set_property -name "top_lib" -value "xil_defaultlib" -objects $simSet
+            current_fileset -simset $simSet
+
             puts [concat $textFileSourceSimTop $file]
             add_files -norecurse -fileset $simSet $file
             set_property -name "file_type" -value "VHDL" -objects \
@@ -106,10 +129,22 @@ foreach file $srcFiles {
             [get_files -of_objects $constrsSet [list "*$file"]]
     } elseif {[string equal $fileExt ".wcfg"]} {
         # Waveform config
+
+        # Load the simset with the name of the testbench
+        if {[string equal [get_filesets -quiet sim_$fileTitle] ""]} {
+            create_fileset -simset sim_$fileTitle
+        }
+        set simSet [get_filesets sim_$fileTitle]
+        set_property -name "top_lib" -value "xil_defaultlib" -objects $simSet
+        current_fileset -simset $simSet
+
         puts [concat $textFileSourceWaveform $file]
         add_files -norecurse -fileset $simSet $file
     }
 }
+
+# delete the unneccesary fileset sim_1
+delete_fileset -quiet sim_1
 
 # Set generic for project path (to read files relative to the project)
 set_property -name "generic" -value "project_path=$projectPath/" -objects $sourcesSet
