@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="fetch_unit_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="fetch_unit_tb" />
+            <top_module name="rv32i_defs" />
+            <top_module name="utils" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="121.496 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="183"></NameColumnWidth>
+      <ValueColumnWidth column_width="100"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject type="logic" fp_name="/fetch_unit_tb/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fetch_unit_tb/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fetch_unit_tb/enable">
+      <obj_property name="ElementShortName">enable</obj_property>
+      <obj_property name="ObjectShortName">enable</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/i_bus_miso">
+      <obj_property name="ElementShortName">i_bus_miso</obj_property>
+      <obj_property name="ObjectShortName">i_bus_miso</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/i_bus_mosi">
+      <obj_property name="ElementShortName">i_bus_mosi</obj_property>
+      <obj_property name="ObjectShortName">i_bus_mosi</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fetch_unit_tb/jump_enable">
+      <obj_property name="ElementShortName">jump_enable</obj_property>
+      <obj_property name="ObjectShortName">jump_enable</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/jump_target">
+      <obj_property name="ElementShortName">jump_target[31:1]</obj_property>
+      <obj_property name="ObjectShortName">jump_target[31:1]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/pc_now">
+      <obj_property name="ElementShortName">pc_now[31:1]</obj_property>
+      <obj_property name="ObjectShortName">pc_now[31:1]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/pc_next">
+      <obj_property name="ElementShortName">pc_next[31:1]</obj_property>
+      <obj_property name="ObjectShortName">pc_next[31:1]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/instr">
+      <obj_property name="ElementShortName">instr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">instr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fetch_unit_tb/ready">
+      <obj_property name="ElementShortName">ready</obj_property>
+      <obj_property name="ObjectShortName">ready</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/fetch_unit_tb/CLOCK_PERIOD">
+      <obj_property name="ElementShortName">CLOCK_PERIOD</obj_property>
+      <obj_property name="ObjectShortName">CLOCK_PERIOD</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/MEM_INIT_FILE">
+      <obj_property name="ElementShortName">MEM_INIT_FILE[1:34]</obj_property>
+      <obj_property name="ObjectShortName">MEM_INIT_FILE[1:34]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/PC_OF_ENTRY">
+      <obj_property name="ElementShortName">PC_OF_ENTRY[31:1]</obj_property>
+      <obj_property name="ObjectShortName">PC_OF_ENTRY[31:1]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/PC_OF_ALIGN_32">
+      <obj_property name="ElementShortName">PC_OF_ALIGN_32[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_OF_ALIGN_32[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/PC_OF_16">
+      <obj_property name="ElementShortName">PC_OF_16[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_OF_16[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fetch_unit_tb/PC_OF_MISALIGN_32">
+      <obj_property name="ElementShortName">PC_OF_MISALIGN_32[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_OF_MISALIGN_32[31:0]</obj_property>
+   </wvobject>
+</wave_config>
