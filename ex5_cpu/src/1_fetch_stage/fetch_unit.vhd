@@ -21,7 +21,7 @@ entity fetch_unit is
     Generic (
         pc_of_entry : std_logic_vector(xlen_range) := (others => '0'));
     Port(
-        clock, enable, reset_n : IN std_logic;
+        clock, reset_n, enable : IN std_logic;
 
         i_bus_in : IN i_bus_miso_rec;
         i_bus_out : OUT i_bus_mosi_rec;
