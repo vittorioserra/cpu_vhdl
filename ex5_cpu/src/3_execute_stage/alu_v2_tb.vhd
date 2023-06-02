@@ -20,8 +20,9 @@ end alu_v2_tb;
 architecture tb of alu_v2_tb is
     constant CLOCK_PERIOD : time := 10 ns;
 
-    signal reset_n : std_logic;
     signal clock: std_logic;
+    signal reset_n : std_logic;
+    signal enable : std_logic;
     signal func : alu_func;
     signal op1, op2 : std_logic_vector(xlen_range);
     signal res : std_logic_vector(xlen_range);
@@ -29,8 +30,9 @@ begin
 
     DUT : entity work.alu_v2
         port map(
-			reset_n => reset_n,
 			clock => clock,
+			enable => enable,
+			reset_n => reset_n,
 			func => func,
 			op1 => op1, op2 => op2,
 			res => res);
@@ -47,8 +49,11 @@ begin
 	begin
 		-- general reset
 		reset_n <= '0';
+		enable <= '0';
 		wait for CLOCK_PERIOD;
 		reset_n <= '1';
+		wait for CLOCK_PERIOD;
+		enable <= '1';
 		
 		-- addition
 		func <= func_add;
@@ -139,8 +144,8 @@ begin
 			wait for CLOCK_PERIOD;
 		end loop;
 		
-		-- general reset
-		reset_n <= '0';
+		-- disable
+		enable <= '0';
 		wait for CLOCK_PERIOD;
 
 		wait;

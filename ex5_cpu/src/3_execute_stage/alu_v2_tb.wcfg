@@ -12,15 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="177.600 ns"></ZoomStartTime>
-      <ZoomEndTime time="315.201 ns"></ZoomEndTime>
-      <Cursor1Time time="285.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="178"></NameColumnWidth>
-      <ValueColumnWidth column_width="85"></ValueColumnWidth>
+      <ValueColumnWidth column_width="81"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="9" />
+   <WVObjectSize size="10" />
    <wvobject type="logic" fp_name="/alu_v2_tb/clock">
       <obj_property name="ElementShortName">clock</obj_property>
       <obj_property name="ObjectShortName">clock</obj_property>
@@ -28,6 +28,10 @@
    <wvobject type="logic" fp_name="/alu_v2_tb/reset_n">
       <obj_property name="ElementShortName">reset_n</obj_property>
       <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/alu_v2_tb/enable">
+      <obj_property name="ElementShortName">enable</obj_property>
+      <obj_property name="ObjectShortName">enable</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/alu_v2_tb/func">
       <obj_property name="ElementShortName">func</obj_property>
