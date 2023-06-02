@@ -20,6 +20,7 @@ package utils is
     function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean;
     function sel(selector : boolean; res_true, res_false : std_logic_vector) return std_logic_vector;
     function sel(selector : boolean; res_true, res_false : std_logic) return std_logic;
+    function sel(selector : boolean; res_true, res_false : integer) return integer;
 end package utils;
 
 package body utils is
@@ -75,6 +76,14 @@ package body utils is
         end if;
     end function;
     function sel(selector : boolean; res_true, res_false : std_logic) return std_logic is
+    begin
+        if (selector) then
+            return res_true;
+        else
+            return res_false;
+        end if;
+    end function;
+    function sel(selector : boolean; res_true, res_false : integer) return integer is
     begin
         if (selector) then
             return res_true;
