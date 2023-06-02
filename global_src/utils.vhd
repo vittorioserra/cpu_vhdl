@@ -14,6 +14,7 @@ package utils is
     function get_bit_count(width : positive) return positive;
     function vec2ui(x : std_logic_vector) return integer;
     function ui2vec(x : integer; width : positive) return std_logic_vector;
+    function si2vec(x : integer; width : positive) return std_logic_vector;
     function bool2vec(value : boolean; width : positive) return std_logic_vector;
     function ends_with(haystack : string; needle : string) return boolean;
     function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean;
@@ -33,6 +34,10 @@ package body utils is
     function ui2vec(x : integer; width : positive) return std_logic_vector is
     begin
         return std_logic_vector(to_unsigned(x, width));
+    end function;
+    function si2vec(x : integer; width : positive) return std_logic_vector is
+    begin
+        return std_logic_vector(to_signed(x, width));
     end function;
     function bool2vec(value: boolean; width: positive) return std_logic_vector is
     begin
