@@ -98,8 +98,8 @@ package rv32i_defs is
         
      type result_ctrl is(
         alu_res,    --00
-        data_mem,   --01
-        prog_ctr_up --10
+        data_mem   --01
+        --prog_ctr_up --10
     );
     
     type internal_alu_op is (

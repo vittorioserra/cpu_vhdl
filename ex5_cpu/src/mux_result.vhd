@@ -19,7 +19,7 @@ entity mux_result is
         
         alures_in : IN std_logic_vector(xlen_range);
         data_mem_in : IN std_logic_vector(xlen_range);
-        pc_up_in : IN std_logic_vector(xlen_range);
+        --pc_up_in : IN std_logic_vector(xlen_range);
         
         muxed_out : OUT std_logic_vector(xlen_range)
     );
@@ -29,7 +29,7 @@ architecture bh of mux_result is
 
 begin
 
-process(reg_selection, alures_in, data_mem_in, pc_up_in) begin
+process(reg_selection, alures_in, data_mem_in) begin
 
     case (reg_selection) is
     
@@ -37,8 +37,8 @@ process(reg_selection, alures_in, data_mem_in, pc_up_in) begin
             muxed_out <= alures_in;
         when data_mem =>
             muxed_out <= data_mem_in;
-        when prog_ctr_up =>
-            muxed_out <= pc_up_in;
+        --when prog_ctr_up =>
+            --muxed_out <= pc_up_in;
         when others => 
             muxed_out <= (xlen_range => '-');
     
