@@ -51,10 +51,12 @@ signal clock : std_logic;
     --op1 is the out value from the regfile
     signal op2_mux_out : std_logic_vector(xlen_range);
 --outgoing
+    signal alu_res_out : std_logic_vector(xlen_range);
+    signal zero_flag_out : std_logic;
 
 begin 
 
-    MEM : entity work.mem
+    INSTR_MEM : entity work.mem
         port map(
             clock => clock;
             d_bus_in  => x"00000000";
@@ -78,13 +80,22 @@ begin
         
     ALU : entity work.alu
         port map(
-            reset_n => '1'; --unused, pegged to '1'
-            clock   => clock;
-            func    => alu_func_ctrl;
-            op1     => rs1_regfile_out;
-            op2     => op2_mux_out;
-            res : OUT std_logic_vector(xlen_range);
-            zero_flag : OUT std_logic
+            reset_n   => '1'; --unused, pegged to '1'
+            clock     => clock;
+            func      => alu_func_ctrl;
+            op1       => rs1_regfile_out;
+            op2       => op2_mux_out;
+            res       => alu_res_out;
+            zero_flag => zero_flag_out
+        );
+     
+     DATA_MEM : entity work.mem
+        port map(
+            clock => clock;
+            i_bus_in  => x"00000000";
+            i_bus_out => x"00000000";
+            d_bus_in  =>
+            d_bus_out => 
         );
 
 
