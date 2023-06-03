@@ -15,7 +15,7 @@ use work.rv32i_defs.ALL;
 
 entity control_unit is
     Port(
-        pc_enable : OUT std_logic;
+        pc_jmp_en : OUT std_logic;
         data_mem_we : OUT std_logic;
         alu_ctrl : OUT alu_func;
         alu_op2_mux_sel : OUT op2_select;
@@ -24,7 +24,6 @@ entity control_unit is
         result_out_mux_sel : OUT result_ctrl;
         
         jump : buffer std_logic;
-        
         
         operation : IN std_logic_vector(oplen_range);
         funct3_field : IN std_logic_vector(funct3_range);
@@ -81,7 +80,7 @@ main_dec : process(operation) begin --main decoder program
         internal_op := immediate_add;
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         jump<='0';
-        pc_enable <= '1';
+        pc_jmp_en <= '1';
     --sw
     when "0100011" =>
         --single_main_controls <= "00111000000";
@@ -94,7 +93,7 @@ main_dec : process(operation) begin --main decoder program
         internal_op := immediate_add;
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);      
         jump<='0';
-        pc_enable <= '1';
+        pc_jmp_en <= '1';
     --R type
     when "0110011" =>
         --single_main_controls <= "1--00000100";
@@ -108,7 +107,7 @@ main_dec : process(operation) begin --main decoder program
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_add; -- add is R type, so this should be fine, imho
         jump<='0';
-        pc_enable <= '1';
+        pc_jmp_en <= '1';
     --beq
     when "1100011" =>
         --single_main_controls <= "01000001010";
@@ -122,7 +121,7 @@ main_dec : process(operation) begin --main decoder program
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_seq; -- set lowest bit when equal, in the book i think they use the zero port on the alu for this...
         jump<='0';
-        pc_enable <= '1';
+        pc_jmp_en <= '1';
     --I type
     when "0010011" => 
         --single_main_controls <= "10010000100";
@@ -136,7 +135,7 @@ main_dec : process(operation) begin --main decoder program
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         --alu_ctrl <= func_add; -- add is R type, so this should be fine, imho
         jump<='0';
-        pc_enable <= '1';
+        pc_jmp_en <= '1';
     --jal 
     when "1101111" => 
         --single_main_controls <= "11100100001";
@@ -149,7 +148,7 @@ main_dec : process(operation) begin --main decoder program
         internal_op := immediate_add;
         alu_ctrl <= alu_decode(internal_op, funct3_field, operation, funct7b5_field);
         jump<='1';
-        pc_enable <= '1';
+        pc_jmp_en <= '1';
     --invalid instruction, all don't cares
     when others =>
         single_main_controls <=(10 downto 0 => '-');

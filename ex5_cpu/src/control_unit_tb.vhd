@@ -19,7 +19,7 @@ end control_unit_tb;
 architecture tb of control_unit_tb is
     constant CLOCK_PERIOD : time := 10 ns;
 	
-	signal pc_enable           : std_logic;
+	signal pc_jmp_en           : std_logic;
     signal data_mem_we         : std_logic;
     signal alu_ctrl            : alu_func;
     signal alu_op2_mux_sel     : op2_select;
@@ -64,7 +64,7 @@ begin
 
     DUT : entity work.control_unit
 		port map (
-		pc_enable           =>        pc_enable          ,
+		pc_jmp_en           =>        pc_jmp_en          ,
         data_mem_we         =>        data_mem_we        ,
         alu_ctrl            =>        alu_ctrl           ,
         alu_op2_mux_sel     =>        alu_op2_mux_sel    ,
