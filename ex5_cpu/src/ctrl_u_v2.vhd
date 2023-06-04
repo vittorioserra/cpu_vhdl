@@ -37,12 +37,12 @@ architecture bh of ctrl_u_v2 is
     
 begin
 
-process(opcode) begin --main decoder program
+process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main decoder program
 
     --all r type instructions
     
     --add
-    if(opcode = "0110011" and funct3_field = "000" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "000" and funct7_field = "0000000" then
     
         alu_ctrl <= func_add;
         alu_op2_mux_sel <= select_rs2;
@@ -52,7 +52,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --sub
-    if(opcode = "0110011" and funct3_field = "000" and funct7_field = "010000") then
+    if opcode = "0110011" and funct3_field = "000" and funct7_field = "0100000" then
     
         alu_ctrl <= func_sub;
         alu_op2_mux_sel <= select_rs2;
@@ -62,7 +62,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --sll
-    if(opcode = "0110011" and funct3_field = "001" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "001" and funct7_field = "0000000" then
     
         alu_ctrl <= func_sll;
         alu_op2_mux_sel <= select_rs2;
@@ -72,7 +72,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --slts
-    if(opcode = "0110011" and funct3_field = "010" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "010" and funct7_field = "0000000" then
     
         alu_ctrl <= func_slts;
         alu_op2_mux_sel <= select_rs2;
@@ -82,7 +82,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --sltu
-    if(opcode = "0110011" and funct3_field = "011" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "011" and funct7_field = "0000000" then
     
         alu_ctrl <= func_sltu;
         alu_op2_mux_sel <= select_rs2;
@@ -92,7 +92,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --xor
-    if(opcode = "0110011" and funct3_field = "100" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "100" and funct7_field = "0000000" then
     
         alu_ctrl <= func_xor;
         alu_op2_mux_sel <= select_rs2;
@@ -102,7 +102,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --srl
-    if(opcode = "0110011" and funct3_field = "101" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "101" and funct7_field = "0000000" then
     
         alu_ctrl <= func_srl;
         alu_op2_mux_sel <= select_rs2;
@@ -112,7 +112,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --sra
-    if(opcode = "0110011" and funct3_field = "101" and funct7_field = "010000") then
+    if opcode = "0110011" and funct3_field = "101" and funct7_field = "0100000" then
     
         alu_ctrl <= func_sra;
         alu_op2_mux_sel <= select_rs2;
@@ -122,7 +122,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --or
-    if(opcode = "0110011" and funct3_field = "110" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "110" and funct7_field = "0000000" then
     
         alu_ctrl <= func_or;
         alu_op2_mux_sel <= select_rs2;
@@ -132,7 +132,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --and
-    if(opcode = "0110011" and funct3_field = "111" and funct7_field = "000000") then
+    if opcode = "0110011" and funct3_field = "111" and funct7_field = "0000000" then
     
         alu_ctrl <= func_and;
         alu_op2_mux_sel <= select_rs2;
@@ -156,7 +156,7 @@ process(opcode) begin --main decoder program
     end if;
     
     --srli
-    if(opcode = "0010011" and funct3_field = "010" and funct7_field = "0000000") then
+    if(opcode = "0010011" and funct3_field = "101" and funct7_field = "0000000") then
     
         alu_ctrl <= func_srl;
         extension_unit_ctrl <= i_type_shift; --the upper field is 0, so we can use this anyway
@@ -168,7 +168,7 @@ process(opcode) begin --main decoder program
     --srai (special handling of bit 30, which is '1')
     if(opcode = "0010011" and funct3_field = "101" and funct7_field = "0100000") then
     
-        alu_ctrl <= func_sll;
+        alu_ctrl <= func_sra;
         extension_unit_ctrl <= i_type_shift; --the upper field is 0, so we can use this anyway
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
@@ -221,7 +221,7 @@ process(opcode) begin --main decoder program
         result_out_mux_sel <= alu_res;
     
     end if;
-    
+        
     --ori
     if(opcode = "0010011" and funct3_field = "110") then
     
@@ -271,7 +271,7 @@ process(opcode) begin --main decoder program
         extension_unit_ctrl <= s_type;
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '0';
-        data_mem_we <= '0';
+        data_mem_we <= '1';
     
     end if;
     
@@ -325,6 +325,7 @@ process(opcode) begin --main decoder program
         data_mem_we <= '0';
         regfile_wen <= '1';
         pc_jmp_en <= '1';
+        
             
     end if;
     

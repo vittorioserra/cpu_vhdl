@@ -1,0 +1,111 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Sat Jun  3 10:08:20 2023
+# Process ID: 416524
+# Current directory: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu
+# Command line: vivado -mode tcl -source make.tcl
+# Log file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/vivado.log
+# Journal file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/vivado.jou
+# Running On: multipro-r1p2, OS: Linux, CPU Frequency: 3000.000 MHz, CPU Physical cores: 8, Host memory: 33234 MB
+#-----------------------------------------------------------
+source make.tcl
+# set textFileSourceSimTop   "Add source file as sim-top:  "
+# set textFileSourceSynthTop "Add source file as synth-top:"
+# set textFileSource         "Add source file:             "
+# set textFileSourceConstr   "Add constraints file:        "
+# set textFileSourceWaveform "Add waveform config file:    "
+# set scriptPath [file normalize [file dirname [info script]]]
+# set projectName [file tail $scriptPath]
+# set projectPath [file normalize [file join $scriptPath ./vivado]]
+# set globalSrcPath [file normalize [file join $scriptPath ../global_src]]
+# set localSrcPath [file normalize [file join $scriptPath ./src]]
+# file delete -force -- $projectPath
+# file mkdir $projectPath
+# create_project ${projectName} ${projectPath} -part xc7z020clg484-1
+# set obj [current_project]
+# set_property -name "board_part" -value "avnet.com:zedboard:part0:1.4" -objects $obj
+# set_property -name "default_lib" -value "xil_defaultlib" -objects $obj
+# set_property -name "enable_vhdl_2008" -value "1" -objects $obj
+# set_property -name "ip_cache_permissions" -value "read write" -objects $obj
+# set_property -name "ip_output_repo" -value "$projectPath/${projectName}.cache/ip" -objects $obj
+# set_property -name "mem.enable_memory_map_generation" -value "1" -objects $obj
+# set_property -name "platform.board_id" -value "zedboard" -objects $obj
+# set_property -name "revised_directory_structure" -value "1" -objects $obj
+# set_property -name "sim.central_dir" -value "$projectPath/${projectName}.ip_user_files" -objects $obj
+# set_property -name "sim.ip.auto_export_scripts" -value "1" -objects $obj
+# set_property -name "simulator_language" -value "VHDL" -objects $obj
+# set_property -name "target_language" -value "VHDL" -objects $obj
+# if {[string equal [get_filesets -quiet sources_1] ""]} {
+#     create_fileset -srcset sources_1
+# }
+# set sourcesSet [get_filesets sources_1]
+# if {[string equal [get_filesets -quiet constrs_1] ""]} {
+#     create_fileset -constrset constrs_1
+# }
+# set constrsSet [get_filesets constrs_1]
+# if {[string equal [get_filesets -quiet sim_1] ""]} {
+#     create_fileset -simset sim_1
+# }
+# set simSet [get_filesets sim_1]
+# set_property -name "top_lib" -value "xil_defaultlib" -objects $simSet
+# set_property -name "top_auto_set" -value "0" -objects $simSet
+# set srcFiles [list \
+#     {*}[glob -nocomplain -- $globalSrcPath/*.*] \
+#     {*}[glob -nocomplain -- $localSrcPath/*.*]]
+# foreach file $srcFiles {
+#     set fileExt [file extension $file]
+#     set fileTitle [file rootname [file tail $file]]
+#     if {[string match "*_old" $fileTitle]} {
+#         # skip this file
+#     } elseif {[string equal $fileExt ".vhd"]} {
+#         if {[string match "*_tb" $fileTitle]} {
+#             # Top Level Source of Simulation
+#             puts [concat $textFileSourceSimTop $file]
+#             add_files -norecurse -fileset $simSet $file
+#             set_property -name "file_type" -value "VHDL" -objects \
+#                 [get_files -of_objects $simSet [list "*$file"]]
+#             set_property -name "top" -value $fileTitle -objects $simSet
+#         } elseif {[string match "*_top" $fileTitle]} {
+#             # Top Level Source of Synthesis
+#             puts [concat $textFileSourceSynthTop $file]
+#             add_files -norecurse -fileset $sourcesSet $file
+#             set_property -name "file_type" -value "VHDL" -objects \
+#                 [get_files -of_objects $sourcesSet [list "*$file"]]
+#             set_property -name "top" -value $fileTitle -objects $sourcesSet
+#         } else {
+#             # Simple Source
+#             puts [concat $textFileSource $file]
+#             add_files -norecurse -fileset $sourcesSet $file
+#             set_property -name "file_type" -value "VHDL" -objects \
+#                 [get_files -of_objects $sourcesSet [list "*$file"]]
+#         }
+#     } elseif {[string equal $fileExt ".xdc"]} {
+#         # Constraints file
+#         puts [concat $textFileSourceConstr $file]
+#         add_files -norecurse -fileset $constrsSet $file
+#         set_property -name "file_type" -value "XDC" -objects \
+#             [get_files -of_objects $constrsSet [list "*$file"]]
+#     } elseif {[string equal $fileExt ".wcfg"]} {
+#         # Waveform config
+#         puts [concat $textFileSourceWaveform $file]
+#         add_files -norecurse -fileset $simSet $file
+#     }
+# }
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/global_src/utils.vhd
+Add constraints file: /home/rzlin/ko92vuzu/cpu_vhdl/global_src/zedboard_master_XDC_RevC_D_v2.xdc
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/ex_alu.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/fe_program_counter.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/gl_mem.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/gl_regfile.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/xx_rv32i_defs.vhd
+Add source file as sim-top: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/control_unit_tb.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/extension_unit.vhd
+Add source file as sim-top: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/extension_unit_tb.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/control_unit.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/mux_alu_reg_b.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/mux_result.vhd
+Add source file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/processor_single_cycle.vhd
+# set_property -name "generic" -value "project_path=$projectPath/" -objects $sourcesSet
+# set_property -name "vhdl_generic" -value "project_path=$projectPath/" -objects $sourcesSet

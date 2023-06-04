@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2021.2 (64-bit)
+# SW Build 3367213 on Tue Oct 19 02:47:39 MDT 2021
+# IP Build 3369179 on Thu Oct 21 08:25:16 MDT 2021
+# Start of session at: Sat Jun  3 10:08:20 2023
+# Process ID: 416524
+# Current directory: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu
+# Command line: vivado -mode tcl -source make.tcl
+# Log file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/vivado.log
+# Journal file: /home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/vivado.jou
+# Running On: multipro-r1p2, OS: Linux, CPU Frequency: 3000.000 MHz, CPU Physical cores: 8, Host memory: 33234 MB
+#-----------------------------------------------------------
+source make.tcl
