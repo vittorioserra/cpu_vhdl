@@ -319,9 +319,10 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
     
     --j type
     --jal
-    if(opcode = "1111111") then
+    if(opcode = "1101111") then
     
         extension_unit_ctrl <= j_type;
+        result_out_mux_sel <= prog_ctr_up;
         data_mem_we <= '0';
         regfile_wen <= '1';
         pc_jmp_en <= '1';

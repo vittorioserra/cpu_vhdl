@@ -15,12 +15,12 @@ use work.rv32i_defs.ALL;
 
 entity processor_single_cycle is
     port(
-        clock, reset : IN std_logic;
+        clock, reset : IN std_logic
         --the following things are just there for the testbench
-        pc_observe : OUT std_logic_vector(xlen_range);
-        instr_observe: OUT std_logic_vector(xlen_range);
-        mem_we_observe, regfile_we_observe : OUT std_logic;
-        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range)
+        --pc_observe : OUT std_logic_vector(xlen_range);
+        --instr_observe: OUT std_logic_vector(xlen_range);
+        --mem_we_observe, regfile_we_observe : OUT std_logic;
+        --alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range)
         );
 end processor_single_cycle;
 
@@ -91,6 +91,7 @@ constant CLOCK_PERIOD : time := 10 ns;
 --pc
     signal jump_enable : std_logic;
     signal pc_next : std_logic_vector(xlen_range);
+    signal clock_divided : std_logic;
  
 begin 
 
@@ -179,7 +180,7 @@ begin
      
      PROG_CTR : entity work.program_counter
         port map(
-            clock => clock,
+            clock => clock_divided,
             enable=> '1', 
             reset_n=> '0',
             load => jump_enable,
@@ -203,6 +204,13 @@ begin
             funct7b5_field => instr_mem_out(20),
             funct7_field => instr_mem_out(31 downto 25),
             zero_flag_from_alu => zero_flag_out -- added for consistency, as of now, quite useless
+        );
+        
+     CLK_DIVIDER : entity work.clock_divider
+        port map(
+        divider => x"00000100",
+        clock_in => clock,
+        clock_out => clock_divided
         );
  
     
