@@ -14,7 +14,14 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity processor_single_cycle is
---  Port ( );
+    port(
+        clock, reset : IN std_logic;
+        --the following things are just there for the testbench
+        pc_observe : OUT std_logic_vector(xlen_range);
+        instr_observe: OUT std_logic_vector(xlen_range);
+        mem_we_observe, regfile_we_observe : OUT std_logic;
+        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range)
+        );
 end processor_single_cycle;
 
 architecture bh of processor_single_cycle is
@@ -24,7 +31,6 @@ constant CLOCK_PERIOD : time := 10 ns;
 --signals
 
 --general signals
-signal clock : std_logic;
 
 --instr_mem
 --ingoing
@@ -79,11 +85,12 @@ signal clock : std_logic;
 --ingoing
     signal extension_selection : extension_control_type;
     
---jumpo unit
+--jump unit
     signal jump_out : std_logic_vector(xlen_range);
  
 --pc
     signal jump_enable : std_logic;
+    signal pc_next : std_logic_vector(xlen_range);
  
 begin 
 
@@ -152,7 +159,8 @@ begin
             reg_selection => result_select_mux,
             alures_in     => alu_res_out,
             data_mem_in   => data_mem_out,
-            muxed_out     => result
+            muxed_out     => result,
+            pc_up_in      => pc_next
         );
         
      EXTENSION_UNIT : entity work.extension_unit
@@ -176,10 +184,11 @@ begin
             reset_n=> '0',
             load => jump_enable,
 		    load_value => jump_out,
-		    pc_value => pc_value
+		    pc_value => pc_value,
+		    pc_value_next => pc_next
         );
         
-     CTRL_UNIT : entity work.control_unit
+     CTRL_UNIT : entity work.ctrl_u_v2
         port map(
             pc_jmp_en => jump_enable,
             data_mem_we => data_mem_we,
@@ -189,9 +198,10 @@ begin
             regfile_wen => dest_reg_we_ctrl,
             result_out_mux_sel => result_select_mux,
                         
-            operation => instr_mem_out(6 downto 0),
+            opcode => instr_mem_out(6 downto 0),
             funct3_field => instr_mem_out(14 downto 12),
             funct7b5_field => instr_mem_out(20),
+            funct7_field => instr_mem_out(31 downto 25),
             zero_flag_from_alu => zero_flag_out -- added for consistency, as of now, quite useless
         );
  

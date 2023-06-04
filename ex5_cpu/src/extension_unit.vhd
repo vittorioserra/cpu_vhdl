@@ -27,6 +27,9 @@ process(input_to_extend, select_extension) begin
     --I type
     when i_type =>
         extended_output<=(31 downto 12 => input_to_extend(31)) & input_to_extend(31 downto 20);
+    -- i type immediate shift
+    when i_type_shift =>
+        extended_output <= (31 downto 26 => '0') & input_to_extend(24 downto 20);
     --S architecture
     when s_type =>
         extended_output<=(31 downto 12 => input_to_extend(31)) & input_to_extend(31 downto 25) & input_to_extend(11 downto 7);

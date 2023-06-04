@@ -15,13 +15,15 @@ entity program_counter is
 	Port ( 
 		clock, enable, reset_n, load : IN std_logic;
 		load_value : IN std_logic_vector(pc_width - 1 downto 0);
-		pc_value : OUT std_logic_vector(pc_width - 1 downto 0));
+		pc_value : OUT std_logic_vector(pc_width - 1 downto 0);
+		pc_value_next : OUT std_logic_vector(pc_width -1 downto 0));
 end program_counter;
 
 architecture bh of program_counter is
 	signal pc_reg : std_logic_vector(pc_width - 1 downto 0);
 begin
 	pc_value <= pc_reg;
+	pc_value_next <= std_logic_vector(unsigned(pc_reg)  + 4);
 
 	process(clock, reset_n, enable)
 	begin

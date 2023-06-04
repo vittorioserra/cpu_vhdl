@@ -90,6 +90,7 @@ package rv32i_defs is
         
     type extension_control_type is (
         i_type,             --i type instrutcion --00
+        i_type_shift,
         b_type,             --b type instruction --10
         s_type,             --s type instruction --01
         j_type,             --j type instruction --11
@@ -98,8 +99,8 @@ package rv32i_defs is
         
      type result_ctrl is(
         alu_res,    --00
-        data_mem   --01
-        --prog_ctr_up --10
+        data_mem,   --01
+        prog_ctr_up --10
     );
     
     type internal_alu_op is (
