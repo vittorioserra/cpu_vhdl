@@ -15,12 +15,12 @@ use work.rv32i_defs.ALL;
 
 entity processor_single_cycle is
     port(
-        clock, reset : IN std_logic
-        --the following things are just there for the testbench
-        --pc_observe : OUT std_logic_vector(xlen_range);
-        --instr_observe: OUT std_logic_vector(xlen_range);
-        --mem_we_observe, regfile_we_observe : OUT std_logic;
-        --alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range)
+        clock, reset    : IN std_logic;
+        pc_observe      : OUT std_logic_vector(xlen_range);
+        instr_observe   : OUT std_logic_vector(xlen_range);
+        mem_we_observe,  regfile_we_observe   : OUT std_logic;
+        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
+        res_observe     : OUT std_logic_vector(xlen_range)
         );
 end processor_single_cycle;
 
@@ -92,6 +92,22 @@ constant CLOCK_PERIOD : time := 10 ns;
     signal jump_enable : std_logic;
     signal pc_next : std_logic_vector(xlen_range);
     signal clock_divided : std_logic;
+    signal pc_enable_int : std_logic;
+    
+--signals for simulation purposes, mapped to a port
+    --instr_mem_addr (pc)
+    --instr_mem_out
+    --extension_unit_out
+    --result
+    --alu_res
+ 
+--the following things are just there for the testbench
+--    variable pc_observe : std_logic_vector(xlen_range);
+--    variable instr_observe:  std_logic_vector(xlen_range);
+--    variable mem_we_observe, regfile_we_observe : std_logic;
+--    variable alu_res_observe, data_mem_out_observe : std_logic_vector(xlen_range);
+--    variable res_observe : std_logic_vector(xlen_range);
+ 
  
 begin 
 
@@ -180,8 +196,8 @@ begin
      
      PROG_CTR : entity work.program_counter
         port map(
-            clock => clock_divided,
-            enable=> '1', 
+            clock => clock,--clock_divided,
+            enable=> pc_enable_int,--'1', 
             reset_n=> '0',
             load => jump_enable,
 		    load_value => jump_out,
@@ -206,13 +222,28 @@ begin
             zero_flag_from_alu => zero_flag_out -- added for consistency, as of now, quite useless
         );
         
-     CLK_DIVIDER : entity work.clock_divider
+     --CLK_DIVIDER : entity work.clock_divider
+     --   port map(
+     --   divider => x"00000100",
+     --   clock_in => clock,
+     --   clock_out => clock_divided
+     --   );
+        
+     CLK_HOLDER : entity work.clock_hold_em
         port map(
-        divider => x"00000100",
-        clock_in => clock,
-        clock_out => clock_divided
+        clock => clock,
+        pc_en => pc_enable_int,
+        result => result
         );
- 
+
+    --general observing signals
+    pc_observe <= pc_value;    
+    instr_observe <= instr_mem_out;  
+    mem_we_observe <= data_mem_we;
+    alu_res_observe <= alu_res_out;
+    res_observe <= result;
+    regfile_we_observe <= dest_reg_we_ctrl;
+    data_mem_out_observe <= data_mem_out;
     
 
 end bh;
