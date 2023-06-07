@@ -15,7 +15,7 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity clock_divider is
-    Port ( divider   : IN std_logic_vector (31 downto 0);
+    Port ( divider   : IN integer;
            clock_in  : IN std_logic;
            clock_out : OUT std_logic);
 end clock_divider;
@@ -26,21 +26,21 @@ begin
 
     process(clock_in, divider)
     
-    variable int_val : std_logic_vector(31 downto 0) := x"00000000";
+    variable int_val : integer := 0;
     
     
     begin
     
-    if(int_val /= divider) then
+    if(int_val /= integer(divider)) then
     
-        int_val := std_logic_vector(unsigned(int_val) + 1);
+        int_val := int_val + 1;
         clock_out <='0';
     else 
     
-        int_val := x"00000000";
+        int_val := 0;
         clock_out <= '1';
         
-        report "---sending clock to following units now---" severity warning;
+        --report "---sending clock to following units now---" severity warning;
         
     end if;
     

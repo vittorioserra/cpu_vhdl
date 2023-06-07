@@ -34,6 +34,7 @@ architecture bh of processor_single_cycle_tb is
     signal alu_reg2_mux_observe  :  op2_select;                  
     signal alu_operand_2_observe :  std_logic_vector(xlen_range);   
     signal alu_operand_1_observe :  std_logic_vector(xlen_range);
+    signal reset                 : std_logic;
 
 
 begin
@@ -41,7 +42,7 @@ begin
     DUT : entity work.processor_single_cycle
 		port map (
 		clock => clock,
-		reset => '0',                           
+		reset => reset,                           
         pc_observe           => pc_observe           ,
         instr_observe        => instr_observe        ,
         mem_we_observe       => mem_we_observe       ,
@@ -63,7 +64,10 @@ begin
 	simuli : process
 	begin
 	
-	
+	reset <= '0';
+	wait for CLOCK_PERIOD/2;
+	reset <= '1';
+	wait for CLOCK_PERIOD/2;
 	
 	wait;
 	end process;

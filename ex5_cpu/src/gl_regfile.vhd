@@ -19,8 +19,9 @@ entity regfile is
     Port(
         clock, reset_n, rd_write_enable : IN std_logic;
         rs1_select, rs2_select, rd_select : IN std_logic_vector(get_bit_count(reg_count) - 1 downto 0);
-        rs1_value, rs2_value : OUT std_logic_vector(xlen_range);
-        rd_value : IN std_logic_vector(xlen_range));
+        rs1_value, rs2_value : OUT std_logic_vector(xlen_range) := (others => '0');
+        rd_value : IN std_logic_vector(xlen_range):= (others => '0') 
+        );
 end regfile;
 
 architecture bh of regfile is

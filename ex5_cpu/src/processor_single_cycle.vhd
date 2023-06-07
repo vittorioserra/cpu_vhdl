@@ -126,10 +126,10 @@ begin
 			mem_init_file => MEM_INIT_FILE)
         port map(
             clock => clock,
-            p1_enable => pc_enable_int, --modified from stable '1'
+            p1_enable => '1',-- pc_enable_int,
             p2_enable => '0',
             p2_write_enable => '0',            
-            p1_addr => pc_value(8 downto 0),
+            p1_addr => pc_value(10 downto 2),
             p2_addr => (8 downto 0 => '0'),
             p2_val_in => x"00000000",
             p1_val_out => instr_mem_out,
@@ -151,7 +151,7 @@ begin
         
     ALU : entity work.alu
         port map(
-            reset_n   => '1', --unused, pegged to '1'
+            reset_n   => reset, --unused, pegged to '1'
             clock     => clock,
             func      => alu_func_ctrl,
             op1       => rs1_regfile_out,
@@ -208,8 +208,8 @@ begin
      
      PROG_CTR : entity work.program_counter
         port map(
-            clock => clock,--clock_divided,
-            enable=> pc_enable_int,--'1', 
+            clock => clock_divided, --clock,
+            enable=> '1',--pc_enable_int, 
             reset_n=> '1',
             load => jump_enable,
 		    load_value => jump_out,
@@ -229,24 +229,24 @@ begin
                         
             opcode => instr_mem_out(6 downto 0),
             funct3_field => instr_mem_out(14 downto 12),
-            funct7b5_field => instr_mem_out(20),
+            funct7b5_field => instr_mem_out(30),
             funct7_field => instr_mem_out(31 downto 25),
             zero_flag_from_alu => zero_flag_out -- added for consistency, as of now, quite useless
         );
         
-     --CLK_DIVIDER : entity work.clock_divider
-     --   port map(
-     --   divider => x"00000100",
-     --   clock_in => clock,
-     --   clock_out => clock_divided
-     --   );
-        
-     CLK_HOLDER : entity work.clock_hold_em
+     CLK_DIVIDER : entity work.clock_divider
         port map(
-        clock => clock,
-        pc_en => pc_enable_int,
-        result => result
+        divider => 8,
+        clock_in => clock,
+        clock_out => clock_divided
         );
+        
+--     CLK_HOLDER : entity work.clock_hold_em
+--        port map(
+--        clock => clock,
+--        pc_en => pc_enable_int,
+--        result => result
+--        );
 
     --general observing signals
     pc_observe <= pc_value;    

@@ -18,7 +18,7 @@ entity alu is
         reset_n : IN std_logic;
         clock: IN std_logic;
         func : IN alu_func;
-        op1, op2 : IN std_logic_vector(xlen_range);
+        op1, op2 : IN std_logic_vector(xlen_range) := (others => '0');
         res : OUT std_logic_vector(xlen_range);
         zero_flag : OUT std_logic);
 end alu;
