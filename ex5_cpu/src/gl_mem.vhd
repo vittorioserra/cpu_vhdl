@@ -18,8 +18,8 @@ entity mem is
     Generic(
         port_width : positive := 32;
         block_count : positive := 512;
-        project_path : string := "/home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/test_code/";
-        mem_init_file : string := "test_code.o");
+        project_path : string := "";
+        mem_init_file : string := "");
     Port(
         clock : IN std_logic;
         p1_enable, p2_enable, p2_write_enable : IN std_logic;

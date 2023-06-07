@@ -20,7 +20,12 @@ entity processor_single_cycle is
         instr_observe   : OUT std_logic_vector(xlen_range);
         mem_we_observe,  regfile_we_observe   : OUT std_logic;
         alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
-        res_observe     : OUT std_logic_vector(xlen_range)
+        res_observe           : OUT std_logic_vector(xlen_range);
+        pc_enable_observe     : OUT std_logic;
+        alu_op_observe        : OUT alu_func;
+        alu_reg2_mux_observe  : OUT op2_select;
+        alu_operand_2_observe : OUT std_logic_vector(xlen_range);
+        alu_operand_1_observe : OUT std_logic_vector(xlen_range)
         );
 end processor_single_cycle;
 
@@ -28,6 +33,9 @@ architecture bh of processor_single_cycle is
 
 --constants
 constant CLOCK_PERIOD : time := 10 ns;
+constant PORT_WIDTH : positive := 32;
+constant BLOCK_COUNT : positive := 512;
+constant MEM_INIT_FILE : string := "/home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/test_code/test_code.o";
 --signals
 
 --general signals
@@ -44,7 +52,7 @@ constant CLOCK_PERIOD : time := 10 ns;
     --reset_n, pegged to '1' as not used in design for now
     signal dest_reg_we_ctrl : std_logic;
     --register_select(s) --> carved out from instr_mem_out
-    signal result : std_logic_vector(xlen_range);
+    signal result : std_logic_vector(xlen_range) := x"a5a5a5a5" ;
 --outgoing
     signal rs1_regfile_out : std_logic_vector(xlen_range);
     signal rs2_regfile_out : std_logic_vector(xlen_range);
@@ -112,9 +120,13 @@ constant CLOCK_PERIOD : time := 10 ns;
 begin 
 
     INSTR_MEM : entity work.mem
+     generic map(
+			port_width => PORT_WIDTH,
+			block_count => BLOCK_COUNT,
+			mem_init_file => MEM_INIT_FILE)
         port map(
             clock => clock,
-            p1_enable => '1',
+            p1_enable => pc_enable_int, --modified from stable '1'
             p2_enable => '0',
             p2_write_enable => '0',            
             p1_addr => pc_value(8 downto 0),
@@ -198,7 +210,7 @@ begin
         port map(
             clock => clock,--clock_divided,
             enable=> pc_enable_int,--'1', 
-            reset_n=> '0',
+            reset_n=> '1',
             load => jump_enable,
 		    load_value => jump_out,
 		    pc_value => pc_value,
@@ -240,10 +252,19 @@ begin
     pc_observe <= pc_value;    
     instr_observe <= instr_mem_out;  
     mem_we_observe <= data_mem_we;
+    
+    --alu debug section
     alu_res_observe <= alu_res_out;
+    alu_op_observe  <= alu_func_ctrl;
+    alu_reg2_mux_observe <= alu_regb_sel;
+    alu_operand_2_observe <= op2_mux_out;
+    alu_operand_1_observe <= rs1_regfile_out;
+    
+    
     res_observe <= result;
     regfile_we_observe <= dest_reg_we_ctrl;
     data_mem_out_observe <= data_mem_out;
+    pc_enable_observe <= pc_enable_int;
     
 
 end bh;

@@ -20,7 +20,7 @@ entity program_counter is
 end program_counter;
 
 architecture bh of program_counter is
-	signal pc_reg : std_logic_vector(pc_width - 1 downto 0);
+	signal pc_reg : std_logic_vector(pc_width - 1 downto 0) := x"00000000";
 begin
 	pc_value <= pc_reg;
 	pc_value_next <= std_logic_vector(unsigned(pc_reg)  + 4);

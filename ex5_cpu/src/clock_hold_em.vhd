@@ -22,7 +22,10 @@ end clock_hold_em;
 
 architecture bh of clock_hold_em is
 
-signal old_result : std_logic_vector(xlen_range) := ( others => '0');
+constant CLOCK_PERIOD : time := 10 ns;
+
+
+signal old_result : std_logic_vector(xlen_range) := ( others => '1');
 
 begin
 
@@ -30,15 +33,15 @@ process(clock, result)
 begin
 
     if(rising_edge(clock)) then
-        
+              
         if(old_result = result) then
         
-            old_result <= result;
-            pc_en <= '1';
+            pc_en <= '0';                    
         
         else
         
-            pc_en <= '0';
+            old_result <= result;
+            pc_en <= '1';    
         
         end if;
         

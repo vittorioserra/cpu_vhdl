@@ -29,6 +29,12 @@ architecture bh of processor_single_cycle_tb is
     signal alu_res_observe      : std_logic_vector(xlen_range);
     signal data_mem_out_observe : std_logic_vector(xlen_range);
     signal res_observe          : std_logic_vector(xlen_range);
+    signal pc_enable_observe    : std_logic;
+    signal alu_op_observe        :  alu_func;                    
+    signal alu_reg2_mux_observe  :  op2_select;                  
+    signal alu_operand_2_observe :  std_logic_vector(xlen_range);   
+    signal alu_operand_1_observe :  std_logic_vector(xlen_range);
+
 
 begin
 
@@ -42,8 +48,9 @@ begin
         regfile_we_observe   => regfile_we_observe   ,
         alu_res_observe      => alu_res_observe      ,
         data_mem_out_observe => data_mem_out_observe ,
-        res_observe          => res_observe          
-		);
+        res_observe          => res_observe          ,
+        pc_enable_observe    => pc_enable_observe	
+        );
 		
    	gen_clk : process
 	begin
