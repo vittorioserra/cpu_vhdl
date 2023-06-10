@@ -16,24 +16,24 @@ use work.rv32i_defs.ALL;
 entity processor_single_cycle is
     port(
         clock, reset    : IN std_logic;
-        pc_observe      : OUT std_logic_vector(xlen_range);
-        instr_observe   : OUT std_logic_vector(xlen_range);
-        opcode_observe  : OUT std_logic_vector(6 downto 0);
-        funct3_observe  : OUT std_logic_vector(2 downto 0);
-        funct7_observe  : OUT std_logic_vector(6 downto 0);
-        mem_we_observe,  regfile_we_observe   : OUT std_logic;
-        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
-        res_observe           : OUT std_logic_vector(xlen_range);
-        pc_enable_observe     : OUT std_logic;
-        alu_op_observe        : OUT alu_func;
-        alu_reg2_mux_observe  : OUT op2_select;
-        alu_operand_2_observe : OUT std_logic_vector(xlen_range);
-        alu_operand_1_observe : OUT std_logic_vector(xlen_range);
-        result_select_mux_observe : OUT result_ctrl;
-        pc_jmp_en_observe     : OUT std_logic;
-        ext_unit_out_observe  : OUT std_logic_vector(xlen_range);
-        pc_load_observe       : OUT std_logic_vector(xlen_range);
-        regfile_rs2_observe   : OUT std_logic_vector(xlen_range)
+--        pc_observe      : OUT std_logic_vector(xlen_range);
+--        instr_observe   : OUT std_logic_vector(xlen_range);
+--        opcode_observe  : OUT std_logic_vector(6 downto 0);
+--        funct3_observe  : OUT std_logic_vector(2 downto 0);
+--        funct7_observe  : OUT std_logic_vector(6 downto 0);
+--        mem_we_observe,  regfile_we_observe   : OUT std_logic;
+--        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
+        res_observe           : OUT std_logic_vector(xlen_range)
+--        pc_enable_observe     : OUT std_logic;
+--        alu_op_observe        : OUT alu_func;
+--        alu_reg2_mux_observe  : OUT op2_select;
+--        alu_operand_2_observe : OUT std_logic_vector(xlen_range);
+--        alu_operand_1_observe : OUT std_logic_vector(xlen_range);
+--        result_select_mux_observe : OUT result_ctrl;
+--        pc_jmp_en_observe     : OUT std_logic;
+--        ext_unit_out_observe  : OUT std_logic_vector(xlen_range);
+--        pc_load_observe       : OUT std_logic_vector(xlen_range);
+--        regfile_rs2_observe   : OUT std_logic_vector(xlen_range)
         );
 end processor_single_cycle;
 
@@ -258,36 +258,36 @@ begin
         );
 
     --general observing signals
-    pc_observe <= pc_value;    
-    instr_observe <= instr_mem_out;  
-    mem_we_observe <= data_mem_we;
+--    pc_observe <= pc_value;    
+--    instr_observe <= instr_mem_out;  
+--    mem_we_observe <= data_mem_we;
     
-    --contol unit
-    opcode_observe <= instr_mem_out(6 downto 0);
-    funct3_observe <= instr_mem_out(14 downto 12);
-    funct7_observe <= instr_mem_out(31 downto 25); 
-    result_select_mux_observe <= result_select_mux;
-    pc_jmp_en_observe <= jump_enable;
+--    --contol unit
+--    opcode_observe <= instr_mem_out(6 downto 0);
+--    funct3_observe <= instr_mem_out(14 downto 12);
+--    funct7_observe <= instr_mem_out(31 downto 25); 
+--    result_select_mux_observe <= result_select_mux;
+--    pc_jmp_en_observe <= jump_enable;
     
-    --extension unit
-    ext_unit_out_observe  <= extended_unit_out;
+--    --extension unit
+--    ext_unit_out_observe  <= extended_unit_out;
     
-    --pc
-    pc_load_observe <= jump_out;
+--    --pc
+--    pc_load_observe <= jump_out;
     
-    --alu debug section
-    alu_res_observe <= alu_res_out;
-    alu_op_observe  <= alu_func_ctrl;
-    alu_reg2_mux_observe <= alu_regb_sel;
-    alu_operand_2_observe <= op2_mux_out;
-    alu_operand_1_observe <= rs1_regfile_out;
+--    --alu debug section
+--    alu_res_observe <= alu_res_out;
+--    alu_op_observe  <= alu_func_ctrl;
+--    alu_reg2_mux_observe <= alu_regb_sel;
+--    alu_operand_2_observe <= op2_mux_out;
+--    alu_operand_1_observe <= rs1_regfile_out;
     
     
     res_observe <= result;
-    regfile_we_observe <= dest_reg_we_ctrl;
-    data_mem_out_observe <= data_mem_out;
-    pc_enable_observe <= pc_enable_int;
-    regfile_rs2_observe <= rs2_regfile_out;
+--    regfile_we_observe <= dest_reg_we_ctrl;
+--    data_mem_out_observe <= data_mem_out;
+--    pc_enable_observe <= pc_enable_int;
+--    regfile_rs2_observe <= rs2_regfile_out;
 
     
 
