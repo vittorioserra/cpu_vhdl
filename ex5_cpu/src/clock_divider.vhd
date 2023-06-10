@@ -34,7 +34,9 @@ begin
     if(rising_edge(clock_in) and int_val /= integer(divider)) then
         int_val <= int_val + 1;
         clock_out <='0';
-    else 
+    end if;    
+    
+    --else 
         if(rising_edge(clock_in) and int_val = integer(divider)) then
     
             int_val <= 0;
@@ -43,7 +45,7 @@ begin
             end if;
         --report "---sending clock to following units now---" severity warning;
         
-    end if;
+    --end if;
     
     end process;
 

@@ -42,6 +42,8 @@ architecture bh of processor_single_cycle_tb is
     signal pc_jmp_en_observe     : std_logic;
     signal ext_unit_out_observe  : std_logic_vector(xlen_range);
     signal pc_load_observe       : std_logic_vector(xlen_range);
+    signal regfile_rs2_observe   : std_logic_vector(xlen_range);
+
 
 
 begin
@@ -68,7 +70,9 @@ begin
         result_select_mux_observe => result_select_mux_observe,
         pc_jmp_en_observe => pc_jmp_en_observe,
         ext_unit_out_observe => ext_unit_out_observe,
-        pc_load_observe => pc_load_observe
+        pc_load_observe => pc_load_observe,
+        regfile_rs2_observe => regfile_rs2_observe
+
 
         );
 		

@@ -31,9 +31,9 @@ entity processor_single_cycle is
         alu_operand_1_observe : OUT std_logic_vector(xlen_range);
         result_select_mux_observe : OUT result_ctrl;
         pc_jmp_en_observe     : OUT std_logic;
-        ext_unit_out_observe      : OUT std_logic_vector(xlen_range);
-        pc_load_observe           : OUT std_logic_vector(xlen_range)
-
+        ext_unit_out_observe  : OUT std_logic_vector(xlen_range);
+        pc_load_observe       : OUT std_logic_vector(xlen_range);
+        regfile_rs2_observe   : OUT std_logic_vector(xlen_range)
         );
 end processor_single_cycle;
 
@@ -174,7 +174,7 @@ begin
             p1_enable => '0',
             p2_enable => '1',
             p2_write_enable => data_mem_we,            
-            p1_addr    => (8 downto 0 => '0'),
+            p1_addr    => "000000000",
             p2_addr    => alu_res_out(8 downto 0),
             p2_val_in  => rs2_regfile_out,
             p1_val_out => open,
@@ -287,6 +287,8 @@ begin
     regfile_we_observe <= dest_reg_we_ctrl;
     data_mem_out_observe <= data_mem_out;
     pc_enable_observe <= pc_enable_int;
+    regfile_rs2_observe <= rs2_regfile_out;
+
     
 
 end bh;
