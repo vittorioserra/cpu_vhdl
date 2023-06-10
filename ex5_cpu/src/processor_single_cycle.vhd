@@ -18,6 +18,9 @@ entity processor_single_cycle is
         clock, reset    : IN std_logic;
         pc_observe      : OUT std_logic_vector(xlen_range);
         instr_observe   : OUT std_logic_vector(xlen_range);
+        opcode_observe  : OUT std_logic_vector(6 downto 0);
+        funct3_observe  : OUT std_logic_vector(2 downto 0);
+        funct7_observe  : OUT std_logic_vector(6 downto 0);
         mem_we_observe,  regfile_we_observe   : OUT std_logic;
         alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
         res_observe           : OUT std_logic_vector(xlen_range);
@@ -25,7 +28,12 @@ entity processor_single_cycle is
         alu_op_observe        : OUT alu_func;
         alu_reg2_mux_observe  : OUT op2_select;
         alu_operand_2_observe : OUT std_logic_vector(xlen_range);
-        alu_operand_1_observe : OUT std_logic_vector(xlen_range)
+        alu_operand_1_observe : OUT std_logic_vector(xlen_range);
+        result_select_mux_observe : OUT result_ctrl;
+        pc_jmp_en_observe     : OUT std_logic;
+        ext_unit_out_observe      : OUT std_logic_vector(xlen_range);
+        pc_load_observe           : OUT std_logic_vector(xlen_range)
+
         );
 end processor_single_cycle;
 
@@ -151,7 +159,7 @@ begin
         
     ALU : entity work.alu
         port map(
-            reset_n   => reset, --unused, pegged to '1'
+            reset_n   => not(reset), --unused, pegged to '1'
             clock     => clock,
             func      => alu_func_ctrl,
             op1       => rs1_regfile_out,
@@ -208,9 +216,9 @@ begin
      
      PROG_CTR : entity work.program_counter
         port map(
-            clock => clock_divided, --clock,
-            enable=> '1',--pc_enable_int, 
-            reset_n=> '1',
+            clock => clock, --clock,
+            enable=> pc_enable_int, --'1'
+            reset_n=> not(reset), --'1'
             load => jump_enable,
 		    load_value => jump_out,
 		    pc_value => pc_value,
@@ -229,17 +237,11 @@ begin
                         
             opcode => instr_mem_out(6 downto 0),
             funct3_field => instr_mem_out(14 downto 12),
-            funct7b5_field => instr_mem_out(30),
+            funct7b5_field => open,
             funct7_field => instr_mem_out(31 downto 25),
-            zero_flag_from_alu => zero_flag_out -- added for consistency, as of now, quite useless
+            zero_flag_from_alu => '0'--zero_flag_out -- added for consistency, as of now, quite useless
         );
         
-     CLK_DIVIDER : entity work.clock_divider
-        port map(
-        divider => 8,
-        clock_in => clock,
-        clock_out => clock_divided
-        );
         
 --     CLK_HOLDER : entity work.clock_hold_em
 --        port map(
@@ -248,10 +250,30 @@ begin
 --        result => result
 --        );
 
+    CLK_DIVIDER : entity work.clock_divider
+        port map(
+            divider   => integer(8),
+            clock_in  =>clock,
+            clock_out =>pc_enable_int
+        );
+
     --general observing signals
     pc_observe <= pc_value;    
     instr_observe <= instr_mem_out;  
     mem_we_observe <= data_mem_we;
+    
+    --contol unit
+    opcode_observe <= instr_mem_out(6 downto 0);
+    funct3_observe <= instr_mem_out(14 downto 12);
+    funct7_observe <= instr_mem_out(31 downto 25); 
+    result_select_mux_observe <= result_select_mux;
+    pc_jmp_en_observe <= jump_enable;
+    
+    --extension unit
+    ext_unit_out_observe  <= extended_unit_out;
+    
+    --pc
+    pc_load_observe <= jump_out;
     
     --alu debug section
     alu_res_observe <= alu_res_out;

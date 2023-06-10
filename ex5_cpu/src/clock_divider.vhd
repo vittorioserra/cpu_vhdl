@@ -22,24 +22,25 @@ end clock_divider;
 
 architecture bh of clock_divider is
 
+signal int_val: integer:=1;
+
+
 begin
 
     process(clock_in, divider)
-    
-    variable int_val : integer := 0;
-    
-    
+        
     begin
     
-    if(int_val /= integer(divider)) then
-    
-        int_val := int_val + 1;
+    if(rising_edge(clock_in) and int_val /= integer(divider)) then
+        int_val <= int_val + 1;
         clock_out <='0';
     else 
+        if(rising_edge(clock_in) and int_val = integer(divider)) then
     
-        int_val := 0;
-        clock_out <= '1';
-        
+            int_val <= 0;
+            clock_out <= '1';
+            
+            end if;
         --report "---sending clock to following units now---" severity warning;
         
     end if;

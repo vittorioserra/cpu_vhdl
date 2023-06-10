@@ -28,7 +28,7 @@ entity ctrl_u_v2 is
         opcode : IN std_logic_vector(oplen_range);
         funct3_field : IN std_logic_vector(funct3_range);
         funct7_field : In std_logic_vector(6 downto 0);
-        funct7b5_field : IN std_logic;
+        funct7b5_field : IN std_logic := '0';
         zero_flag_from_alu : IN std_logic -- added for consistency, as of now, quite useless
         );
 end ctrl_u_v2;
@@ -48,6 +48,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -58,6 +60,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -68,6 +72,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -78,6 +84,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -88,6 +96,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -98,6 +108,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -108,6 +120,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -118,6 +132,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -128,6 +144,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -138,6 +156,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -152,6 +172,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -163,6 +185,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     --srai (special handling of bit 30, which is '1')
@@ -173,6 +197,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -186,6 +212,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -197,6 +225,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -208,6 +238,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -219,6 +251,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
         
@@ -230,6 +264,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -241,6 +277,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '1';
         result_out_mux_sel <= alu_res;
+        
+        pc_jmp_en <= '0';
     
     end if;
     
@@ -255,6 +293,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
         regfile_wen <= '1'; --the regfile writing is enabled
         result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        
+        pc_jmp_en <= '0';
     
     end if;
     --lbu --> need mask
@@ -272,6 +312,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '0';
         data_mem_we <= '1';
+        
+        pc_jmp_en <= '0';
     
     end if;
     

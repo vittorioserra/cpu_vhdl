@@ -35,6 +35,13 @@ architecture bh of processor_single_cycle_tb is
     signal alu_operand_2_observe :  std_logic_vector(xlen_range);   
     signal alu_operand_1_observe :  std_logic_vector(xlen_range);
     signal reset                 : std_logic;
+    signal opcode_observe        : std_logic_vector(6 downto 0);
+    signal funct3_observe        : std_logic_vector(2 downto 0);
+    signal funct7_observe        : std_logic_vector(6 downto 0);
+    signal result_select_mux_observe : result_ctrl;
+    signal pc_jmp_en_observe     : std_logic;
+    signal ext_unit_out_observe  : std_logic_vector(xlen_range);
+    signal pc_load_observe       : std_logic_vector(xlen_range);
 
 
 begin
@@ -50,7 +57,19 @@ begin
         alu_res_observe      => alu_res_observe      ,
         data_mem_out_observe => data_mem_out_observe ,
         res_observe          => res_observe          ,
-        pc_enable_observe    => pc_enable_observe	
+        pc_enable_observe    => pc_enable_observe	 ,
+        opcode_observe       => opcode_observe       ,
+        funct3_observe =>       funct3_observe,
+        funct7_observe =>       funct7_observe,
+        alu_op_observe => alu_op_observe,
+        alu_reg2_mux_observe => alu_reg2_mux_observe,
+        alu_operand_2_observe => alu_operand_2_observe,
+        alu_operand_1_observe => alu_operand_1_observe,
+        result_select_mux_observe => result_select_mux_observe,
+        pc_jmp_en_observe => pc_jmp_en_observe,
+        ext_unit_out_observe => ext_unit_out_observe,
+        pc_load_observe => pc_load_observe
+
         );
 		
    	gen_clk : process
@@ -64,9 +83,9 @@ begin
 	simuli : process
 	begin
 	
-	reset <= '0';
-	wait for CLOCK_PERIOD/2;
 	reset <= '1';
+	wait for CLOCK_PERIOD/2;
+	reset <= '0';
 	wait for CLOCK_PERIOD/2;
 	
 	wait;
