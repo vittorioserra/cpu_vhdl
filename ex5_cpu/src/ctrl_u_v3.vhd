@@ -669,6 +669,88 @@ process(instr)  --main decoder program
     
     end if;
     
+    
+    -- LASCIATE OGNI SPERANZA VOI CHE ENTRATE --
+    -- FROM HERE ONWARDS IT IS A WORK IN PROGRESS--
+    --the following section is just a placeholder, unudeful for now
+    
+    --fence instructions
+    --fence
+    if(instr(31 downto 28) = "0000" and instr(19 downto 0) = "00000000000000001111")then 
+    
+        --operation ordering
+    
+    end if;
+    --fence.i
+    if(instr = "00000000000000000001000000001111") then
+    
+        --sync writes between instr-mem and instruction fetches
+    
+    end if;
+    
+    --e instructions --we do not have a supporting execution environment for now
+    --all i type
+    --ecall
+     if(instr = "00000000000000000000000001110011") then 
+     
+     --TODO : generate environment call
+     
+     end if;
+     
+    --ebreak
+    if(instr = "00000000000100000000000001110011") then
+    
+    --TODO : transfer control back to debugging environment
+    
+    end if;
+    
+    --csr instructions -- we do not have csr registers for now
+    --all i type
+    --csrrw
+    if(opcode = "1110011" and funct3_field = "001") then
+    
+        --move value of crs in rd, and value of rs1 to csr
+    
+    end if;
+    
+    --csrrs
+    if(opcode = "1110011" and funct3_field = "010") then
+    
+        --write value of csr to rd.  value at csr is bitwise csr | rs1
+    
+    end if;
+    
+    --csrrc
+    if(opcode = "1110011" and funct3_field = "011") then
+    
+        --write value of csr to rd. clear bits in crs according to following bit-wise operation : 
+        --csr & ~rs1
+    
+    end if;
+    
+    --csrrwi
+    if(opcode = "1110011" and funct3_field = "101") then
+    
+        --write value of csr to rd. value in csr is ZeroExt of Uimm
+    
+    end if;
+    
+    --csrrsi
+    if(opcode = "1110011" and funct3_field = "110") then
+    
+        --move value of csr to rd. set value in csr according to the following bit-wise expression : 
+        --csr=csr| ZeroExt(uimm)
+    
+    end if;
+    
+    --csrrci
+    if(opcode = "1110011" and funct3_field="111") then
+    
+        --move value of csr in rd. clear bits in crs according to following bit-wise operation : 
+        --csr & ZeroExt(uimm)
+    
+    end if;
+    
 end process;
 
 
