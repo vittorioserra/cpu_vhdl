@@ -13,7 +13,7 @@ library work;
 use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
-entity ctrl_u_v2 is
+entity ctrl_u_v3 is
     Port(
         pc_jmp_en : OUT std_logic;
         data_mem_we : OUT std_logic;
@@ -22,23 +22,34 @@ entity ctrl_u_v2 is
         extension_unit_ctrl : OUT extension_control_type;
         regfile_wen : OUT std_logic;
         result_out_mux_sel : OUT result_ctrl;
+        jmp_src_sel : OUT jump_reg_sel;
+        data_mem_qty : OUT mem_qty;
+        s_ext_mode : OUT mem_res_sgn_ext;
         
         jump : buffer std_logic;
         
-        opcode : IN std_logic_vector(oplen_range);
-        funct3_field : IN std_logic_vector(funct3_range);
-        funct7_field : In std_logic_vector(6 downto 0);
-        funct7b5_field : IN std_logic := '0';
-        zero_flag_from_alu : IN std_logic -- added for consistency, as of now, quite useless
-        );
-end ctrl_u_v2;
+        instr : IN std_logic_vector(xlen_range);
+        cmp_flag_from_alu : IN std_logic
 
-architecture bh of ctrl_u_v2 is
-    
+        );
+end ctrl_u_v3;
+
+architecture bh of ctrl_u_v3 is 
+   
 begin
 
-process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main decoder program
+process(instr)  --main decoder program
 
+    variable opcode             :  std_logic_vector(oplen_range);
+    variable funct3_field       :  std_logic_vector(funct3_range);
+    variable funct7_field       :  std_logic_vector(6 downto 0);
+    
+    begin
+    
+    opcode := opcode_carve_out(instr);
+    funct3_field := funct3_carve_out(instr);
+    funct7_field := funct7_carve_out(instr);
+    
     --all r type instructions
     
     --add
@@ -51,6 +62,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
 
     
     end if;
@@ -65,6 +77,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -78,6 +91,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -91,6 +105,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -104,6 +119,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -117,6 +133,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -130,6 +147,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -143,6 +161,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -156,6 +175,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -169,6 +189,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -186,6 +207,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -200,6 +222,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     --srai (special handling of bit 30, which is '1')
@@ -213,6 +236,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -229,6 +253,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -243,6 +268,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -257,6 +283,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -271,6 +298,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
         
@@ -285,6 +313,7 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -299,18 +328,19 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
     --loading from memory
-    --lb --> need mask
-    if(opcode = "0000011" and funct3_field = "000") then
-        
+    --lb
+    if(opcode = "0000011" and funct3_field = "000") then  
         --TODO : 
         -- 1 : Calculate alignment offset
         -- 2 : apply mask to sign extension unit
         
-        -- 1 : calculate aligment offset
+        -- 1 : calculate aligment offset --> (done by mem)
+        -- 2 : telling memory to go into "byte-mode"
         
         
         alu_ctrl <= func_add; --add the immediate
@@ -318,14 +348,33 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
         regfile_wen <= '1'; --the regfile writing is enabled
         result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= byte;
+        s_ext_mode <= sext;        
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
-    
+        jmp_src_sel <= select_pc;
         
     end if;
     
-    --lh --> need mask
+    --lh
+    if (opcode = "0000011" and funct3_field = "001") then
+    
+        alu_ctrl <= func_add; --add the immediate
+        extension_unit_ctrl <= i_type; --extend, normal here
+        alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
+        regfile_wen <= '1'; --the regfile writing is enabled
+        result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= half;
+        s_ext_mode <= sext;        
+        
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
+    
+    end if;
+    
     --lw
     if(opcode = "0000011" and funct3_field = "010") then
     
@@ -334,18 +383,98 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
         regfile_wen <= '1'; --the regfile writing is enabled
         result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= word;        
+        s_ext_mode <= sext;
         
         pc_jmp_en <= '0';
         data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
-    --lbu --> need mask
-    --lhu --> need mask
-    --jalr --> not implemented for now
+    
+    --lbu
+    if(opcode = "0000011" and funct3_field = "100") then  
+        --TODO : 
+        -- 1 : Calculate alignment offset
+        -- 2 : apply mask to sign extension unit
+        
+        -- 1 : calculate aligment offset --> (done by mem)
+        -- 2 : telling memory to go into "byte-mode"
+        
+        
+        alu_ctrl <= func_add; --add the immediate
+        extension_unit_ctrl <= i_type; --extend, normal here
+        alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
+        regfile_wen <= '1'; --the regfile writing is enabled
+        result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= byte;        
+        s_ext_mode <= uext;
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
+        
+    end if;
+    --lhu
+    if(opcode = "0000011" and funct3_field = "100") then  
+        --TODO : 
+        -- 1 : Calculate alignment offset
+        -- 2 : apply mask to sign extension unit
+        
+        -- 1 : calculate aligment offset --> (done by mem)
+        -- 2 : telling memory to go into "byte-mode"
+        
+        
+        alu_ctrl <= func_add; --add the immediate
+        extension_unit_ctrl <= i_type; --extend, normal here
+        alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
+        regfile_wen <= '1'; --the regfile writing is enabled
+        result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= half;
+        s_ext_mode <= uext;        
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '0';
+        jmp_src_sel <= select_pc;
+        
+    end if;
     
     --s type instructions
-    --sb --> needs mask
-    --sh --> needs mask
+    --sb
+    if(opcode = "0100011" and funct3_field = "000") then
+    
+        alu_ctrl <= func_add; --add the immediate
+        extension_unit_ctrl <= i_type; --extend, normal here
+        alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
+        regfile_wen <= '1'; --the regfile writing is enabled
+        result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= byte;
+        s_ext_mode <= uext; -- trick it this way
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '1';
+        jmp_src_sel <= select_pc;
+    
+    end if;
+    
+    --sh
+        if(opcode = "0100011" and funct3_field = "001") then
+    
+        alu_ctrl <= func_add; --add the immediate
+        extension_unit_ctrl <= i_type; --extend, normal here
+        alu_op2_mux_sel <= select_imm; --the immediate extended goes into the ali
+        regfile_wen <= '1'; --the regfile writing is enabled
+        result_out_mux_sel <= data_mem; --the result comes from the mem, the address is the result of the alu
+        data_mem_qty <= half;
+        s_ext_mode <= uext; -- trick it this way
+
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '1';
+        jmp_src_sel <= select_pc;
+    
+    end if;
+    
     --sw
     if(opcode = "0100011" and funct3_field = "010") then
     
@@ -354,8 +483,11 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_imm;
         regfile_wen <= '0';
         data_mem_we <= '1';
+        s_ext_mode <= uext; -- trick it this way
+
         
         pc_jmp_en <= '0';
+        jmp_src_sel <= select_pc;
     
     end if;
     
@@ -368,8 +500,9 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         data_mem_we <= '0';
         regfile_wen <= '0';
+        jmp_src_sel <= select_pc;
         
-        if(zero_flag_from_alu = '1') then
+        if(cmp_flag_from_alu = '1') then
             pc_jmp_en <= '1';
         else
             pc_jmp_en <= '0';
@@ -386,8 +519,9 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         alu_op2_mux_sel <= select_rs2;
         data_mem_we <= '0';
         regfile_wen <= '0';
+        jmp_src_sel <= select_pc;
         
-        if(zero_flag_from_alu = '0') then
+        if(cmp_flag_from_alu = '0') then
             pc_jmp_en <= '1';
         else
             pc_jmp_en <= '0';
@@ -396,10 +530,83 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
         
     end if;
     
-    --blt -->need last bit from alu flag
-    --bge -->need last bit from alu flag
-    --bltu -->need last bit from alu flag
-    --bgeu -->need last bit from alu flag
+    --blt
+    if(opcode ="1100011" and funct3_field = "100")then
+        
+        alu_ctrl <= func_slts;
+        extension_unit_ctrl <=  b_type;
+        alu_op2_mux_sel <= select_rs2;
+        data_mem_we <= '0';
+        regfile_wen <= '0';
+        jmp_src_sel <= select_pc;
+        
+        if(cmp_flag_from_alu = '1') then
+            pc_jmp_en <= '1';
+        else
+            pc_jmp_en <= '0';
+            
+        end if; 
+        
+    end if;
+    
+    --bge
+    if(opcode ="1100011" and funct3_field = "101")then
+        
+        alu_ctrl <= func_slts;
+        extension_unit_ctrl <=  b_type;
+        alu_op2_mux_sel <= select_rs2;
+        data_mem_we <= '0';
+        regfile_wen <= '0';
+        jmp_src_sel <= select_pc;
+
+        
+        if(cmp_flag_from_alu = '0') then
+            pc_jmp_en <= '1';
+        else
+            pc_jmp_en <= '0';
+            
+        end if; 
+        
+    end if;
+    
+    --bltu 
+    if(opcode ="1100011" and funct3_field = "110")then
+        
+        alu_ctrl <= func_sltu;
+        extension_unit_ctrl <=  b_type;
+        alu_op2_mux_sel <= select_rs2;
+        data_mem_we <= '0';
+        regfile_wen <= '0';
+        jmp_src_sel <= select_pc;
+
+        
+        if(cmp_flag_from_alu = '1') then
+            pc_jmp_en <= '1';
+        else
+            pc_jmp_en <= '0';
+            
+        end if; 
+        
+    end if;
+    --bgeu
+    if(opcode ="1100011" and funct3_field = "111")then
+        
+        alu_ctrl <= func_sltu;
+        extension_unit_ctrl <=  b_type;
+        alu_op2_mux_sel <= select_rs2;
+        data_mem_we <= '0';
+        regfile_wen <= '0';
+        jmp_src_sel <= select_pc;
+
+        
+        if(cmp_flag_from_alu = '0') then
+            pc_jmp_en <= '1';
+        else
+            pc_jmp_en <= '0';
+            
+        end if; 
+        
+    end if;
     
     --j type
     --jal
@@ -407,6 +614,8 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
     
         extension_unit_ctrl <= j_type;
         result_out_mux_sel <= prog_ctr_up;
+        jmp_src_sel <= select_pc;
+
         data_mem_we <= '0';
         regfile_wen <= '1';
         pc_jmp_en <= '1';
@@ -414,8 +623,51 @@ process(opcode, funct7_field, funct3_field, zero_flag_from_alu) begin --main dec
             
     end if;
     
-    --u type instructions are missing as of now
+    --jalr
+    if(opcode = "1100111" and funct3_field = "000") then
     
+        extension_unit_ctrl <= j_type;
+        result_out_mux_sel <= prog_ctr_up;
+        regfile_wen <= '1';
+        pc_jmp_en <= '1';
+        
+        --missing way to route alu_res to pc
+        jmp_src_sel <= select_rs1;
+        
+        data_mem_we <= '0';
+        alu_op2_mux_sel <= select_rs2;
+
+            
+    end if;
+    
+    --u type instructions
+    --lui
+    if(opcode = "0110111") then 
+    
+        extension_unit_ctrl <= u_type;
+        result_out_mux_sel <= immediate;
+        regfile_wen <= '1';
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '0';
+        alu_op2_mux_sel <= select_rs2;
+        jmp_src_sel <= select_rs1;   
+    
+    end if;
+    
+    --aiupc
+    if(opcode = "0010111") then 
+    
+        extension_unit_ctrl <= u_type;
+        result_out_mux_sel <= prog_ctr_up;
+        regfile_wen <= '1';
+        
+        pc_jmp_en <= '0';
+        data_mem_we <= '0';
+        alu_op2_mux_sel <= select_rs2;
+        jmp_src_sel <= select_pc;   
+    
+    end if;
     
 end process;
 

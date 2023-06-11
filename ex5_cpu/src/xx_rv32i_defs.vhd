@@ -77,6 +77,10 @@ package rv32i_defs is
     type op2_select is (
         select_rs2,         -- op2 is rs2 --0
         select_imm);        -- op2 is immediate value --1
+        
+    type jump_reg_sel is (
+        select_rs1,         -- op2 is rs1 --0
+        select_pc);         -- op2 is pc
 
     type jump_base_select is (
         select_rs1,         -- jump base is rs1
@@ -94,20 +98,40 @@ package rv32i_defs is
         b_type,             --b type instruction --10
         s_type,             --s type instruction --01
         j_type,             --j type instruction --11
+        u_type,             --u type instruction
         complement          -- this is equal to "--"
         );
+    
+    type mem_alignment is (
+        upper_byte, 
+        medium_upper_byte,
+        medium_lower_byte,
+        lower_byte    
+    );
+    
+    type mem_qty is (
+        byte, 
+        half,
+        word  
+    );
+    
+    type mem_res_sgn_ext is(
+        sext,
+        uext
+    );
         
-     type result_ctrl is(
+    type result_ctrl is(
         alu_res,    --00
         data_mem,   --01
-        prog_ctr_up --10
+        prog_ctr_up,--10
+        immediate
     );
     
     type internal_alu_op is (
         immediate_add,     --00
         immediate_sub,     --01
         decode_from_funct3 -- others
-        );
+    );
     
 end rv32i_defs;
 
