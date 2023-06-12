@@ -307,6 +307,4 @@ begin
     pc_enable_observe <= pc_enable_int;
     regfile_rs2_observe <= rs2_regfile_out;
 
-    
-
 end bh;

@@ -484,6 +484,7 @@ process(instr)  --main decoder program
         regfile_wen <= '0';
         data_mem_we <= '1';
         s_ext_mode <= uext; -- trick it this way
+        data_mem_qty <= word;
 
         
         pc_jmp_en <= '0';
