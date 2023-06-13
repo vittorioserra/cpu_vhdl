@@ -173,14 +173,14 @@ set_property PACKAGE_PIN Y9 [get_ports {clock}];  # "GCLK"
 # ----------------------------------------------------------------------------
 # User LEDs - Bank 33
 # ---------------------------------------------------------------------------- 
-set_property PACKAGE_PIN T22 [get_ports {led[0]}];  # "LD0"
-set_property PACKAGE_PIN T21 [get_ports {led[1]}];  # "LD1"
-set_property PACKAGE_PIN U22 [get_ports {led[2]}];  # "LD2"
-set_property PACKAGE_PIN U21 [get_ports {led[3]}];  # "LD3"
-set_property PACKAGE_PIN V22 [get_ports {led[4]}];  # "LD4"
-set_property PACKAGE_PIN W22 [get_ports {led[5]}];  # "LD5"
-set_property PACKAGE_PIN U19 [get_ports {led[6]}];  # "LD6"
-set_property PACKAGE_PIN U14 [get_ports {led[7]}];  # "LD7"
+set_property PACKAGE_PIN T22 [get_ports {leds_out[0]}];  # "LD0"
+set_property PACKAGE_PIN T21 [get_ports {leds_out[1]}];  # "LD1"
+set_property PACKAGE_PIN U22 [get_ports {leds_out[2]}];  # "LD2"
+set_property PACKAGE_PIN U21 [get_ports {leds_out[3]}];  # "LD3"
+set_property PACKAGE_PIN V22 [get_ports {leds_out[4]}];  # "LD4"
+set_property PACKAGE_PIN W22 [get_ports {leds_out[5]}];  # "LD5"
+set_property PACKAGE_PIN U19 [get_ports {leds_out[6]}];  # "LD6"
+set_property PACKAGE_PIN U14 [get_ports {leds_out[7]}];  # "LD7"
 
 # ----------------------------------------------------------------------------
 # VGA Output - Bank 33
@@ -203,11 +203,11 @@ set_property PACKAGE_PIN U14 [get_ports {led[7]}];  # "LD7"
 # ----------------------------------------------------------------------------
 # User Push Buttons - Bank 34
 # ---------------------------------------------------------------------------- 
-set_property PACKAGE_PIN P16 [get_ports {btn_c}];  # "BTNC"
-set_property PACKAGE_PIN R16 [get_ports {btn_d}];  # "BTND"
-set_property PACKAGE_PIN N15 [get_ports {btn_l}];  # "BTNL"
-set_property PACKAGE_PIN R18 [get_ports {btn_r}];  # "BTNR"
-set_property PACKAGE_PIN T18 [get_ports {btn_u}];  # "BTNU"
+#set_property PACKAGE_PIN P16 [get_ports {btn_c}];  # "BTNC"
+#set_property PACKAGE_PIN R16 [get_ports {btn_d}];  # "BTND"
+#set_property PACKAGE_PIN N15 [get_ports {btn_l}];  # "BTNL"
+#set_property PACKAGE_PIN R18 [get_ports {btn_r}];  # "BTNR"
+#set_property PACKAGE_PIN T18 [get_ports {btn_u}];  # "BTNU"
 
 # ----------------------------------------------------------------------------
 # USB OTG Reset - Bank 34
@@ -235,14 +235,14 @@ set_property PACKAGE_PIN T18 [get_ports {btn_u}];  # "BTNU"
 # ----------------------------------------------------------------------------
 # User DIP Switches - Bank 35
 # ---------------------------------------------------------------------------- 
-set_property PACKAGE_PIN F22 [get_ports {switch[0]}];  # "SW0"
-set_property PACKAGE_PIN G22 [get_ports {switch[1]}];  # "SW1"
-set_property PACKAGE_PIN H22 [get_ports {switch[2]}];  # "SW2"
-set_property PACKAGE_PIN F21 [get_ports {switch[3]}];  # "SW3"
-set_property PACKAGE_PIN H19 [get_ports {switch[4]}];  # "SW4"
-set_property PACKAGE_PIN H18 [get_ports {switch[5]}];  # "SW5"
-set_property PACKAGE_PIN H17 [get_ports {switch[6]}];  # "SW6"
-set_property PACKAGE_PIN M15 [get_ports {switch[7]}];  # "SW7"
+#set_property PACKAGE_PIN F22 [get_ports {switch[0]}];  # "SW0"
+#set_property PACKAGE_PIN G22 [get_ports {switch[1]}];  # "SW1"
+#set_property PACKAGE_PIN H22 [get_ports {switch[2]}];  # "SW2"
+#set_property PACKAGE_PIN F21 [get_ports {switch[3]}];  # "SW3"
+#set_property PACKAGE_PIN H19 [get_ports {switch[4]}];  # "SW4"
+#set_property PACKAGE_PIN H18 [get_ports {switch[5]}];  # "SW5"
+#set_property PACKAGE_PIN H17 [get_ports {switch[6]}];  # "SW6"
+#set_property PACKAGE_PIN M15 [get_ports {switch[7]}];  # "SW7"
 
 # ----------------------------------------------------------------------------
 # XADC AD Channels - Bank 35

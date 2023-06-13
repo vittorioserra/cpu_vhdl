@@ -83,10 +83,19 @@ architecture bh of mem is
         file_close(file_handler);
         return ret;
     end function;
-    shared variable mem_block : mem_block_t := file2mem(mem_init_file);
-begin
+    shared variable mem_block : mem_block_t := file2mem(mem_init_file);    
+
+begin    
+
     PORT1 : process(clock)
     begin
+    
+    mem_block(0) := x"00100513";
+    mem_block(1) := x"00d51593";
+    mem_block(2) := x"00700113";
+    mem_block(3) := x"0025a023";
+    mem_block(4) := x"ff1ff06f";
+    
         if (rising_edge(clock) and p1_enable = '1') then
             p1_val_out <= mem_block(vec2ui(p1_addr));
         end if;
@@ -94,6 +103,9 @@ begin
 
     PORT2 : process(clock)
     begin
+    
+    
+    
         if (rising_edge(clock) and p2_enable = '1') then
             if (p2_write_enable = '1') then
                 mem_block(vec2ui(p2_addr)) := p2_val_in;

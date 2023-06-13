@@ -15,16 +15,17 @@ use work.rv32i_defs.ALL;
 
 entity mem_map_io_driver is
     Generic(
-        leds_mem_pos   : positive := 8192;
-        leds_mem_range : positive := 4
+        leds_mem_pos   : unsigned := x"2000";
+        leds_mem_range : unsigned := x"4"
     );
 
     Port (
-        data_qty    : IN mem_qty;
-        is_s_type   : IN std_logic;
-        address     : IN std_logic_vector(xlen_range);
+        data_qty               : IN mem_qty;
+        is_s_type              : IN extension_control_type;
+        address                : IN std_logic_vector(xlen_range);
+        data_in                : IN std_logic_vector(xlen_range);
         
-        leds_output : OUT std_logic_vector(7 downto 0);
+        leds_output            : OUT std_logic_vector(7 downto 0);
         inhibition_data_mem_we : OUT std_logic
     );
 end mem_map_io_driver;
@@ -33,19 +34,21 @@ architecture bh of mem_map_io_driver is
 
 begin
 
-process(is_s_type, address, data_qty) is 
+process(is_s_type, address, data_qty, data_in) is 
 
 begin
 
-    if(is_s_type = '1') then
+    if(is_s_type = s_type) then
     
-    if(unsigned(address) >= unsigned(leds_mem_pos) and unsigned(address) >= unsigned(leds_mem_pos + leds_mem_range)) then 
-            inhibition_data_mem_we <= '1';
-            --TODO also write to LEDs
-    end if;       
+        if(unsigned(address) >= unsigned(leds_mem_pos) and unsigned(address) < unsigned(leds_mem_pos + leds_mem_range)) then 
+                inhibition_data_mem_we <= '1'; 
+                leds_output(7 downto 0) <= data_in(7 downto 0);
+        end if;       
     
     else
+        
         inhibition_data_mem_we <= '0';
+        
     end if;
 
 end process;
