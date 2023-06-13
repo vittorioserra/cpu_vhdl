@@ -27,6 +27,9 @@ process(input_to_extend, select_extension) begin
     --I type
     when i_type =>
         extended_output<=(31 downto 12 => input_to_extend(31)) & input_to_extend(31 downto 20);
+    -- i type immediate shift
+    when i_type_shift =>
+        extended_output <= (31 downto 5 => '0') & input_to_extend(24 downto 20);
     --S architecture
     when s_type =>
         extended_output<=(31 downto 12 => input_to_extend(31)) & input_to_extend(31 downto 25) & input_to_extend(11 downto 7);
@@ -36,6 +39,8 @@ process(input_to_extend, select_extension) begin
     --J type
     when j_type =>
         extended_output<=(31 downto 20 => input_to_extend(31))& input_to_extend(19 downto 12) & input_to_extend(20) & input_to_extend(30 downto 21) & '0';
+    when u_type =>
+        extended_output<=input_to_extend(31 downto 12) & (11 downto 0 => '0');
     when others =>
         extended_output<=(31 downto 0 => '-');
     end case;
