@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
--- Company: FAU Erlangen - Nuernberg
--- Engineer: Vittorio Serra and Cedric Donges
+-- Company:     FAU Erlangen - Nuernberg
+-- Engineer:    Vittorio Serra and Cedric Donges
 --
 -- Description: alu_v2 for RISC-V 32I
 --              More optimal resource utilization by reusing logic.
