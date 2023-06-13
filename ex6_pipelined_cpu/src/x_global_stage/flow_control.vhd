@@ -1,0 +1,15 @@
+----------------------------------------------------------------------------------
+-- Company: FAU Erlangen - Nuernberg
+-- Engineer: Cedric Donges and Vittorio Serra
+--
+-- Description: Stalls or flush the pipeline if needed.
+----------------------------------------------------------------------------------
+
+-- TODO
+-- IN: ready from fetch, ex and mem stage
+-- IN: jump_enable from ex stage
+-- OUT: en to all five stages
+-- DISABLING any stage should not change its outputs or the ready flag
+-- FLUSH: disable ex, mem and wb. advance one cycle.
+--        then force-clear the jump_enable (if not, an interlock occurs)
+--        probably with an reg which holds the last state of jump_enable.

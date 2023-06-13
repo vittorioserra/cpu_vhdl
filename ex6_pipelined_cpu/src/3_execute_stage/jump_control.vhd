@@ -1,0 +1,11 @@
+----------------------------------------------------------------------------------
+-- Company: FAU Erlangen - Nuernberg
+-- Engineer: Cedric Donges and Vittorio Serra
+--
+-- Description: Calculates Jump/Branch targets and enables the jump if condition is met.
+----------------------------------------------------------------------------------
+
+-- TODO
+-- IN: clock, enable
+-- IN: jump_base, jump_offset, jump_control_type, jump_condition
+-- OUT: jump_target, jump_enable
