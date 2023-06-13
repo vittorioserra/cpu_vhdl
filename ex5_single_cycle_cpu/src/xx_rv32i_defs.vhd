@@ -14,9 +14,9 @@ use work.utils.ALL;
 
 package rv32i_defs is
     constant xlen : positive := 32;                                         -- 32
-    constant xlen_addr_width : positive := get_bit_count(xlen / 8);         -- 2
+    constant xlen_subaddr_width : positive := get_bit_count(xlen / 8);         -- 2
     subtype xlen_range is natural range xlen - 1 downto 0;                  -- 31 downto 0
-    subtype addr_range is natural range xlen - 1 downto xlen_addr_width;    -- 31 downto 2
+    subtype addr_range is natural range xlen - 1 downto xlen_subaddr_width;    -- 31 downto 2
     subtype pc_range is natural range xlen - 1 downto 1;                    -- 31 downto 1
     subtype instr_range is natural range 31 downto 0;                       -- 32 bits for instructions
     subtype reg_range is natural range 4 downto 0;                          -- 5 bits for register select
