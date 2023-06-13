@@ -13,11 +13,11 @@ library work;
 use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
-entity alu_v2_tb is
+entity alu_tb is
     Generic(PROJECT_PATH : string);
-end alu_v2_tb;
+end alu_tb;
 
-architecture tb of alu_v2_tb is
+architecture tb of alu_tb is
     constant CLOCK_PERIOD : time := 10 ns;
 
     signal clock: std_logic;
@@ -28,7 +28,7 @@ architecture tb of alu_v2_tb is
     signal res : std_logic_vector(xlen_range);
 begin
 
-    DUT : entity work.alu_v2
+    DUT : entity work.alu
         port map(
 			clock => clock,
 			enable => enable,
