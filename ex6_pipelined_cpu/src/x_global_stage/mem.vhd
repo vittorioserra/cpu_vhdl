@@ -4,7 +4,7 @@
 --
 -- Description: Dual port Memory for CPU, sync read port for instr, sync rw port for data
 --              Memory can be initalized with file content.
---              The bytes of the block that will be written are selectable.
+--              The data bytes of the block that will be written are selectable.
 ----------------------------------------------------------------------------------
 
 -- TODO we can buildin a shadow-rom which holds the contents of the init-file
