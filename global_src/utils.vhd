@@ -20,17 +20,14 @@ package utils is
     function bool2vec(value : boolean; width : positive) return std_logic_vector;
     function ends_with(haystack : string; needle : string) return boolean;
     function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean;
-<<<<<<< HEAD
     function sel(selector : boolean; res_true, res_false : std_logic_vector) return std_logic_vector;
     function sel(selector : boolean; res_true, res_false : std_logic) return std_logic;
     function sel(selector : boolean; res_true, res_false : integer) return integer;
-=======
     function opcode_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
     function funct3_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
     function funct7_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
     --function align_in_word(address : std_logic_vector(31 downto 0)) return mem_alignment;
     --function mem_mask(alignment : mem_alignment; qty mem_read_qty; data_word : std_logic_vector(31 downto 0)) return std_logic_vector; 
->>>>>>> bukkake_single_cycle
 end package utils;
 
 package body utils is
@@ -78,7 +75,6 @@ package body utils is
     begin
         return addr(addr'high downto addr'high - chip_addr'length + 1) = chip_addr;
     end function;
-<<<<<<< HEAD
     function sel(selector : boolean; res_true, res_false : std_logic_vector) return std_logic_vector is
     begin
         if (selector) then
@@ -103,7 +99,6 @@ package body utils is
             return res_false;
         end if;
     end function;
-=======
     
     --control unit instructions
     
@@ -149,5 +144,4 @@ package body utils is
 --    return mem_align;
 --    end function;
  
->>>>>>> bukkake_single_cycle
 end package body utils;
