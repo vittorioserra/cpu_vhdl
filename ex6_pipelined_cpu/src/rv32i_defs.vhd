@@ -59,16 +59,16 @@ package rv32i_defs is
         func_srl,   -- Shift right logically
         func_sra);  -- Shift right arithmetically
         
-    type mem_ctrl is (
-        none,           -- do nothing
-        mem_write_w,    -- write Word                = 32 bits
-        mem_write_h,    -- write half Word           = 16 bits
-        mem_write_b,    -- write Byte                =  8 bits
+    type mem_mode_type is (
+        passthrough,    -- data_out = data_in
         mem_read_w,     -- read Word                 = 32 bits
         mem_read_hs,    -- read half Word (signed)   = 16 bits
         mem_read_hu,    -- read half Word (unsigned) = 16 bits
         mem_read_bs,    -- read Byte (signed)        =  8 bits
-        mem_read_bu);   -- read Byte (unsigned)      =  8 bits
+        mem_read_bu     -- read Byte (unsigned)      =  8 bits
+        mem_write_w,    -- write Word                = 32 bits
+        mem_write_h,    -- write half Word           = 16 bits
+        mem_write_b);   -- write Byte                =  8 bits
 
     type op1_select is (
         select_rs1,         -- op1 is rs1
@@ -83,7 +83,7 @@ package rv32i_defs is
         select_rs1,         -- jump base is rs1
         select_pc_now);     -- jump base is pc of the instr
         
-    type jump_control_type is (
+    type jump_mode_type is (
         jump_none,          -- dont jump
         jump_branch,        -- jump if condition is true
         jump_branch_n,      -- jump if condition is false
