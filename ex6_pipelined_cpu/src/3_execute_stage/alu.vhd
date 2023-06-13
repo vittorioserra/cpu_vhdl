@@ -2,7 +2,7 @@
 -- Company:     FAU Erlangen - Nuernberg
 -- Engineer:    Vittorio Serra and Cedric Donges
 --
--- Description: alu_v2 for RISC-V 32I
+-- Description: alu for RISC-V 32I
 --              More optimal resource utilization by reusing logic.
 ----------------------------------------------------------------------------------
 
@@ -14,15 +14,15 @@ library work;
 use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
-entity alu_v2 is
+entity alu is
     Port(
         clock, reset_n, enable : IN std_logic;
         func : IN alu_func;
         op1, op2 : IN std_logic_vector(xlen_range);
         res : OUT std_logic_vector(xlen_range));
-end alu_v2;
+end alu;
 
-architecture bh of alu_v2 is
+architecture bh of alu is
     type unit_select is (arithmetic, shift, logic);
     type op_reg_t is array (unit_select) of std_logic_vector(xlen_range);
     type func_reg_t is array (unit_select) of alu_func;

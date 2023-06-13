@@ -3,9 +3,9 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="alu_v2_tb_behav.wdb" id="1">
+      <db_ref path="alu_tb_behav.wdb" id="1">
          <top_modules>
-            <top_module name="alu_v2_tb" />
+            <top_module name="alu_tb" />
             <top_module name="rv32i_defs" />
             <top_module name="utils" />
          </top_modules>
@@ -21,45 +21,45 @@
       <ValueColumnWidth column_width="81"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="10" />
-   <wvobject type="logic" fp_name="/alu_v2_tb/clock">
+   <wvobject type="logic" fp_name="/alu_tb/clock">
       <obj_property name="ElementShortName">clock</obj_property>
       <obj_property name="ObjectShortName">clock</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/alu_v2_tb/reset_n">
+   <wvobject type="logic" fp_name="/alu_tb/reset_n">
       <obj_property name="ElementShortName">reset_n</obj_property>
       <obj_property name="ObjectShortName">reset_n</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/alu_v2_tb/enable">
+   <wvobject type="logic" fp_name="/alu_tb/enable">
       <obj_property name="ElementShortName">enable</obj_property>
       <obj_property name="ObjectShortName">enable</obj_property>
    </wvobject>
-   <wvobject type="other" fp_name="/alu_v2_tb/func">
+   <wvobject type="other" fp_name="/alu_tb/func">
       <obj_property name="ElementShortName">func</obj_property>
       <obj_property name="ObjectShortName">func</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/alu_v2_tb/op1">
+   <wvobject type="array" fp_name="/alu_tb/op1">
       <obj_property name="ElementShortName">op1[31:0]</obj_property>
       <obj_property name="ObjectShortName">op1[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/alu_v2_tb/op2">
+   <wvobject type="array" fp_name="/alu_tb/op2">
       <obj_property name="ElementShortName">op2[31:0]</obj_property>
       <obj_property name="ObjectShortName">op2[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/alu_v2_tb/res">
+   <wvobject type="array" fp_name="/alu_tb/res">
       <obj_property name="ElementShortName">res[31:0]</obj_property>
       <obj_property name="ObjectShortName">res[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/alu_v2_tb/op1">
+   <wvobject type="array" fp_name="/alu_tb/op1">
       <obj_property name="ElementShortName">op1[31:0]</obj_property>
       <obj_property name="ObjectShortName">op1[31:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/alu_v2_tb/op2">
+   <wvobject type="array" fp_name="/alu_tb/op2">
       <obj_property name="ElementShortName">op2[31:0]</obj_property>
       <obj_property name="ObjectShortName">op2[31:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/alu_v2_tb/res">
+   <wvobject type="array" fp_name="/alu_tb/res">
       <obj_property name="ElementShortName">res[31:0]</obj_property>
       <obj_property name="ObjectShortName">res[31:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
