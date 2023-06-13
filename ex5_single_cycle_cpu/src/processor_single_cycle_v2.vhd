@@ -14,6 +14,9 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity processor_single_cycle_v2 is
+    generic(
+        PROJECT_PATH : string
+        );
     port(
         clock, reset    : IN std_logic;
         pc_observe      : OUT std_logic_vector(xlen_range);
@@ -43,7 +46,7 @@ architecture bh of processor_single_cycle_v2 is
 constant CLOCK_PERIOD : time := 10 ns;
 constant PORT_WIDTH : positive := 32;
 constant BLOCK_COUNT : positive := 512;
-constant MEM_INIT_FILE : string := "/home/rzlin/ko92vuzu/cpu_vhdl/ex5_cpu/src/test_code/test_code.o";
+constant MEM_INIT_FILE : string := "../src/test_code/test_code.o";
 --signals
 
 --general signals
@@ -139,6 +142,7 @@ begin
      generic map(
 			port_width => PORT_WIDTH,
 			block_count => BLOCK_COUNT,
+			project_path => PROJECT_PATH,
 			mem_init_file => MEM_INIT_FILE)
         port map(
             clock => clock,
