@@ -6,6 +6,8 @@
 --              Selects read and written data byte, half or wordwise.
 ----------------------------------------------------------------------------------
 
+-- TODO support unaligned access
+--      add ready flag, remove misalign flag
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
