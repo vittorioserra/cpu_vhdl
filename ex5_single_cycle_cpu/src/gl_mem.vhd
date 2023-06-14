@@ -90,10 +90,10 @@ begin
     PORT1 : process(clock)
     begin
     
-    mem_block(0) := x"00100513";
-    mem_block(1) := x"00d51593";
-    mem_block(2) := x"00700113";
-    mem_block(3) := x"0025a023";
+    mem_block(0) := x"00700093";
+    mem_block(1) := x"00100513";
+    mem_block(2) := x"00d51593";
+    mem_block(3) := x"0015a023";
     mem_block(4) := x"ff1ff06f";
     
         if (rising_edge(clock) and p1_enable = '1') then

@@ -28,7 +28,7 @@ package utils is
     function funct7_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
     --function align_in_word(address : std_logic_vector(31 downto 0)) return mem_alignment;
     --function mem_mask(alignment : mem_alignment; qty mem_read_qty; data_word : std_logic_vector(31 downto 0)) return std_logic_vector; 
-    function move_bits(src_vec : std_logic_vector; src_right : integer; length : integer; dst_right : integer; sign_ext : boolean) return std_logic_vector;
+--    function move_bits(src_vec : std_logic_vector; src_right : integer; length : integer; dst_right : integer; sign_ext : boolean) return std_logic_vector;
 end package utils;
 
 package body utils is
@@ -145,28 +145,28 @@ package body utils is
 --    return mem_align;
 --    end function;
 
-    function move_bits(src_vec : std_logic_vector; src_right : integer; length : integer; dst_right : integer; sign_ext : boolean)
-        return std_logic_vector is
-        variable dst_vec : std_logic_vector(xlen_range);
-        -- example
-        -- scr 3
-        -- dsr 2
-        -- len 3
-        -- sgn 1
-        -- src_vec 8 7 6 5 4 3 2 1
-        -- dst_vec 6 6 6 6 5 4 0 0
-        --       i 7 6 5 4 3 2 1 0
-    begin
-        for i in ret'range loop
-            if (i >= dst_right + length - 1) then
-                dst_vec(i) := src_vec(src_right + length - 1) when sign_ext else '0';
-            elsif (i >= dst_right) then
-                dst_vec(i) := src_vec(i - dst_right + src_right);
-            else
-                dst_vec(i) := '0';
-            end if;
-        end loop;
-        return dst_vec;
-    end function;
+--    function move_bits(src_vec : std_logic_vector; src_right : integer; length : integer; dst_right : integer; sign_ext : boolean)
+--        return std_logic_vector is
+--        variable dst_vec : std_logic_vector(xlen_range);
+--        -- example
+--        -- scr 3
+--        -- dsr 2
+--        -- len 3
+--        -- sgn 1
+--        -- src_vec 8 7 6 5 4 3 2 1
+--        -- dst_vec 6 6 6 6 5 4 0 0
+--        --       i 7 6 5 4 3 2 1 0
+--    begin
+--        for i in ret'range loop
+--            if (i >= dst_right + length - 1) then
+--                dst_vec(i) := src_vec(src_right + length - 1) when sign_ext else '0';
+--            elsif (i >= dst_right) then
+--                dst_vec(i) := src_vec(i - dst_right + src_right);
+--            else
+--                dst_vec(i) := '0';
+--            end if;
+--        end loop;
+--        return dst_vec;
+--    end function;
  
 end package body utils;

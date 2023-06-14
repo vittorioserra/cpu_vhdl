@@ -42,7 +42,7 @@ begin
         leds_output(7 downto 0) <= data_in(7 downto 0);
     else
         inhibition_data_mem_we <= '0';
-        leds_output(7 downto 0) <= (others => '0');
+        --leds_output(7 downto 0) <= (others => '0');
     end if;
 
 end process;
