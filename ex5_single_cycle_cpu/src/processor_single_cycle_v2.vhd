@@ -18,25 +18,30 @@ entity processor_single_cycle_v2 is
         PROJECT_PATH : string
         );
     port(
-        clock, reset    : IN std_logic;
-        pc_observe      : OUT std_logic_vector(xlen_range);
-        instr_observe   : OUT std_logic_vector(xlen_range);
-        opcode_observe  : OUT std_logic_vector(6 downto 0);
-        funct3_observe  : OUT std_logic_vector(2 downto 0);
-        funct7_observe  : OUT std_logic_vector(6 downto 0);
-        mem_we_observe,  regfile_we_observe   : OUT std_logic;
-        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
-        res_observe           : OUT std_logic_vector(xlen_range);
-        pc_enable_observe     : OUT std_logic;
-        alu_op_observe        : OUT alu_func;
-        alu_reg2_mux_observe  : OUT op2_select;
-        alu_operand_2_observe : OUT std_logic_vector(xlen_range);
-        alu_operand_1_observe : OUT std_logic_vector(xlen_range);
-        result_select_mux_observe : OUT result_ctrl;
-        pc_jmp_en_observe     : OUT std_logic;
-        ext_unit_out_observe  : OUT std_logic_vector(xlen_range);
-        pc_load_observe       : OUT std_logic_vector(xlen_range);
-        regfile_rs2_observe   : OUT std_logic_vector(xlen_range)
+        clock    : IN std_logic;
+--      reset    : IN std_logic;  
+--        pc_observe      : OUT std_logic_vector(xlen_range);
+--        instr_observe   : OUT std_logic_vector(xlen_range);
+--        opcode_observe  : OUT std_logic_vector(6 downto 0);
+--        funct3_observe  : OUT std_logic_vector(2 downto 0);
+--        funct7_observe  : OUT std_logic_vector(6 downto 0);
+--        mem_we_observe,  regfile_we_observe   : OUT std_logic;
+--        alu_res_observe, data_mem_out_observe : OUT std_logic_vector(xlen_range);
+--        res_observe           : OUT std_logic_vector(xlen_range);
+--        pc_enable_observe     : OUT std_logic;
+--        alu_op_observe        : OUT alu_func;
+--        alu_reg2_mux_observe  : OUT op2_select;
+--        alu_operand_2_observe : OUT std_logic_vector(xlen_range);
+--        alu_operand_1_observe : OUT std_logic_vector(xlen_range);
+--        result_select_mux_observe : OUT result_ctrl;
+--        pc_jmp_en_observe     : OUT std_logic;
+--        ext_unit_out_observe  : OUT std_logic_vector(xlen_range);
+--        pc_load_observe       : OUT std_logic_vector(xlen_range);
+--        regfile_rs2_observe   : OUT std_logic_vector(xlen_range);
+        
+        
+        --demo file
+        leds_out              : OUT std_logic_vector(7 downto 0)
         );
 end processor_single_cycle_v2;
 
@@ -46,7 +51,7 @@ architecture bh of processor_single_cycle_v2 is
 constant CLOCK_PERIOD : time := 10 ns;
 constant PORT_WIDTH : positive := 32;
 constant BLOCK_COUNT : positive := 512;
-constant MEM_INIT_FILE : string := "../src/test_code/test_code.o";
+constant MEM_INIT_FILE : string := "../src/test_code/test_code_leds_no_delay.o";
 --signals
 
 --general signals
@@ -121,6 +126,12 @@ constant MEM_INIT_FILE : string := "../src/test_code/test_code.o";
     signal data_mem_qty_int : mem_qty;
     signal s_ext_mode_int   : mem_res_sgn_ext;   
     
+--mem_map_io_ctrl
+    signal inhibition_data_mem_we_int : std_logic;
+    
+--synthesis
+    signal reset : std_logic := '0';
+    
 --signals for simulation purposes, mapped to a port
     --instr_mem_addr (pc)
     --instr_mem_out
@@ -184,7 +195,7 @@ begin
             clock      => clock,
             p1_enable  => '0',
             p2_enable  => '1',
-            p2_write_enable => data_mem_we,            
+            p2_write_enable => (data_mem_we and not(inhibition_data_mem_we_int)),            
             p1_addr    => "000000000",
             p2_addr    => alu_res_out(8 downto 0),
             p2_val_in  => rs2_regfile_out,
@@ -193,6 +204,19 @@ begin
             quantity   => data_mem_qty_int,
             s_ext_mode => s_ext_mode_int
         );
+        
+    MMAP_IO_CTRL : entity work.mem_map_io_driver
+        port map(
+        
+             data_qty => data_mem_qty_int,        
+             is_s_type => extension_selection, --using extension selection          
+             address => alu_res_out,       
+             data_in => rs2_regfile_out,
+                       
+             leds_output => leds_out, -- defined to port directly
+             inhibition_data_mem_we => inhibition_data_mem_we_int
+        
+        );        
 
     ALU_MUX : entity work.mux_alu_reg_b
         port map(
@@ -279,36 +303,36 @@ begin
             clock_out =>pc_enable_int
         );
 
-    --general observing signals
-    pc_observe <= pc_value;    
-    instr_observe <= instr_mem_out;  
-    mem_we_observe <= data_mem_we;
+--    --general observing signals
+--    pc_observe <= pc_value;    
+--    instr_observe <= instr_mem_out;  
+--    mem_we_observe <= data_mem_we;
     
---    --contol unit
-    opcode_observe <= instr_mem_out(6 downto 0);
-    funct3_observe <= instr_mem_out(14 downto 12);
-    funct7_observe <= instr_mem_out(31 downto 25); 
-    result_select_mux_observe <= result_select_mux;
-    pc_jmp_en_observe <= jump_enable;
+----    --contol unit
+--    opcode_observe <= instr_mem_out(6 downto 0);
+--    funct3_observe <= instr_mem_out(14 downto 12);
+--    funct7_observe <= instr_mem_out(31 downto 25); 
+--    result_select_mux_observe <= result_select_mux;
+--    pc_jmp_en_observe <= jump_enable;
     
---    --extension unit
-    ext_unit_out_observe  <= extended_unit_out;
+----    --extension unit
+--    ext_unit_out_observe  <= extended_unit_out;
     
---    --pc
-    pc_load_observe <= jump_out;
+----    --pc
+--    pc_load_observe <= jump_out;
     
---    --alu debug section
-    alu_res_observe <= alu_res_out;
-    alu_op_observe  <= alu_func_ctrl;
-    alu_reg2_mux_observe <= alu_regb_sel;
-    alu_operand_2_observe <= op2_mux_out;
-    alu_operand_1_observe <= rs1_regfile_out;
+----    --alu debug section
+--    alu_res_observe <= alu_res_out;
+--    alu_op_observe  <= alu_func_ctrl;
+--    alu_reg2_mux_observe <= alu_regb_sel;
+--    alu_operand_2_observe <= op2_mux_out;
+--    alu_operand_1_observe <= rs1_regfile_out;
     
     
-    res_observe <= result;
-    regfile_we_observe <= dest_reg_we_ctrl;
-    data_mem_out_observe <= data_mem_out;
-    pc_enable_observe <= pc_enable_int;
-    regfile_rs2_observe <= rs2_regfile_out;
+--    res_observe <= result;
+--    regfile_we_observe <= dest_reg_we_ctrl;
+--    data_mem_out_observe <= data_mem_out;
+--    pc_enable_observe <= pc_enable_int;
+--    regfile_rs2_observe <= rs2_regfile_out;
 
 end bh;
