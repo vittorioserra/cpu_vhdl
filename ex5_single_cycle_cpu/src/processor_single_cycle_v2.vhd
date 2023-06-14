@@ -41,7 +41,7 @@ entity processor_single_cycle_v2 is
         
         
         --demo file
-        leds_out              : OUT std_logic_vector(7 downto 0)
+        leds             : OUT std_logic_vector(7 downto 0)
         );
 end processor_single_cycle_v2;
 
@@ -213,7 +213,7 @@ begin
              address => alu_res_out,       
              data_in => rs2_regfile_out,
                        
-             leds_output => leds_out, -- defined to port directly
+             leds_output => leds, -- defined to port directly
              inhibition_data_mem_we => inhibition_data_mem_we_int
         
         );        
