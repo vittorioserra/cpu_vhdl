@@ -2,9 +2,9 @@
 -- Company: FAU Erlangen - Nuernberg
 -- Engineer: Cedric Donges and Vittorio Serra
 --
--- Description: Dual port Memory for CPU, sync read port for instr, sync rw port for data
+-- Description: Dual port Memory for CPU, sync read port for instr, sync read then write port for data
 --              Memory can be initalized with file content.
---              The data bytes of the block that will be written are selectable.
+--              The data bytes in a block, that will be written are selectable.
 ----------------------------------------------------------------------------------
 
 -- TODO we can buildin a shadow-rom which holds the contents of the init-file
