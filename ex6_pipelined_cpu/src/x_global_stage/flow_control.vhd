@@ -10,6 +10,7 @@
 -- IN: jump_enable from ex stage
 -- OUT: en to all five stages
 -- DISABLING any stage should not change its outputs or the ready flag
+--          CHECK IF THE ENABLE FLAG OF ALL STAGES BEHAVES CORRECTLY!!!
 -- FLUSH: disable ex, mem and wb. advance one cycle.
 --        then force-clear the jump_enable (if not, an interlock occurs)
 --        probably with an reg which holds the last state of jump_enable.
