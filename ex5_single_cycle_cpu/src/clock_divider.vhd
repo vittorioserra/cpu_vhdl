@@ -15,38 +15,25 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity clock_divider is
-    Port ( divider   : IN integer;
-           clock_in  : IN std_logic;
+    Generic (divider : IN integer);
+    Port ( clock_in : IN std_logic;
            clock_out : OUT std_logic);
 end clock_divider;
 
 architecture bh of clock_divider is
-
-signal int_val: integer:=1;
-
-
+    signal chain_int : std_logic_vector(0 to divider - 1) := (0 => '1', others => '0');
 begin
-
-    process(clock_in, divider)
-        
+    clock_out <= chain_int(chain_int'right);
+    process (clock_in, chain_int)
     begin
-    
-    if(rising_edge(clock_in) and int_val /= integer(divider)) then
-        int_val <= int_val + 1;
-        clock_out <='0';
-    end if;    
-    
-    --else 
-        if(rising_edge(clock_in) and int_val = integer(divider)) then
-    
-            int_val <= 0;
-            clock_out <= '1';
-            
-            end if;
-        --report "---sending clock to following units now---" severity warning;
-        
-    --end if;
-    
+        if (rising_edge(clock_in)) then
+            for i in chain_int'range loop
+                if (i = chain_int'right) then
+                    chain_int(0) <= chain_int(i);
+                else 
+                    chain_int(i + 1) <= chain_int(i);
+                end if; 
+            end loop;
+        end if;
     end process;
-
 end bh;

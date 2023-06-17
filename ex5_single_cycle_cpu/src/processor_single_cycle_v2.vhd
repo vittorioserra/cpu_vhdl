@@ -51,11 +51,14 @@ architecture bh of processor_single_cycle_v2 is
 constant CLOCK_PERIOD : time := 10 ns;
 constant PORT_WIDTH : positive := 32;
 constant BLOCK_COUNT : positive := 512;
-constant MEM_INIT_FILE : string := "../src/test_code/test_code_leds_no_delay.o";
+constant MEM_INIT_FILE : string := "../src/test_code/test_code_solid.hex";
 --signals
 
 --general signals
-
+    signal clk_int : std_logic;
+    --signal clk_vec_int : std_logic_vector(0 downto 0);
+    
+    signal leds_int : std_logic_vector(7 downto 0);
 --instr_mem
 --ingoing
     signal pc_value : std_logic_vector(xlen_range);
@@ -68,7 +71,7 @@ constant MEM_INIT_FILE : string := "../src/test_code/test_code_leds_no_delay.o";
     --reset_n, pegged to '1' as not used in design for now
     signal dest_reg_we_ctrl : std_logic;
     --register_select(s) --> carved out from instr_mem_out
-    signal result : std_logic_vector(xlen_range) := x"a5a5a5a5" ;
+    signal result : std_logic_vector(xlen_range);
 --outgoing
     signal rs1_regfile_out : std_logic_vector(xlen_range);
     signal rs2_regfile_out : std_logic_vector(xlen_range);
@@ -145,6 +148,7 @@ constant MEM_INIT_FILE : string := "../src/test_code/test_code_leds_no_delay.o";
 --    variable mem_we_observe, regfile_we_observe : std_logic;
 --    variable alu_res_observe, data_mem_out_observe : std_logic_vector(xlen_range);
 --    variable res_observe : std_logic_vector(xlen_range);
+
  
  
 begin 
@@ -156,7 +160,7 @@ begin
 			project_path => PROJECT_PATH,
 			mem_init_file => MEM_INIT_FILE)
         port map(
-            clock => clock,
+            clock => clk_int,
             p1_enable => '1',-- pc_enable_int,
             p2_enable => '0',
             p2_write_enable => '0',            
@@ -169,8 +173,8 @@ begin
 
     REGFILE : entity work.regfile
         port map(
-            clock => clock,
-            reset_n=> '1', --unused, pegged to '1'
+            clock => clk_int,
+            reset_n=> not(reset), --unused, pegged to '1'
             rd_write_enable => dest_reg_we_ctrl,
             rs1_select => instr_mem_out(19 downto 15),
             rs2_select => instr_mem_out(24 downto 20),
@@ -183,7 +187,7 @@ begin
     ALU : entity work.alu_v2
         port map(
             reset_n   => not(reset), --unused, pegged to '1'
-            clock     => clock,
+            clock     => clk_int,
             func      => alu_func_ctrl,
             op1       => rs1_regfile_out,
             op2       => op2_mux_out,
@@ -192,7 +196,7 @@ begin
      
      DATA_MEM : entity work.mem_v2
         port map(
-            clock      => clock,
+            clock      => clk_int,
             p1_enable  => '0',
             p2_enable  => '1',
             p2_write_enable => (data_mem_we and not(inhibition_data_mem_we_int)),            
@@ -212,15 +216,18 @@ begin
              is_s_type => extension_selection, --using extension selection          
              address => alu_res_out,       
              data_in => rs2_regfile_out,
+             clock => clk_int,
                        
-             leds_output => leds, -- defined to port directly
+             leds_output => leds_int,
              inhibition_data_mem_we => inhibition_data_mem_we_int
         
-        );        
+        );
+    leds <= leds_int;        
 
     ALU_MUX : entity work.mux_alu_reg_b
         port map(
             reg_selection => alu_regb_sel,
+            --clock => clk_int,
         
             rs2_in       => rs2_regfile_out,
             immediate_in => extended_unit_out,
@@ -262,7 +269,7 @@ begin
      
      PROG_CTR : entity work.program_counter
         port map(
-            clock => clock, --clock,
+            clock => clk_int, --clock,
             enable=> pc_enable_int, --'1'
             reset_n=> not(reset), --'1'
             load => jump_enable,
@@ -285,7 +292,8 @@ begin
             s_ext_mode => s_ext_mode_int,
                         
             instr => instr_mem_out,
-            cmp_flag_from_alu => alu_res_out(0)
+            cmp_flag_from_alu => alu_res_out(0),
+            clock => clk_int
         );
         
         
@@ -297,11 +305,88 @@ begin
 --        );
 
     CLK_DIVIDER : entity work.clock_divider
+        generic map(
+            divider => 8)
         port map(
-            divider   => integer(8),
-            clock_in  =>clock,
+            clock_in  =>clk_int,
             clock_out =>pc_enable_int
         );
+        
+        
+
+----data memory
+----ingoing 
+--    --clock, already there
+--    --p1_enable, pegged to 0, not used
+--    --p2_enable, pegged to 1, not used for now
+--    signal data_mem_we : std_logic; 
+-- --outgoing
+--    signal data_mem_out : std_logic_vector(xlen_range);
+    
+----alu reg_b mux
+----ingoing
+--    signal alu_regb_sel : op2_select;
+--    --rs2_regfile_out
+--    signal extended_unit_out : std_logic_vector(xlen_range);
+----outgoing
+--    --op2_muxed_out, already existing
+    
+----result_ctrl_mux
+----ingoing
+--    signal result_select_mux : result_ctrl;
+    
+----extension unit
+----ingoing
+--    signal extension_selection : extension_control_type;
+    
+----jump unit
+--    signal jump_out : std_logic_vector(xlen_range);
+    
+----jump unit mux
+--    signal jump_unit_mux_out_int : std_logic_vector(xlen_range);
+ 
+----pc
+--    signal jump_enable : std_logic;
+--    signal pc_next : std_logic_vector(xlen_range);
+--    signal clock_divided : std_logic;
+--    signal pc_enable_int : std_logic;
+    
+-- --control_unit
+--    signal jmp_src_sel_int  : jump_reg_sel;
+--    signal data_mem_qty_int : mem_qty;
+--    signal s_ext_mode_int   : mem_res_sgn_ext;   
+    
+----mem_map_io_ctrl
+--    signal inhibition_data_mem_we_int : std_logic;
+    
+----synthesis
+--    signal reset : std_logic := '0';
+        
+--     VIO   : entity work.vio_0
+--        port map(
+            
+--            clk => clock,
+--            probe_in0 => leds_int,
+--            probe_in1 => pc_value,
+--            probe_in2 => instr_mem_out,
+--            probe_in3 => alu_res_out,
+--            probe_in4 => extended_unit_out,
+--            probe_in5 => jump_out,
+--            probe_in6 => rs1_regfile_out,
+--            probe_in7 => op2_mux_out,
+--            --probe_in8 => dest_reg_we_ctrl, --std_logic
+--            probe_in8  => open,
+--            probe_in9 => result, --gen cpu result, std_logic_vector
+--            probe_in10 => rs2_regfile_out,
+            
+            
+                
+--            probe_out0 => clk_vec_int
+        
+--        );
+--     clk_int <= clk_vec_int(0);
+
+        clk_int <= clock;
 
 --    --general observing signals
 --    pc_observe <= pc_value;    

@@ -255,10 +255,11 @@ begin
 --        );
 
     CLK_DIVIDER : entity work.clock_divider
+        generic map(
+            divider => 8)
         port map(
-            divider   => integer(8),
-            clock_in  =>clock,
-            clock_out =>pc_enable_int
+            clock_in  => clock,
+            clock_out => pc_enable_int
         );
 
     --general observing signals

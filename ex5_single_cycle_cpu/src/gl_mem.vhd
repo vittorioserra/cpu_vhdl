@@ -47,7 +47,7 @@ architecture bh of mem is
         file_open(file_status, file_handler, project_path & filename, read_mode);
         if (file_status /= open_ok) then
             return ret;
-        elsif (ends_with(filename, ".o")) then
+        elsif (ends_with(filename, ".hex")) then
             for block_index in ret'low to ret'high loop
                 if endfile(file_handler) then
                     exit;
@@ -84,17 +84,19 @@ architecture bh of mem is
         return ret;
     end function;
     shared variable mem_block : mem_block_t := file2mem(mem_init_file);    
-
-begin    
-
-    PORT1 : process(clock)
+                                               
+begin                                          
+                                               
+                                               
+    
+    PORT1 : process(clock)                      
     begin
     
-    mem_block(0) := x"00700093";
-    mem_block(1) := x"00100513";
-    mem_block(2) := x"00d51593";
-    mem_block(3) := x"0015a023";
-    mem_block(4) := x"ff1ff06f";
+--    mem_block(0) := x"00700093";
+--    mem_block(1) := x"00100513";
+--    mem_block(2) := x"00d51593";
+--    mem_block(3) := x"0015a023";
+--    mem_block(4) := x"ff1ff06f";
     
         if (rising_edge(clock) and p1_enable = '1') then
             p1_val_out <= mem_block(vec2ui(p1_addr));
