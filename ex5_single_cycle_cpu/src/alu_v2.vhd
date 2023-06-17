@@ -17,6 +17,7 @@ entity alu_v2 is
     Port(
         reset_n : IN std_logic;
         clock: IN std_logic;
+        enable: IN std_logic;
         func : IN alu_func;
         op1, op2 : IN std_logic_vector(xlen_range) := (others => '0');
         res : OUT std_logic_vector(xlen_range);
@@ -37,7 +38,7 @@ begin
             op1_reg <= (others => (others => '0'));
             op2_reg <= (others => (others => '0'));
             func_reg <= func_add;
-        elsif (rising_edge(clock)) then
+        elsif (rising_edge(clock) and enable = '1') then
             op1_reg(alu_func'pos(func)) <= op1;
             op2_reg(alu_func'pos(func)) <= op2;
             func_reg <= func;

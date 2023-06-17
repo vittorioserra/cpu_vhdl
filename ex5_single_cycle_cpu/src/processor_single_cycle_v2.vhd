@@ -51,11 +51,13 @@ architecture bh of processor_single_cycle_v2 is
 constant CLOCK_PERIOD : time := 10 ns;
 constant PORT_WIDTH : positive := 32;
 constant BLOCK_COUNT : positive := 512;
-constant MEM_INIT_FILE : string := "../src/test_code/test_code_solid.hex";
+constant MEM_INIT_FILE : string := "../src/test_code/led_swap_wait.hex";
 --signals
 
 --general signals
     signal clk_int : std_logic;
+    signal alu_enable : std_logic;
+    signal regfile_we : std_logic;
     --signal clk_vec_int : std_logic_vector(0 downto 0);
     
     signal leds_int : std_logic_vector(7 downto 0);
@@ -175,7 +177,7 @@ begin
         port map(
             clock => clk_int,
             reset_n=> not(reset), --unused, pegged to '1'
-            rd_write_enable => dest_reg_we_ctrl,
+            rd_write_enable => (dest_reg_we_ctrl and regfile_we),
             rs1_select => instr_mem_out(19 downto 15),
             rs2_select => instr_mem_out(24 downto 20),
             rd_select  => instr_mem_out(11 downto  7),
@@ -187,6 +189,7 @@ begin
     ALU : entity work.alu_v2
         port map(
             reset_n   => not(reset), --unused, pegged to '1'
+            enable    => alu_enable,
             clock     => clk_int,
             func      => alu_func_ctrl,
             op1       => rs1_regfile_out,
@@ -211,7 +214,7 @@ begin
         
     MMAP_IO_CTRL : entity work.mem_map_io_driver
         port map(
-        
+             enable => regfile_we,
              data_qty => data_mem_qty_int,        
              is_s_type => extension_selection, --using extension selection          
              address => alu_res_out,       
@@ -308,8 +311,10 @@ begin
         generic map(
             divider => 8)
         port map(
-            clock_in  =>clk_int,
-            clock_out =>pc_enable_int
+            clock_in  => clk_int,
+            pc_ce_out => pc_enable_int,
+            alu_en_out => alu_enable,
+            regfile_we_out => regfile_we
         );
         
         

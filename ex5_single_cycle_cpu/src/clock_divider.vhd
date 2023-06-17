@@ -17,13 +17,17 @@ use work.rv32i_defs.ALL;
 entity clock_divider is
     Generic (divider : IN integer);
     Port ( clock_in : IN std_logic;
-           clock_out : OUT std_logic);
+           pc_ce_out : OUT std_logic;
+           alu_en_out : OUT std_logic;
+           regfile_we_out : OUT std_logic);
 end clock_divider;
 
 architecture bh of clock_divider is
     signal chain_int : std_logic_vector(0 to divider - 1) := (0 => '1', others => '0');
 begin
-    clock_out <= chain_int(chain_int'right);
+    pc_ce_out <= chain_int(chain_int'right);
+    alu_en_out <= chain_int(3);
+    regfile_we_out <= chain_int(6);
     process (clock_in, chain_int)
     begin
         if (rising_edge(clock_in)) then
