@@ -15,6 +15,7 @@ use work.rv32i_defs.ALL;
 
 entity ctrl_u_v3 is
     Port(
+        clock     : IN std_logic;
         pc_jmp_en : OUT std_logic;
         data_mem_we : OUT std_logic;
         alu_ctrl : OUT alu_func;
@@ -38,7 +39,7 @@ architecture bh of ctrl_u_v3 is
    
 begin
 
-process(instr)  --main decoder program
+process(instr, clock)  --main decoder program
 
     variable opcode             :  std_logic_vector(oplen_range);
     variable funct3_field       :  std_logic_vector(funct3_range);
@@ -46,9 +47,11 @@ process(instr)  --main decoder program
     
     begin
     
-    opcode := opcode_carve_out(instr);
-    funct3_field := funct3_carve_out(instr);
-    funct7_field := funct7_carve_out(instr);
+    if(rising_edge(clock)) then 
+    
+    opcode := instr(6 downto 0)
+    funct3_field := instr(14 downto 12);
+    funct7_field := instr(31 downto 25);
     
     --all r type instructions
     
@@ -749,6 +752,8 @@ process(instr)  --main decoder program
     
         --move value of csr in rd. clear bits in crs according to following bit-wise operation : 
         --csr & ZeroExt(uimm)
+    
+    end if;
     
     end if;
     

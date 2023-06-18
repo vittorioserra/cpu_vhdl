@@ -23,9 +23,6 @@ package utils is
     function sel(selector : boolean; res_true, res_false : std_logic_vector) return std_logic_vector;
     function sel(selector : boolean; res_true, res_false : std_logic) return std_logic;
     function sel(selector : boolean; res_true, res_false : integer) return integer;
-    function opcode_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
-    function funct3_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
-    function funct7_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector;
 end package utils;
 
 package body utils is
@@ -97,33 +94,5 @@ package body utils is
             return res_false;
         end if;
     end function;
-    
-    --control unit instructions
-    
-    function opcode_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector is 
-    variable op_outcarved : std_logic_vector(6 downto 0);
-    begin
-    
-    op_outcarved := opcode(6 downto 0);
-    
-    return op_outcarved;
-    end function;
-    
-    function funct3_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector is 
-    variable funct3_outcarved : std_logic_vector(2 downto 0);
-    begin
-    
-    funct3_outcarved := opcode(14 downto 12);
-    
-    return funct3_outcarved;
-    end function;
-    
-    function funct7_carve_out(opcode : std_logic_vector(31 downto 0)) return std_logic_vector is 
-    variable funct7_outcarved : std_logic_vector(31 downto 25);
-    begin
-    
-    funct7_outcarved := opcode(31 downto 25);
-    
-    return funct7_outcarved;
-    end function;
+ 
 end package body utils;

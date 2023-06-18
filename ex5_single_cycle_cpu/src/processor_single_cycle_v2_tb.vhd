@@ -14,7 +14,7 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity processor_single_cycle_v2_tb is
---  Port ( );
+    generic(PROJECT_PATH : string);
 end processor_single_cycle_v2_tb;
 
 architecture bh of processor_single_cycle_v2_tb is
@@ -44,11 +44,14 @@ architecture bh of processor_single_cycle_v2_tb is
 --    signal pc_load_observe       : std_logic_vector(xlen_range);
 --    signal regfile_rs2_observe   : std_logic_vector(xlen_range);
 
-    signal leds_out              : std_logic_vector(7 downto 0);
+    signal leds              : std_logic_vector(7 downto 0);
 
 begin
 
     DUT : entity work.processor_single_cycle_v2
+		generic map (
+			PROJECT_PATH => PROJECT_PATH
+		)
 		port map (
 		clock => clock,
 --		reset => reset,                           
@@ -73,7 +76,7 @@ begin
 --        pc_load_observe => pc_load_observe,
 --        regfile_rs2_observe => regfile_rs2_observe,
 
-        leds_out            => leds_out
+        leds            => leds
         );
 		
    	gen_clk : process

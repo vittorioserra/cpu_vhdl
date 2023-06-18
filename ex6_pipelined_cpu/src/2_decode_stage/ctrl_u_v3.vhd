@@ -46,9 +46,9 @@ process(instr)  --main decoder program
     
     begin
     
-    opcode := opcode_carve_out(instr);
-    funct3_field := funct3_carve_out(instr);
-    funct7_field := funct7_carve_out(instr);
+    opcode := instr(6 downto 0)
+    funct3_field := instr(14 downto 12);
+    funct7_field := instr(31 downto 25);
     
     --all r type instructions
     

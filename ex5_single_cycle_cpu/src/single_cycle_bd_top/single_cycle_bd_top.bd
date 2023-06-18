@@ -1,0 +1,39 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0x0",
+      "device": "xc7z020clg484-1",
+      "name": "single_cycle_bd_top",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2021.2"
+    },
+    "design_tree": {
+      "processor_single_cyc_0": ""
+    },
+    "components": {
+      "processor_single_cyc_0": {
+        "vlnv": "xilinx.com:module_ref:processor_single_cycle_v2:1.0",
+        "xci_name": "single_cycle_bd_top_processor_single_cyc_0_0",
+        "xci_path": "ip/single_cycle_bd_top_processor_single_cyc_0_0/single_cycle_bd_top_processor_single_cyc_0_0.xci",
+        "inst_hier_path": "processor_single_cyc_0",
+        "reference_info": {
+          "ref_type": "unknown",
+          "ref_name": "processor_single_cycle_v2",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clock": {
+            "type": "clk",
+            "direction": "I"
+          },
+          "leds": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          }
+        }
+      }
+    }
+  }
+}

@@ -17,6 +17,8 @@ entity mux_alu_reg_b is
     Port(
         reg_selection : IN op2_select;
         
+        --clock         : IN std_logic;
+        
         rs2_in : IN std_logic_vector(xlen_range);
         immediate_in : IN std_logic_vector(xlen_range);
         
@@ -30,12 +32,16 @@ begin
 
 process(reg_selection, rs2_in, immediate_in) begin
 
+--if(rising_edge(clock)) then 
+
     if reg_selection = select_rs2 then
         muxed_out <= rs2_in;
     else 
         muxed_out <= immediate_in;
     end if;
     
+--end if;
+ 
 end process;
 
 end bh;

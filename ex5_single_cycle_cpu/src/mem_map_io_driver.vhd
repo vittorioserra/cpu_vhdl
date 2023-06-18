@@ -15,11 +15,12 @@ use work.rv32i_defs.ALL;
 
 entity mem_map_io_driver is
     Generic(
-        leds_mem_pos   : unsigned := x"2000";
-        leds_mem_range : unsigned := x"4"
+        leds_mem_pos   : unsigned := x"2000"
     );
 
     Port (
+        clock                  : IN std_logic;
+        enable                 : IN std_logic;
         data_qty               : IN mem_qty;
         is_s_type              : IN extension_control_type;
         address                : IN std_logic_vector(xlen_range);
@@ -34,22 +35,21 @@ architecture bh of mem_map_io_driver is
 
 begin
 
-process(is_s_type, address, data_qty, data_in) is 
+process(is_s_type, address, data_qty, data_in, clock) is 
 
 begin
 
-    if(is_s_type = s_type) then
-    
-        if(unsigned(address) >= unsigned(leds_mem_pos) and unsigned(address) < unsigned(leds_mem_pos + leds_mem_range)) then 
-                inhibition_data_mem_we <= '1'; 
-                leds_output(7 downto 0) <= data_in(7 downto 0);
-        end if;       
-    
+if (rising_edge(clock) and enable = '1') then
+
+    if(is_s_type = s_type and unsigned(address) = unsigned(leds_mem_pos)) then
+        inhibition_data_mem_we <= '1'; 
+        leds_output(7 downto 0) <= data_in(7 downto 0);
     else
-        
         inhibition_data_mem_we <= '0';
-        
+        --leds_output(7 downto 0) <= (others => '0');
     end if;
+    
+end if;
 
 end process;
 
