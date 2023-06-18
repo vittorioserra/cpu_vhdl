@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="data_control_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="data_control_tb" />
+            <top_module name="rv32i_defs" />
+            <top_module name="utils" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="216"></NameColumnWidth>
+      <ValueColumnWidth column_width="101"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject type="logic" fp_name="/data_control_tb/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/data_control_tb/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/data_control_tb/enable">
+      <obj_property name="ElementShortName">enable</obj_property>
+      <obj_property name="ObjectShortName">enable</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/data_control_tb/mode">
+      <obj_property name="ElementShortName">mode</obj_property>
+      <obj_property name="ObjectShortName">mode</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/data_control_tb/data_addr">
+      <obj_property name="ElementShortName">data_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/data_control_tb/data_in">
+      <obj_property name="ElementShortName">data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/data_control_tb/data_out">
+      <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/data_control_tb/ready">
+      <obj_property name="ElementShortName">ready</obj_property>
+      <obj_property name="ObjectShortName">ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider53" type="divider">
+      <obj_property name="label">Memory Bus</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/data_control_tb/DUT/d_bus_out">
+      <obj_property name="ElementShortName">d_bus_out</obj_property>
+      <obj_property name="ObjectShortName">d_bus_out</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/data_control_tb/DUT/d_bus_out.addr">
+         <obj_property name="ElementShortName">.addr[31:2]</obj_property>
+         <obj_property name="ObjectShortName">.addr[31:2]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/data_control_tb/DUT/d_bus_out.data">
+         <obj_property name="ElementShortName">.data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">.data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/data_control_tb/DUT/d_bus_out.write_enable">
+         <obj_property name="ElementShortName">.write_enable[3:0]</obj_property>
+         <obj_property name="ObjectShortName">.write_enable[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/data_control_tb/DUT/d_bus_in">
+      <obj_property name="ElementShortName">d_bus_in</obj_property>
+      <obj_property name="ObjectShortName">d_bus_in</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>
