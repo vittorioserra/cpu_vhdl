@@ -60,15 +60,15 @@ package rv32i_defs is
         func_sra);  -- Shift right arithmetically
         
     type mem_mode_type is (
-        passthrough,    -- data_out = data_in_reg
-        mem_read_w,     -- read Word                 = 32 bits
-        mem_read_hs,    -- read half Word (signed)   = 16 bits
-        mem_read_hu,    -- read half Word (unsigned) = 16 bits
-        mem_read_bs,    -- read Byte (signed)        =  8 bits
-        mem_read_bu,     -- read Byte (unsigned)      =  8 bits
-        mem_write_w,    -- write Word                = 32 bits
-        mem_write_h,    -- write half Word           = 16 bits
-        mem_write_b);   -- write Byte                =  8 bits
+        mem_passthrough,    -- data_out = data_in_reg
+        mem_read_w,         -- read Word                 = 32 bits
+        mem_read_hs,        -- read half Word (signed)   = 16 bits
+        mem_read_hu,        -- read half Word (unsigned) = 16 bits
+        mem_read_bs,        -- read Byte (signed)        =  8 bits
+        mem_read_bu,        -- read Byte (unsigned)      =  8 bits
+        mem_write_w,        -- write Word                = 32 bits
+        mem_write_h,        -- write half Word           = 16 bits
+        mem_write_b);       -- write Byte                =  8 bits
 
     type op1_select is (
         select_zero,        -- op1 is 0
