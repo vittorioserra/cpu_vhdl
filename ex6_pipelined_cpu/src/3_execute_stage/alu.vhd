@@ -62,8 +62,6 @@ begin
                         func_reg(logic) <= func;
                         enable_reg(logic) <= '1';
                 end case;
-            else
-                enable_reg <= (others => '0');
             end if;
         end if;
     end process;

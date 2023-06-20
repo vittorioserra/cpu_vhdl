@@ -10,6 +10,7 @@
 -- TODO we can buildin a shadow-rom which holds the contents of the init-file
 --      during reset this rom could be copied in the memory.
 --      a copy_done signal should report the end of copying
+--      IS THIS POSSIBLE WITH AN RESET PIN ON THE BRAM?
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;

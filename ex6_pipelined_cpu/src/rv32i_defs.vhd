@@ -21,6 +21,7 @@ package rv32i_defs is
     
     constant reg_count : positive := 32;                                        -- 32 registers
     subtype reg_range is natural range get_bit_count(reg_count) - 1 downto 0;   -- 4 downto 0
+    constant reg_zero : std_logic_vector(reg_range) := (others => '0');
 
     constant oplen : positive := 7;
     subtype oplen_range is natural range oplen - 1 downto 0;
