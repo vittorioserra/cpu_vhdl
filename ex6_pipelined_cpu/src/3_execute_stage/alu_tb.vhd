@@ -23,7 +23,7 @@ architecture tb of alu_tb is
     signal clock: std_logic;
     signal reset_n : std_logic;
     signal enable : std_logic;
-    signal func : alu_func;
+    signal func : ex_func_type;
     signal op1, op2 : std_logic_vector(xlen_range);
     signal res : std_logic_vector(xlen_range);
 begin
@@ -56,7 +56,7 @@ begin
 		enable <= '1';
 		
 		-- addition
-		func <= func_add;
+		func <= f_add;
 		for i in -4 to 4 loop
 			op1 <= si2vec(i, xlen);
 			op2 <= si2vec(2, xlen);
@@ -64,7 +64,7 @@ begin
 		end loop;
 		
 		-- subtraction
-		func <= func_sub;
+		func <= f_sub;
 		for i in -4 to 4 loop
 			op1 <= si2vec(2, xlen);
 			op2 <= si2vec(i, xlen);
@@ -72,7 +72,7 @@ begin
 		end loop;
 		
 		-- slts
-		func <= func_slts;
+		func <= f_slts;
 		for i in -4 to 4 loop
 			op1 <= si2vec(i, xlen);
 			op2 <= si2vec(0, xlen);
@@ -80,7 +80,7 @@ begin
 		end loop;
 		
 		-- sltu
-		func <= func_sltu;
+		func <= f_sltu;
 		for i in -4 to 4 loop
 			op1 <= si2vec(2 + i, xlen);
 			op2 <= si2vec(2, xlen);
@@ -88,14 +88,14 @@ begin
 		end loop;
 		
 		-- seq
-		func <= func_seq;
+		func <= f_seq;
 		for i in -4 to 4 loop
 			op1 <= si2vec(i, xlen);
 			op2 <= si2vec(2, xlen);
 			wait for CLOCK_PERIOD;
 		end loop;
 		
-		func <= func_seq;
+		func <= f_seq;
 		for i in -4 to 4 loop
 			op1 <= si2vec(i, xlen);
 			op2 <= si2vec(-1, xlen);
@@ -105,23 +105,23 @@ begin
 		-- xor
 		op1 <= x"a5a5a5a5";
 		op2 <= x"5a5a5a5a";
-		func <= func_xor;
+		func <= f_xor;
 		wait for CLOCK_PERIOD;
 		
 		-- or
 		op1 <= x"DEAD0000";
 		op2 <= x"0000BEEF";
-		func <= func_or;
+		func <= f_or;
 		wait for CLOCK_PERIOD;
 		
 		-- and
 		op1 <= x"a5a5a5a5";
 		op2 <= x"5a5a5a5a";
-		func <= func_and;
+		func <= f_and;
 		wait for CLOCK_PERIOD;
 		
 		-- sll
-		func <= func_sll;
+		func <= f_sll;
 		op1 <= x"DEADBEEF";
 		for i in 0 to 4 loop
 			op2 <= si2vec(i, xlen);
@@ -129,7 +129,7 @@ begin
 		end loop;
 		
 		-- srl
-		func <= func_srl;
+		func <= f_srl;
 		op1 <= x"C01DCAFE";
 		for i in 0 to 4 loop
 			op2 <= si2vec(i, xlen);
@@ -137,7 +137,7 @@ begin
 		end loop;
 		
 		-- sra
-		func <= func_sra;
+		func <= f_sra;
 		op1 <= x"FEEBDAED";
 		for i in 0 to 4 loop
 			op2 <= si2vec(i, xlen);

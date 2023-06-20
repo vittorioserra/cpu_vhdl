@@ -35,7 +35,7 @@ begin
             if (reset_n = '0') then
                 addr_base_reg <= (others => '0');
                 addr_offset_reg <= (others => '0');
-                jump_mode_reg <= jump_none;
+                jump_mode_reg <= j_n;
             elsif (enable = '1') then
                 addr_base_reg <= jump_base;
                 addr_offset_reg <= jump_offset;
@@ -48,14 +48,10 @@ begin
     begin
         addr_target <= std_logic_vector(unsigned(addr_base_reg) + unsigned(addr_offset_reg));
         case jump_mode_reg is
-            when jump_none =>
-                jump_enable <= '0';
-            when jump_branch =>
-                jump_enable <= jump_condition;
-            when jump_branch_n =>
-                jump_enable <= not jump_condition;
-            when jump_definitive =>
-                jump_enable <= '1';
+            when j_n   => jump_enable <= '0';
+            when j_c   => jump_enable <= jump_condition;
+            when j_c_n => jump_enable <= not jump_condition;
+            when j_y =>   jump_enable <= '1';
         end case;
     end process;
 end bh;

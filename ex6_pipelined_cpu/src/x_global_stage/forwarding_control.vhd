@@ -46,10 +46,10 @@ begin
         if (de_rs1_select = reg_zero) then
             -- value from zero register
             de_rs1_value <= wb_rs1_value;
-        elsif (de_rs1_select = ex_rd_select and ex_mem_mode = mem_passthrough) then
+        elsif (de_rs1_select = ex_rd_select and ex_mem_mode = m_pass) then
             -- value in ex stage
             de_rs1_value <= ex_rd_value;
-        elsif (de_rs1_select = ex_rd_select and ex_mem_mode /= mem_passthrough) then
+        elsif (de_rs1_select = ex_rd_select and ex_mem_mode /= m_pass) then
             -- value from memory but its in address phase: not ready
             de_rs1_value <= me_rd_value;
             ready <= '0';
@@ -65,10 +65,10 @@ begin
         if (de_rs2_select = reg_zero) then
             -- value from zero register
             de_rs2_value <= wb_rs2_value;
-        elsif (de_rs2_select = ex_rd_select and ex_mem_mode = mem_passthrough) then
+        elsif (de_rs2_select = ex_rd_select and ex_mem_mode = m_pass) then
             -- value in ex stage
             de_rs2_value <= ex_rd_value;
-        elsif (de_rs2_select = ex_rd_select and ex_mem_mode /= mem_passthrough) then
+        elsif (de_rs2_select = ex_rd_select and ex_mem_mode /= m_pass) then
             -- value from memory but its in address phase: not ready
             de_rs2_value <= me_rd_value;
             ready <= '0';

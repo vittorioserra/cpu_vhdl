@@ -78,7 +78,7 @@ begin
 		enable <= '1';
 		
 		-- write bytes
-		mode <= mem_write_b;
+		mode <= m_wb;
 		for i in 0 to 7 loop
 			data_addr <= si2vec(i, xlen);
 			data_in <= si2vec(-i, xlen);
@@ -86,7 +86,7 @@ begin
 		end loop;
 		
 		-- write half words
-		mode <= mem_write_h;
+		mode <= m_wh;
 		for i in 8 to 15 loop
 			data_addr <= si2vec(i, xlen);
 			data_in <= si2vec(vec2ui(x"44444444") + vec2ui(x"11111111") * (i - 8), xlen);
@@ -98,7 +98,7 @@ begin
 		end loop;
 		
 		-- write words
-		mode <= mem_write_w;
+		mode <= m_ww;
 		for i in 16 to 23 loop
 			data_addr <= si2vec(i, xlen);
 			data_in <= si2vec(vec2ui(x"44444444") + vec2ui(x"11111111") * (i - 16), xlen);
@@ -110,21 +110,21 @@ begin
 		end loop;
 		
 		-- read bytes unsigned
-		mode <= mem_read_bu;
+		mode <= m_rbu;
 		for i in 0 to 7 loop
 			data_addr <= si2vec(i, xlen);
 			wait for CLOCK_PERIOD;
 		end loop;
 		
 		-- read bytes signed
-		mode <= mem_read_bs;
+		mode <= m_rbs;
 		for i in 0 to 7 loop
 			data_addr <= si2vec(i, xlen);
 			wait for CLOCK_PERIOD;
 		end loop;
 
 		-- read half words unsigned
-		mode <= mem_read_hu;
+		mode <= m_rhu;
 		for i in 8 to 15 loop
 			data_addr <= si2vec(i, xlen);
 			wait for CLOCK_PERIOD / 2;
@@ -135,7 +135,7 @@ begin
 		end loop;
 
 		-- read half words signed
-		mode <= mem_read_hs;
+		mode <= m_rhs;
 		for i in 8 to 15 loop
 			data_addr <= si2vec(i, xlen);
 			wait for CLOCK_PERIOD / 2;
@@ -146,7 +146,7 @@ begin
 		end loop;
 		
 		-- read words
-		mode <= mem_read_w;
+		mode <= m_rw;
 		for i in 16 to 23 loop
 			data_addr <= si2vec(i, xlen);
 			wait for CLOCK_PERIOD / 2;
@@ -157,7 +157,7 @@ begin
 		end loop;
 		
 		-- passthrough
-		mode <= mem_passthrough;
+		mode <= m_pass;
 		for i in 0 to 8 loop
 			data_addr <= si2vec(i, xlen);
 			data_in <= si2vec(vec2ui(x"44444444") + vec2ui(x"11111111") * (i - 16), xlen);

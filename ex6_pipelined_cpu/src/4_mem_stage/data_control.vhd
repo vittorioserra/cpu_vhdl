@@ -47,7 +47,7 @@ begin
                 do_second_access_reg <= '0';
                 last_d_bus_in_data_reg <= (others => '0');
                 data_in_reg <= (others => '0');
-                mode_reg <= mem_passthrough;
+                mode_reg <= m_pass;
                 subaddr_reg <= (others => '0');
             elsif (enable = '1') then
                 next_d_bus_out_reg <= next_d_bus_out_int;
@@ -68,10 +68,10 @@ begin
     begin
         -- Generate byte select signals (for write_enable and misalign check)
         case mode is
-            when mem_write_b | mem_read_bu | mem_read_bs => byte_select := "0001";
-            when mem_write_h | mem_read_hu | mem_read_hs => byte_select := "0011";
-            when mem_write_w | mem_read_w                => byte_select := "1111";
-            when mem_passthrough                         => byte_select := "0000";
+            when m_wb | m_rbu | m_rbs => byte_select := "0001";
+            when m_wh | m_rhu | m_rhs => byte_select := "0011";
+            when m_ww | m_rw          => byte_select := "1111";
+            when m_pass               => byte_select := "0000";
         end case;
 
         -- Generate shifted signals
@@ -90,10 +90,10 @@ begin
             -- first access
             -- Generate (next) d_bus_out signals
             case mode is
-                when mem_passthrough =>
+                when m_pass =>
                     d_bus_out                       <= (others => (others => '0'));
                     next_d_bus_out_int              <= (others => (others => '0'));
-                when mem_read_bu | mem_read_bs | mem_read_hu | mem_read_hs | mem_read_w =>
+                when m_rbu | m_rbs | m_rhu | m_rhs | m_rw =>
                     d_bus_out.data                  <= (others => '0');
                     d_bus_out.write_enable          <= (others => '0');
                     d_bus_out.addr                  <= data_addr(addr_range);
@@ -134,13 +134,13 @@ begin
             when others => -- do nothing;
         end case;
         case mode_reg is
-            when mem_read_bu        => data_out <= (31 downto  8 => '0'          ) & temp_data( 7 downto 0);
-            when mem_read_bs        => data_out <= (31 downto  8 => temp_data( 7)) & temp_data( 7 downto 0);
-            when mem_read_hu        => data_out <= (31 downto 16 => '0'          ) & temp_data(15 downto 0);
-            when mem_read_hs        => data_out <= (31 downto 16 => temp_data(15)) & temp_data(15 downto 0);
-            when mem_read_w         => data_out <= temp_data(31 downto 0);
-            when mem_passthrough    => data_out <= data_in_reg;
-            when others             => data_out <= (others => '0');
+            when m_rbu  => data_out <= (31 downto  8 => '0'          ) & temp_data( 7 downto 0);
+            when m_rbs  => data_out <= (31 downto  8 => temp_data( 7)) & temp_data( 7 downto 0);
+            when m_rhu  => data_out <= (31 downto 16 => '0'          ) & temp_data(15 downto 0);
+            when m_rhs  => data_out <= (31 downto 16 => temp_data(15)) & temp_data(15 downto 0);
+            when m_rw   => data_out <= temp_data(31 downto 0);
+            when m_pass => data_out <= data_in_reg;
+            when others => data_out <= (others => '0');
         end case;
     end process;
 end bh;
