@@ -49,7 +49,7 @@ process(instr, clock)  --main decoder program
     
     if(rising_edge(clock)) then 
     
-    opcode := instr(6 downto 0)
+    opcode := instr(6 downto 0);
     funct3_field := instr(14 downto 12);
     funct7_field := instr(31 downto 25);
     
