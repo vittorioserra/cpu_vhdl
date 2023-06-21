@@ -37,14 +37,14 @@ begin
                 addr_offset_reg <= (others => '0');
                 jump_mode_reg <= j_n;
             elsif (enable = '1') then
-                addr_base_reg <= jump_base;
-                addr_offset_reg <= jump_offset;
+                addr_base_reg <= addr_base;
+                addr_offset_reg <= addr_offset;
                 jump_mode_reg <= jump_mode;
             end if;
         end if;
     end process;
     
-    LOGIC : process (jump_base_reg, jump_offset_reg, jump_mode_reg, jump_condition)
+    LOGIC : process (addr_base_reg, addr_offset_reg, jump_mode_reg, jump_condition)
     begin
         addr_target <= std_logic_vector(unsigned(addr_base_reg) + unsigned(addr_offset_reg));
         case jump_mode_reg is
