@@ -36,6 +36,62 @@ end decoder;
 architecture bh of decoder is
     signal instr_reg : std_logic_vector(instr_range);
     signal i_type : instr_type;
+    
+    
+    function compressed_op_carve_out(instruction : std_logic_vector(15 downto 0)) return std_logic_vector is 
+    variable compressed_op : std_logic_vector(2 downto 0);
+    begin
+
+    compressed_op := instruction(2 downto 0);
+
+    return compressed_op;
+    end function;
+    
+    function compressed_funct4(instruction : std_logic_vector(15 downto 0)) return std_logic_vector is 
+    variable compressed_funct4 : std_logic_vector(15 downto 12);
+    begin
+
+    compressed_funct4 := instruction(15 downto 12);
+
+    return compressed_funct4;
+    end function;
+    
+    function compressed_funct3(instruction : std_logic_vector(15 downto 0)) return std_logic_vector is 
+    variable compressed_funct3 : std_logic_vector(15 downto 13);
+    begin
+
+    compressed_funct3 := instruction(15 downto 13);
+
+    return compressed_funct3;
+    end function;
+    
+    function compressed_funct6(instruction : std_logic_vector(15 downto 0)) return std_logic_vector is 
+    variable compressed_funct6 : std_logic_vector(15 downto 10);
+    begin
+
+    compressed_funct6 := instruction(15 downto 10);
+
+    return compressed_funct6;
+    end function;
+    
+    function compressed_funct(instruction : std_logic_vector(15 downto 0)) return std_logic_vector is 
+    variable compressed_funct : std_logic_vector(11 downto 10);
+    begin
+
+    compressed_funct := instruction(11 downto 10);
+
+    return compressed_funct;
+    end function;
+    
+    function compressed_funct2(instruction : std_logic_vector(15 downto 0)) return std_logic_vector is 
+    variable compressed_funct2 : std_logic_vector(6 downto 5);
+    begin
+
+    compressed_funct2 := instruction(6 downto 5);
+
+    return compressed_funct2;
+    end function;
+    
 begin
     INPUT_REGISTER : process(clock, reset_n, enable)
     begin
@@ -78,6 +134,9 @@ begin
 
         -- decode instructions
         case instr_reg is
+        
+            -- PLEASE REWRITE WITH CARVE OUT FUCNTIONS; IT IS CLEANER THAT WAY !!! If you miss a bit here you are FUCKED!!! 
+        
             --   "f7     rs2  rs1  f3 rd   opcode "             imm op1  op2  addr_base
             when "-------------------------0110111" => ir_type := u_zero_imm;      e_mode <= f_add;                   -- LUI
             when "-------------------------0010111" => ir_type := u_pc___imm;      e_mode <= f_add;                   -- AUIPC
@@ -122,6 +181,20 @@ begin
             when others                             => ir_type := i_zero_zero;     e_mode <= f_add;                   -- ILLEGAL (jump to illegal instruction handler) TODO jump to handler
                                                                                                                       -- TODO compressed instructions
         end case;
+        
+        --if compressed instruction mode : 
+        
+        -- C.ADDI4spn
+        -- C.FLD
+        -- C.LW
+        -- C.FLW
+        -- C.FSD
+        -- C.FSD
+        -- C.SW
+        -- C.FSW
+        -- C.NOP
+        -- C.ADDI
+        
 
         -- route operands
         a_base <= sel_pc;
