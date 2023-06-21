@@ -5,9 +5,10 @@
 #  Description: Universal Project Creation Script for CPU_VHDL Project.
 #               Copy this file into the project directory and execute it from vivado.
 #               CAUTION: This script will delete an existing vivado project folder.
-#               Imports only .xdc, .wcfg .vhd files from local and global src folder.
-#               Fileformat: *_tb.vhd is Top of Simulation
-#               Fileformat: *_top.vhd is Top of Synthesis
+#               Imports only .xdc, .wcfg, .vhd and .vhdl files from local and global src folder.
+#               Files with ending .vhdl will be imported as VHDL 2008 file.
+#               Fileformat: *_tb.vhd(l) is Top of Simulation
+#               Fileformat: *_top.vhd(l) is Top of Synthesis
 #               Fileformat: *_old.* will not be added to the project
 # --------------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ foreach file $srcFiles {
     set fileTitle [file rootname [file tail $file]]
     if {[string match "*_old" $fileTitle]} {
         # skip this file
-    } elseif {[string equal $fileExt ".vhd"]} {
+    } elseif {[string equal $fileExt ".vhd"] || [string equal $fileExt ".vhdl"]} {
         if {[string match "*_tb" $fileTitle]} {
             lappend simTopFiles $file
         } elseif {[string match "*_top" $fileTitle]} {
@@ -120,9 +121,14 @@ foreach file $constrFiles {
 }
 
 foreach file $sourceFiles {
+    set fileExt [file extension $file]
     puts [concat $textFileSource $file]
     add_files -norecurse -fileset $sourcesSet $file
-    set_property -name "file_type" -value "VHDL" -objects [get_files -of_objects $sourcesSet [list "*$file"]]
+    if {[string equal $fileExt ".vhdl"]} {
+        set_property -name "file_type" -value "VHDL 2008" -objects [get_files -of_objects $sourcesSet [list "*$file"]]
+    } else {
+        set_property -name "file_type" -value "VHDL" -objects [get_files -of_objects $sourcesSet [list "*$file"]]
+    }
 }
 set_property -name "generic" -value "project_path=$projectPath/" -objects $sourcesSet
 
