@@ -19,7 +19,8 @@ entity processor_top is
     Port(
         clock : IN std_logic;
         switch : IN std_logic_vector(7 downto 0);
-        leds : OUT std_logic_vector(7 downto 0));
+        leds : OUT std_logic_vector(7 downto 0);
+        btn_c, btn_d, btn_l, btn_r, btn_u : IN std_logic);
 end processor_top;
 
 architecture bh of processor_top is
