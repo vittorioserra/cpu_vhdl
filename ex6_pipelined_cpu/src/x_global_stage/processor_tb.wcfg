@@ -12,13 +12,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="68.601 ns"></ZoomEndTime>
-      <Cursor1Time time="39.000 ns"></Cursor1Time>
+      <ZoomStartTime time="130.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="294.018 ns"></ZoomEndTime>
+      <Cursor1Time time="171.525 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="216"></NameColumnWidth>
-      <ValueColumnWidth column_width="97"></ValueColumnWidth>
+      <ValueColumnWidth column_width="93"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="37" />
    <wvobject type="logic" fp_name="/processor_tb/clock">
@@ -292,13 +292,19 @@
    <wvobject type="other" fp_name="/processor_tb/DUT/CPU/DECODE/de_op1_select">
       <obj_property name="ElementShortName">de_op1_select</obj_property>
       <obj_property name="ObjectShortName">de_op1_select</obj_property>
+      <obj_property name="CustomSignalColor">#FFA500</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/processor_tb/DUT/CPU/DECODE/de_op2_select">
       <obj_property name="ElementShortName">de_op2_select</obj_property>
       <obj_property name="ObjectShortName">de_op2_select</obj_property>
+      <obj_property name="CustomSignalColor">#FFA500</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/processor_tb/DUT/CPU/DECODE/de_addr_base">
       <obj_property name="ElementShortName">de_addr_base</obj_property>
       <obj_property name="ObjectShortName">de_addr_base</obj_property>
+      <obj_property name="CustomSignalColor">#FFA500</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>
