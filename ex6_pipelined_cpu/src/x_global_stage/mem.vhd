@@ -54,7 +54,7 @@ architecture bh of mem is
         file_open(file_status, file_handler, project_path & filename, read_mode);
         if (file_status /= open_ok) then
             return ret;
-        elsif (ends_with(filename, ".o")) then
+        elsif (ends_with(filename, ".hex")) then
             for block_index in ret'range loop
                 if endfile(file_handler) then
                     exit;
@@ -115,6 +115,8 @@ begin
                             := d_bus_in.data(i * 8 + 7 downto i * 8);
                     end if;
                 end loop;
+            else
+                d_bus_out.data <= (others => '0');
             end if;
         end if;
     end process;
