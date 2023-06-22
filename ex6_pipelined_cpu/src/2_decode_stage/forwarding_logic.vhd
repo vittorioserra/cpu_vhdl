@@ -13,7 +13,7 @@ use IEEE.NUMERIC_STD.ALL;
 library work;
 use work.rv32i_defs.ALL;
 
-entity forwarding_control is
+entity forwarding_logic is
     Port(
         de_rs1_select : IN std_logic_vector(reg_range);
         de_rs2_select : IN std_logic_vector(reg_range);
@@ -32,9 +32,9 @@ entity forwarding_control is
         de_rs1_value : OUT std_logic_vector(xlen_range);
         de_rs2_value : OUT std_logic_vector(xlen_range);
         ready : OUT std_logic);
-end forwarding_control;
+end forwarding_logic;
 
-architecture bh of forwarding_control is
+architecture bh of forwarding_logic is
 begin
     process (de_rs1_select, de_rs2_select, ex_rd_select, ex_mem_mode, ex_rd_value, me_rd_select, me_rd_value, wb_rs1_value, wb_rs2_value)
     begin
