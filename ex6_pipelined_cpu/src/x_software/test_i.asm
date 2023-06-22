@@ -17,7 +17,7 @@ after_set_one:
 	andi t1, t1, 0
 after_set_zero:
 	sw t1, 0(a0)
-	slli t6, t4, 16
+	slli t6, t4, 8
     or t6, t6, t3
     or t6, t6, t5
     sub t6, t6, t1
