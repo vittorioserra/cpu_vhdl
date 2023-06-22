@@ -46,7 +46,7 @@ entity compressed_decoder is
         rs2_select : OUT std_logic_vector(reg_range);
         imm_value : OUT std_logic_vector(xlen_range);
 
-        ex_mode : OUT ex_func_type;
+        func : OUT ex_func_type;
         ex_op1_select : OUT ex_op1_type;
         ex_op2_select : OUT ex_op2_type;
         ex_addr_base : OUT addr_base_type;
@@ -124,7 +124,29 @@ begin
     variable compressed_funct3         :  std_logic_vector(15 downto 13);
     variable compressed_funct6         :  std_logic_vector(15 downto 10);
     variable compressed_funct          :  std_logic_vector(11 downto 10);
-    variable compressed_funct2         :  std_logic_vector(6 downto 5);       
+    variable compressed_funct2         :  std_logic_vector(6 downto 5);      
+    
+    type instr_routing_type is ( -- instr-type op1  op2  addr_base
+           cr_type      ,
+           ci_type      ,
+           cs_type      ,
+           cs_comma_type,
+           c_type       ,
+           cb_comma_type,
+           cj_type      ,
+           css_type     ,
+           ciw_type     ,
+           cl_type      );
+        variable ir_type : instr_routing_type;
+        alias rs1 : std_logic_vector(reg_range) is rs1_select;
+        alias rs2 : std_logic_vector(reg_range) is rs2_select;
+        alias imm : std_logic_vector(xlen_range) is imm_value;
+        alias op1 : ex_op1_type is op1_select;
+        alias op2 : ex_op2_type is op2_select;
+        alias a_base : addr_base_type is addr_base;
+        alias j_mode : jump_mode_type is jump_mode;
+        alias rd : std_logic_vector(reg_range) is rd_select;
+        alias m_mode : mem_mode_type is mem_mode; 
 
     begin
     
@@ -138,57 +160,85 @@ begin
     case compressed_op is 
         when "00" => 
             case compressed_funct6 is
-                when "000---" => -- c.addi4spn
-                when "001---" => -- c.fld
-                when "010---" => -- c.lw
-                when "011---" => -- c.flw
-                when "101---" => -- c.fsd
-                when "110---" => -- c.sw
-                when "111---" => -- c.fsw
+                when "000---" => ir_type := ciw_type; func <= f_add; -- c.addi4spn
+                when "001---" => ir_type := cl_type; -- c.fld
+                when "010---" => ir_type := cl_type; -- c.lw
+                when "011---" => ir_type := cl_type; -- c.flw
+                when "101---" => ir_type := cs_type; -- c.fsd
+                when "110---" => ir_type := cs_type; -- c.sw
+                when "111---" => ir_type := cs_type; -- c.fsw
         end case;
         
         when "01" => 
             case compressed_funct6 is
-                when "000000" => --c.nop
-                when "000---" => --c.addi
-                when "001---" => --c.jal
-                when "010---" => --c.li
-                when "011---" => --c.lui
-                when "011---" => --c.addi16sp -- TODO : make a way to keep it apart from c.lui
-                when "100-00" => --c.srli
-                when "100-01" => --c.srai
-                when "100-10" => --c.andi
-                when "101---" => --c.j
-                when "110---" => --c.beqz
-                when "111---" => --c.bnez
-                when "100011" =>
+                when "000000" => ir_type := ci_type;--c.nop
+                when "000---" => ir_type := ci_type;--c.addi
+                when "001---" => ir_type := ci_type;--c.jal
+                when "010---" => ir_type := cj_type;--c.li
+                when "011---" => ir_type := ci_type;--c.lui
+                when "011---" => ir_type := ci_type;--c.addi16sp -- TODO : make a way to keep it apart from c.lui
+                when "100-00" => ir_type := ci_type;--c.srli
+                when "100-01" => ir_type := cb_comma_type;--c.srai
+                when "100-10" => ir_type := cb_comma_type;--c.andi
+                when "101---" => ir_type := cj_type;--c.j
+                when "110---" => ir_type := cb_comma_type;--c.beqz
+                when "111---" => ir_type := cb_comma_type;--c.bnez
+                when "100011" => 
                     case compressed_funct2 is
-                        when "00" => --c.sub 
-                        when "01" => --c.xor
-                        when "10" => --c.or
-                        when "11" => --c.and
+                        when "00" => ir_type := cs_comma_type;--c.sub 
+                        when "01" => ir_type := cs_comma_type;--c.xor
+                        when "10" => ir_type := cs_comma_type;--c.or
+                        when "11" => ir_type := cs_comma_type;--c.and
                     end case;
             end case;
          
         when "10" => 
             case compressed_funct6 is
-                when "000---" => --c.slli
-                when "001---" => --c.fldp
-                when "010---" => --c.lwsp
-                when "011---" => --c.flwsp
-                when "1000--" => --c.jr
-                when "1000--" => --c.mv implement logic to tell them apart
-                when "1001--" => --c.ebreak
-                when "1001--" => --c.jalr
-                when "1001--" => --c.add
-                when "101---" => --c.fsdsp
-                when "110---" => --c.swsp
-                when "111---" => --c.fswsp           
+                when "000---" =>ir_type := ci_type;--c.slli
+                when "001---" =>ir_type := ci_type;--c.fldp
+                when "010---" =>ir_type := ci_type;--c.lwsp
+                when "011---" =>ir_type := ci_type;--c.flwsp
+                when "1000--" =>ir_type := cr_type;--c.jr
+                when "1000--" =>ir_type := cr_type;--c.mv implement logic to tell them apart
+                when "1001--" =>ir_type := cr_type;--c.ebreak
+                when "1001--" =>ir_type := cr_type;--c.jalr
+                when "1001--" =>ir_type := cr_type;--c.add
+                when "101---" =>ir_type := css_type;--c.fsdsp
+                when "110---" =>ir_type := css_type;--c.swsp
+                when "111---" =>ir_type := css_type;--c.fswsp           
             end case;  
             
           
         end case;
-                
+        
+        
+        -- route operands
+        a_base <= sel_pc;
+        rs1    <= instr_reg(19 downto 15);
+        rs2    <= instr_reg(24 downto 20);
+        rd     <= instr_reg(11 downto  7);
+        case ir_type is
+            when cr_type        => op1 <= sel_zero; op2 <= sel_imm; rs1 <= reg_zero; rs2 <= reg_zero;
+            when ci_type        => op1 <= sel_pc;   op2 <= sel_imm; rs1 <= reg_zero; rs2 <= reg_zero;
+            when cs_type        => op1 <= sel_pc_n; op2 <= sel_rs2; rs1 <= reg_zero; rs2 <= reg_zero; a_base <= sel_pc;
+            when cs_comma_type  => op1 <= sel_rs1;  op2 <= sel_rs2;                                   a_base <= sel_pc;  rd <= reg_zero;
+            when c_type         => op1 <= sel_zero; op2 <= sel_rs2;                                   a_base <= sel_rs1; rd <= reg_zero;
+            when cb_comma_type  => op1 <= sel_rs1;  op2 <= sel_rs2;
+            when cj_type        => op1 <= sel_pc_n; op2 <= sel_rs2;                  rs2 <= reg_zero; a_base <= sel_rs1;
+            when css_type       => op1 <= sel_zero; op2 <= sel_rs2;                  rs2 <= reg_zero; a_base <= sel_rs1;
+            when ciw_type       => op1 <= sel_rs1;  op2 <= sel_imm;                  rs2 <= reg_zero;
+            when cl_type        => op1 <= sel_zero; op2 <= sel_rs2; rs1 <= reg_zero; rs2 <= reg_zero;
+        end case;
+
+        -- immediate extraction
+        case ir_type is
+            when u_zero_imm | u_pc_imm => imm <= instr_reg(31 downto 12) & (11 downto 0 => '0');
+            when j_pc_n_zero_pc        => imm <= (31 downto 20 => instr_reg(31)) & instr_reg(19 downto 12) & instr_reg(20) & instr_reg(30 downto 21) & '0';
+            when b_rs1_rs2_pc          => imm <= (31 downto 12 => instr_reg(31)) & instr_reg(7) & instr_reg(30 downto 25) & instr_reg(11 downto 8) & '0';
+            when s_zero_rs2_rs1        => imm <= (31 downto 11 => instr_reg(31)) & instr_reg(30 downto 25) & instr_reg(11 downto 8) & instr_reg(7);
+            -- r_rs1_rs2 | i_pc_n_zero_rs1 | i_zero_zero_rs1 | i_rs1_imm | i_zero_zero
+            when others                => imm <= (31 downto 11 => instr_reg(31)) & instr_reg(30 downto 20);
+        end case;        
     
     
     end process;
