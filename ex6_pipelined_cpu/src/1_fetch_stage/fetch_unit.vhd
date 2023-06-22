@@ -83,7 +83,7 @@ begin
             if (i_bus_in.data(17 downto 16) = "11") then
                 -- instruction is 32 bit long and misaligned
                 pc_next_int <= pc_plus_4;
-                instr <= (others => '0');
+                instr <= "00000000000000000000000000010011"; -- nop (addi x0, x0, 0)
                 ready <= '0';
                 misaligned <= '1';
             else
@@ -102,8 +102,8 @@ begin
             if (reset_n = '0') then
                 -- load the entry point
                 last_i_bus_data_high_half_reg <= (others => '0');
-                pc_now_reg <= pc_of_entry;
-                i_bus_out_pc_reg <= pc_of_entry;
+                pc_now_reg <= pc_of_entry(xlen - 1 downto 1) & '0';
+                i_bus_out_pc_reg <= pc_of_entry(xlen - 1 downto 1) & '0';
                 instr_prefetched_reg <= '0';
                 combine_this_low_half_with_last_high_half_reg <= '0';
             elsif (enable = '1') then
@@ -143,9 +143,9 @@ begin
         -- because mem has its own registers (to be able to infer BRAM)
 		if (reset_n = '0') then
             i_bus_out.addr <= pc_of_entry(addr_range);
-        elsif (enable = '1') then
+        else
             if (jump_enable = '1') then
-                i_bus_out.addr <= jump_target(xlen - 1 downto addr_range'low);
+                i_bus_out.addr <= jump_target(addr_range);
             elsif (misaligned = '1') then
                 i_bus_out.addr <= i_bus_out_pc_plus_4(addr_range);
             else
