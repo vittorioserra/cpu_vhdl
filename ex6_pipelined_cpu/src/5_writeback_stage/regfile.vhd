@@ -18,7 +18,7 @@ entity regfile is
         reg_count : positive := 32);
     Port(
         clock, reset_n, rd_write_enable : IN std_logic;
-        rs1_select, rs2_select, rd_select : IN std_logic_vector(get_bit_count(reg_count) - 1 downto 0);
+        rs1_select, rs2_select, rd_select : IN std_logic_vector(reg_range);
         rs1_value, rs2_value : OUT std_logic_vector(xlen_range);
         rd_value : IN std_logic_vector(xlen_range));
 end regfile;
