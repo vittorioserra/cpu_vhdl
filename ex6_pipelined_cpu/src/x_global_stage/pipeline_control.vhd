@@ -13,7 +13,6 @@ entity pipeline_control is
     Port(
         reset_n : IN std_logic;
 
-        shadow_copy_done : IN std_logic;
         jump_enable : IN std_logic;
 
         fe_ready : IN std_logic;
@@ -44,11 +43,10 @@ begin
     me_enable <= not me_ready or (                                       wb_ready);
     wb_enable <= '1';
 
-    -- reset processor while shadow copy is running
-    -- flush (reset) de and ex stage if jumping
-    fe_reset_n <= reset_n and shadow_copy_done;
-    de_reset_n <= reset_n and shadow_copy_done and not jump_enable;
-    ex_reset_n <= reset_n and shadow_copy_done and not jump_enable;
-    me_reset_n <= reset_n and shadow_copy_done;
-    wb_reset_n <= reset_n and shadow_copy_done;
+    -- reset processor or flush (reset) de and ex stage if jumping
+    fe_reset_n <= reset_n;
+    de_reset_n <= reset_n and not jump_enable;
+    ex_reset_n <= reset_n and not jump_enable;
+    me_reset_n <= reset_n;
+    wb_reset_n <= reset_n;
 end bh;
