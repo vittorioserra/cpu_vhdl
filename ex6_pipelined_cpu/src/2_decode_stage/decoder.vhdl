@@ -133,10 +133,10 @@ begin
         case ir_type is
             when u_zero_imm      => op1 <= sel_zero; op2 <= sel_imm; rs1 <= reg_zero; rs2 <= reg_zero;
             when u_pc_imm        => op1 <= sel_pc;   op2 <= sel_imm; rs1 <= reg_zero; rs2 <= reg_zero;
-            when j_pc_n_zero_pc  => op1 <= sel_pc_n; op2 <= sel_rs2; rs1 <= reg_zero; rs2 <= reg_zero;
-            when b_rs1_rs2_pc    => op1 <= sel_rs1;  op2 <= sel_imm;
-            when s_zero_rs2_rs1  => op1 <= sel_zero; op2 <= sel_imm;                                   a_base <= sel_rs1; rd <= reg_zero;
-            when r_rs1_rs2       => op1 <= sel_rs1;  op2 <= sel_imm;
+            when j_pc_n_zero_pc  => op1 <= sel_pc_n; op2 <= sel_rs2; rs1 <= reg_zero; rs2 <= reg_zero; a_base <= sel_pc;
+            when b_rs1_rs2_pc    => op1 <= sel_rs1;  op2 <= sel_rs2;                                   a_base <= sel_pc;  rd <= reg_zero;
+            when s_zero_rs2_rs1  => op1 <= sel_zero; op2 <= sel_rs2;                                   a_base <= sel_rs1; rd <= reg_zero;
+            when r_rs1_rs2       => op1 <= sel_rs1;  op2 <= sel_rs2;
             when i_pc_n_zero_rs1 => op1 <= sel_pc_n; op2 <= sel_rs2;                  rs2 <= reg_zero; a_base <= sel_rs1;
             when i_zero_zero_rs1 => op1 <= sel_zero; op2 <= sel_rs2;                  rs2 <= reg_zero; a_base <= sel_rs1;
             when i_rs1_imm       => op1 <= sel_rs1;  op2 <= sel_imm;                  rs2 <= reg_zero;
