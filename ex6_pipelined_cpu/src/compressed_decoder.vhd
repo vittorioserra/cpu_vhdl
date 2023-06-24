@@ -165,7 +165,7 @@ begin
             case compressed_funct6 is
                 when "000---" => -- c.addi4spn
 
-				    ir_type := ciw_type;
+				    --ir_type := ciw_type;
 				    func <= f_add; 
 				    op1 <= sel_rs1;  
 				    rs1 <= reg_sp;  
@@ -180,10 +180,10 @@ begin
                 when "010---" =>  -- c.lw
 
 				    imm <= (31 downto 8  => '0') & comp_instr(12 downto 10) & comp_instr(6 downto 5) & ( 1 downto 0 => '0'); --imm, shifted by four
-				    ir_type := cl_type;
+				    --ir_type := cl_type;
 				    func <= f_add;
 				    m_mode <= m_rw;
-				    op1 <= sel_zero; 
+				    op1 <= sel_rs1; 
 				    op2 <= sel_imm; 
 				    rs1 <= "01" & comp_instr(9 downto 7); 
 				    rs2 <= reg_zero;
@@ -215,21 +215,23 @@ begin
         
         when "01" => 
             case compressed_funct6 is
+                
                 when "000000" => ir_type := ci_type; func<=f_add; --c.nop
 				
                 when "000---" =>  --c.addi
-				ir_type := ci_type; 
-				func<=f_add;
-				if (comp_instr(6) = '1') then
-					imm <= (31 downto 5 => '1') & comp_instr(6 downto 2);
-				else
-					imm <= (31 downto 5 => '0') & comp_instr(6 downto 2);
-				end if;
-				op1  <= sel_rs1;  
-				rs1 <= comp_instr(11 downto 7);
-				op2  <= sel_imm; 
-				rs2  <= reg_zero;
-				rd   <= comp_instr(11 downto 7);
+                
+				    ir_type := ci_type; 
+				    func<=f_add;
+				    if (comp_instr(6) = '1') then
+				    	imm <= (31 downto 5 => '1') & comp_instr(6 downto 2);
+				    else
+				    	imm <= (31 downto 5 => '0') & comp_instr(6 downto 2);
+				    end if;
+				    op1  <= sel_rs1;  
+				    rs1 <= comp_instr(11 downto 7);
+				    op2  <= sel_imm; 
+				    rs2  <= reg_zero;
+				    rd   <= comp_instr(11 downto 7);
 				
 
                 when "001---" => ir_type := ci_type; --c.jal
@@ -244,6 +246,7 @@ begin
 				    end if;
 				    op1 <= sel_rs1;  
 				    rs1 <= comp_instr(11 downto 7);
+				    rd <= comp_instr(11 downto 7);
 				    op2 <= sel_imm; 
 				    rs2 <= reg_zero;
 
@@ -333,16 +336,16 @@ begin
             case compressed_funct6 is
                 when "000---" =>ir_type := ci_type; func<=f_sll; --c.slli
 
-				if (comp_instr(6) = '1') then
-					imm <= (31 downto 5 => '1') & comp_instr(6 downto 2);
-				else
-					imm <= (31 downto 5 => '1') & comp_instr(6 downto 2);
-				end if;	
-				op1 <= sel_rs1;  
-				op2 <= sel_imm;                  
-				rs2 <= reg_zero;
-				rs1 <= comp_instr(11 downto 7);
-				rd  <= comp_instr(11 downto 7);		
+				    if (comp_instr(6) = '1') then
+				    	imm <= (31 downto 5 => '1') & comp_instr(6 downto 2);
+				    else
+				    	imm <= (31 downto 5 => '1') & comp_instr(6 downto 2);
+				    end if;	
+				    op1 <= sel_rs1;  
+				    op2 <= sel_imm;                  
+				    rs2 <= reg_zero;
+				    rs1 <= comp_instr(11 downto 7);
+				    rd  <= comp_instr(11 downto 7);		
 
                 when "001---" =>ir_type := ci_type; --c.fldsp --float
                 when "010---" =>ir_type := ci_type; --c.lwsp
@@ -356,24 +359,24 @@ begin
                 when "1001--" =>ir_type := cr_type; --c.jalr
 
                 when "1001--" =>ir_type := cr_type; func<=f_add; --c.add
-				op1 <= sel_rs1;  
-			    op2 <= sel_rs2;
-			    rs2 <= comp_instr(6 downto 2);
-			    rs1 <= comp_instr(11 downto 7);
-			    rd <= comp_instr(11 downto 7);
+				    op1 <= sel_rs1;  
+			        op2 <= sel_rs2;
+			        rs2 <= comp_instr(6 downto 2);
+			        rs1 <= comp_instr(11 downto 7);
+			        rd  <= comp_instr(11 downto 7);
 
                 when "101---" =>ir_type := css_type; --c.fsdsp --float
 
                 when "110---" =>ir_type := css_type; --c.swsp
-				imm <= (31 downto 8  => '0') & comp_instr(12 downto 10) & comp_instr(6 downto 5) & ( 1 downto 0 => '0');
-				func   <= f_add;  
-				m_mode <= m_ww;
-				op1    <= sel_rs1; 
-				op2    <= sel_imm;                                   
-				a_base <= sel_rs1;
-				rs2    <= reg_zero;
-				rs1    <= reg_sp; 
-				rd     <= comp_instr(6 downto 2);
+				    imm <= (31 downto 8  => '0') & comp_instr(12 downto 10) & comp_instr(6 downto 5) & ( 1 downto 0 => '0');
+				    func   <= f_add;  
+				    m_mode <= m_ww;
+				    op1    <= sel_rs1; 
+				    op2    <= sel_imm;                                   
+				    a_base <= sel_rs1;
+				    rs2    <= reg_zero;
+				    rs1    <= reg_sp; 
+				    rd     <= comp_instr(6 downto 2);
 
                 when "111---" =>ir_type := css_type; --c.fswsp --float   
             end case;  
