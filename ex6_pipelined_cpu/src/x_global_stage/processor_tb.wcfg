@@ -12,15 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="130.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="294.018 ns"></ZoomEndTime>
-      <Cursor1Time time="171.525 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="133.401 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="216"></NameColumnWidth>
-      <ValueColumnWidth column_width="93"></ValueColumnWidth>
+      <ValueColumnWidth column_width="89"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="37" />
+   <WVObjectSize size="43" />
    <wvobject type="logic" fp_name="/processor_tb/clock">
       <obj_property name="ElementShortName">clock</obj_property>
       <obj_property name="ObjectShortName">clock</obj_property>
@@ -37,10 +37,6 @@
       <obj_property name="label">CPU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/processor_tb/DUT/CPU/clock">
-      <obj_property name="ElementShortName">clock</obj_property>
-      <obj_property name="ObjectShortName">clock</obj_property>
-   </wvobject>
    <wvobject type="logic" fp_name="/processor_tb/DUT/CPU/reset_n">
       <obj_property name="ElementShortName">reset_n</obj_property>
       <obj_property name="ObjectShortName">reset_n</obj_property>
@@ -48,6 +44,7 @@
    <wvobject type="group" fp_name="group120">
       <obj_property name="label">MEMORY BUS</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
       <wvobject type="array" fp_name="/processor_tb/DUT/CPU/i_bus_miso">
          <obj_property name="ElementShortName">i_bus_miso</obj_property>
          <obj_property name="ObjectShortName">i_bus_miso</obj_property>
@@ -306,5 +303,33 @@
       <obj_property name="ObjectShortName">de_addr_base</obj_property>
       <obj_property name="CustomSignalColor">#FFA500</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/processor_tb/DUT/CPU/MEMORY/d_bus_miso">
+      <obj_property name="ElementShortName">d_bus_miso</obj_property>
+      <obj_property name="ObjectShortName">d_bus_miso</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/processor_tb/DUT/CPU/MEMORY/DC/d_bus_in">
+      <obj_property name="ElementShortName">d_bus_in</obj_property>
+      <obj_property name="ObjectShortName">d_bus_in</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/processor_tb/DUT/CPU/MEMORY/DC/do_second_access_reg">
+      <obj_property name="ElementShortName">do_second_access_reg</obj_property>
+      <obj_property name="ObjectShortName">do_second_access_reg</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/processor_tb/DUT/CPU/MEMORY/DC/subaddr_reg">
+      <obj_property name="ElementShortName">subaddr_reg[1:0]</obj_property>
+      <obj_property name="ObjectShortName">subaddr_reg[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/processor_tb/DUT/CPU/MEMORY/DC/mode_reg">
+      <obj_property name="ElementShortName">mode_reg</obj_property>
+      <obj_property name="ObjectShortName">mode_reg</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/processor_tb/DUT/CPU/MEMORY/DC/data_out">
+      <obj_property name="ElementShortName">data_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/processor_tb/DUT/CPU/MEMORY/wb_rd_value">
+      <obj_property name="ElementShortName">wb_rd_value[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wb_rd_value[31:0]</obj_property>
    </wvobject>
 </wave_config>

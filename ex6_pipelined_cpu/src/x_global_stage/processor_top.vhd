@@ -26,7 +26,7 @@ end processor_top;
 architecture bh of processor_top is
     constant pc_of_entry : std_logic_vector(xlen_range) := si2vec(0, xlen);
 
-    constant ram_init_file : string := "../src/x_software/test_i.hex";
+    constant ram_init_file : string := "../src/x_software/prime_search.hex";
     constant ram_chip_addr : std_logic_vector(xlen_range) := x"00000000";
     constant ram_block_count : positive := 512;
     
@@ -38,8 +38,11 @@ architecture bh of processor_top is
     signal i_bus_mosi : i_bus_mosi_rec;
     signal d_bus_miso, ram_d_bus_out, gpio_d_bus_out : d_bus_miso_rec;
     signal d_bus_mosi : d_bus_mosi_rec;
+
+    signal deb_switch : std_logic_vector(7 downto 0);
+    signal deb_btn_c, deb_btn_d, deb_btn_l, deb_btn_r, deb_btn_u : std_logic;
 begin
-    gpio_input <= (31 downto 8 => '0') & switch;
+    gpio_input <= (31 downto 13 => '0') & deb_btn_c & deb_btn_d & deb_btn_l & deb_btn_r & deb_btn_u & deb_switch;
     leds <= gpio_output(7 downto 0);
     d_bus_miso.data <= ram_d_bus_out.data or gpio_d_bus_out.data;
 
@@ -48,7 +51,7 @@ begin
             pc_of_entry => pc_of_entry)
         port map(
             clock => clock,
-            reset_n => switch(0),
+            reset_n => deb_switch(0),
             i_bus_miso => i_bus_miso,
             i_bus_mosi => i_bus_mosi,
             d_bus_miso => d_bus_miso,
@@ -75,4 +78,24 @@ begin
             d_bus_out => gpio_d_bus_out,
             input => gpio_input,
             output => gpio_output);
+            
+    DEB : entity work.debouncer
+        generic map(
+            port_width => 13,
+            stable_count => 127)
+        port map(
+            clock => clock,
+            input(12) => btn_c,
+            input(11) => btn_d,
+            input(10) => btn_l,
+            input(9) => btn_r,
+            input(8) => btn_u,
+            input(7 downto 0) => switch,
+            output(12) => deb_btn_c,
+            output(11) => deb_btn_d,
+            output(10) => deb_btn_l,
+            output(9) => deb_btn_r,
+            output(8) => deb_btn_u,
+            output(7 downto 0) => deb_switch);
+
 end bh;

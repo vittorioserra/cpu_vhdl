@@ -30,7 +30,12 @@ begin
         port map(
             clock => clock,
             switch => switch,
-            leds => leds);
+            leds => leds,
+			btn_c => '1',
+			btn_d => '0',
+			btn_l => '1',
+			btn_r => '0',
+			btn_u => '1');
 
     gen_clk : process
 	begin
@@ -44,9 +49,13 @@ begin
 	begin
 		-- general reset
 		switch <= (others => '0');
-		wait for CLOCK_PERIOD;
-		switch(0) <= '1';
-		wait for CLOCK_PERIOD;
+		for i in 0 to 130 loop
+			wait for CLOCK_PERIOD;
+		end loop;
+		switch <= "10000001";
+		for i in 0 to 130 loop
+			wait for CLOCK_PERIOD;
+		end loop;
 		
 		-- run
 		wait;
