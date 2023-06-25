@@ -82,7 +82,7 @@ begin
     DEB : entity work.debouncer
         generic map(
             port_width => 13,
-            stable_count => 127)
+            stable_count => 100000) -- 1 ms
         port map(
             clock => clock,
             input(12) => btn_c,
