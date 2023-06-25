@@ -1,7 +1,9 @@
 	# step through the numbers 0 to 255 with button up and down
-	li a0, 7
+	li a0, 0
 	li s0, 0x77770000
 	li s1, 0
+	# clear the leds
+	sb zero, 0(s0)
 main_loop:
 	# check if button is toggled on
 	lb t0, 1(s0)
