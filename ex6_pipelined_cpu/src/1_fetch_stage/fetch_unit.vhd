@@ -137,13 +137,13 @@ begin
 		end if;
 	end process;
 
-	i_bus_addr_generate : process(reset_n, enable, jump_enable, jump_target, misaligned, i_bus_out_pc_plus_4, pc_next_int)
+	i_bus_addr_generate : process(reset_n, enable, jump_enable, jump_target, misaligned, i_bus_out_pc_plus_4, pc_next_int, i_bus_out_pc_reg)
 	begin
         -- this generates the address for the memory without the register stage
         -- because mem has its own registers (to be able to infer BRAM)
 		if (reset_n = '0') then
             i_bus_out.addr <= pc_of_entry(addr_range);
-        else
+        elsif (enable = '1') then
             if (jump_enable = '1') then
                 i_bus_out.addr <= jump_target(addr_range);
             elsif (misaligned = '1') then
@@ -151,6 +151,8 @@ begin
             else
                 i_bus_out.addr <= pc_next_int(addr_range);
             end if;
+        else
+            i_bus_out.addr <= i_bus_out_pc_reg(addr_range);
         end if;
 	end process;
 end bh;
