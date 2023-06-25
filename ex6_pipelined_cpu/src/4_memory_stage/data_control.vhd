@@ -32,6 +32,7 @@ architecture bh of data_control is
     signal next_d_bus_out_reg : d_bus_mosi_rec;
     signal misaligned : std_logic;
     signal do_second_access_reg : std_logic;
+    signal combine_second_access_reg : std_logic;
     signal last_d_bus_in_data_reg : std_logic_vector(xlen_range);
     signal data_in_reg : std_logic_vector(xlen_range);
     signal mode_reg : mem_mode_type;
@@ -45,6 +46,7 @@ begin
             if (reset_n = '0') then
                 next_d_bus_out_reg <= (others => (others => '0'));
                 do_second_access_reg <= '0';
+                combine_second_access_reg <= '0';
                 last_d_bus_in_data_reg <= (others => '0');
                 data_in_reg <= (others => '0');
                 mode_reg <= m_pass;
@@ -52,6 +54,7 @@ begin
             elsif (enable = '1') then
                 next_d_bus_out_reg <= next_d_bus_out_int;
                 do_second_access_reg <= misaligned;
+                combine_second_access_reg <= do_second_access_reg;
                 last_d_bus_in_data_reg <= d_bus_in.data;
                 data_in_reg <= data_in;
                 mode_reg <= mode;
@@ -125,7 +128,7 @@ begin
     D_BUS_IN_PROCESSING : process (d_bus_in, last_d_bus_in_data_reg, subaddr_reg, mode_reg, data_in_reg)
         variable temp_data : std_logic_vector(xlen * 2 - 1 downto 0);
     begin
-        temp_data := d_bus_in.data & last_d_bus_in_data_reg;
+        temp_data := d_bus_in.data & sel(combine_second_access_reg = '1', last_d_bus_in_data_reg, d_bus_in.data);
         case subaddr_reg is
             when "00"   => temp_data(31 downto 0) := temp_data(31 downto  0);
             when "01"   => temp_data(31 downto 0) := temp_data(39 downto  8);
