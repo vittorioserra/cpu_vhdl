@@ -22,8 +22,6 @@ package rv32i_defs is
     constant reg_count : positive := 32;                                        -- 32 registers
     subtype reg_range is natural range get_bit_count(reg_count) - 1 downto 0;   -- 4 downto 0
     constant reg_zero : std_logic_vector(reg_range) := (others => '0');
-    constant reg_sp   : std_logic_vector(reg_range) := "00010"; --reg 2 is stack pointer
-    constant compressed_offset : std_logic_vector   := "01000"; --compressed ISA registers have an offset which begins at x8
 
     type d_bus_mosi_rec is record
         addr            : std_logic_vector(addr_range);
