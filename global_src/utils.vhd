@@ -97,5 +97,4 @@ package body utils is
             return res_false;
         end if;
     end function;
- 
 end package body utils;
