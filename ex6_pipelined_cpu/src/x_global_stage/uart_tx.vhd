@@ -13,7 +13,7 @@ entity uart_tx is
     clock           : in  std_logic;
     data_tx_in      : in  std_logic_vector(7 downto 0);
 	data_valid      : in  std_logic;
-    busy _tx        : out std_logic;
+    busy_tx        : out std_logic;
     serial_data_out : out std_logic;
     tx_done         : out std_logic
     );
@@ -41,7 +41,7 @@ begin
       case uart_state is
  
         when idle =>               -- in idle state we keep the line high
-          busy _tx        <= '0';
+          busy_tx        <= '0';
           serial_data_out <= '1';
           tx_done         <= '0';
           baud_clock      <= 0;
@@ -101,7 +101,7 @@ begin
 
 		when done =>      	  
 
-          tx_busy <= '0';
+          busy_tx <= '0';
       	  tx_done   <= '1';
       	  uart_state   <= idle; 
 

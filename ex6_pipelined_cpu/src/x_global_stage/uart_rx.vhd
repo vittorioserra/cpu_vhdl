@@ -1,3 +1,8 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+ 
+
 entity uart_rx is
 	Generic(
         word_count : positive := 32;
@@ -9,7 +14,7 @@ entity uart_rx is
     clock            : in  std_logic;
     data_rx_out      : out  std_logic_vector(7 downto 0);
 	data_valid       : out  std_logic;
-    serial_data_in  : out std_logic;
+    serial_data_in  : in std_logic
     );
 end uart_rx;
  
@@ -23,7 +28,7 @@ architecture bh of uart_rx is
   signal rx_bit_buffer          : std_logic := '0';
   signal rx_sampled_data        : std_logic := '0';
  
-  signal uart_state             : integer range 0 to clks_per_baud-1 := 0;
+  signal baud_clock             : integer range 0 to clks_per_baud-1 := 0;
   signal bit_index              : integer range 0 to 7 := 0;  -- 8 Bits Total
   signal rx_data_buffer         : std_logic_vector(7 downto 0) := (others => '0');
   signal rx_data_valid_reg      : std_logic := '0';
@@ -76,8 +81,8 @@ begin
           else
             baud_clock <= 0;
             if bit_index < 7 then              --register is empity ? if yes go to rhe next state
-              bit_index <= bit_index + 1;
 			  rx_data_buffer(bit_index) <= rx_bit_buffer;
+			  bit_index <= bit_index + 1;
               uart_state   <= data_bits;
             else
               bit_index <= 0;
@@ -96,6 +101,7 @@ begin
             baud_clock    <= 0;
             uart_state    <= done; --go in done state and reset stuff
 			rx_data_valid_reg <= '1';
+			data_rx_out <= rx_data_buffer;
 		  end if;
       	  
 		when done =>
