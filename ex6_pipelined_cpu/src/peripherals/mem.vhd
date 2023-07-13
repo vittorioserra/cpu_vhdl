@@ -23,12 +23,12 @@ use work.rv32i_defs.ALL;
 
 entity mem is
     Generic(
-        block_count : positive := 512;
         project_path : string := "";
-        mem_init_file : string := "");
+        mem_init_file : string := "";
+        chip_addr : std_logic_vector(xlen_range);
+        block_count : positive);
     Port(
         clock : IN std_logic;
-        chip_addr : IN std_logic_vector(addr_range'high downto addr_range'low + get_bit_count(block_count));
         d_bus_in : IN d_bus_mosi_rec;
         d_bus_out : OUT d_bus_miso_rec;
         i_bus_in : IN i_bus_mosi_rec;
@@ -36,6 +36,8 @@ entity mem is
 end mem;
 
 architecture bh of mem is
+    constant chip_addr_int : std_logic_vector(addr_range'high downto addr_range'low + get_bit_count(block_count))
+        := chip_addr(addr_range'high downto addr_range'low + get_bit_count(block_count));
     type mem_block_t is array (0 to block_count - 1) of std_logic_vector(xlen_range);
     impure function file2mem(filename : string) return mem_block_t is
         file file_handler : text;
@@ -93,10 +95,13 @@ architecture bh of mem is
     shared variable mem_block : mem_block_t := file2mem(mem_init_file);
     subtype mem_addr_range is natural range get_bit_count(block_count) + addr_range'low - 1 downto addr_range'low;
 begin
+    -- check if the chip_addr is aligned with the block_count
+    assert vec2ui(chip_addr(chip_addr_int'low - 1 downto 0)) = 0 report "RAM origin must be aligned with the RAM size." severity FAILURE;
+
     SYNC_PORT1 : process(clock)
     begin
         if (rising_edge(clock)) then
-            if (is_selected(chip_addr, i_bus_in.addr)) then
+            if (is_selected(chip_addr_int, i_bus_in.addr)) then
                 i_bus_out.data <= mem_block(vec2ui(i_bus_in.addr(mem_addr_range)));
             else
                 i_bus_out.data <= (others => '0');
@@ -107,7 +112,7 @@ begin
     SYNC_PORT2 : process(clock)
     begin
         if (rising_edge(clock)) then
-            if (is_selected(chip_addr, d_bus_in.addr)) then
+            if (is_selected(chip_addr_int, d_bus_in.addr)) then
                 d_bus_out.data <= mem_block(vec2ui(d_bus_in.addr(mem_addr_range)));
                 for i in d_bus_in.write_enable'range loop
                     if (d_bus_in.write_enable(i) = '1') then

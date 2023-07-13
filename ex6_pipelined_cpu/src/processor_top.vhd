@@ -60,21 +60,22 @@ begin
             
     RAM : entity work.mem
         generic map(
-            block_count => ram_block_count,
             project_path => project_path,
-            mem_init_file => ram_init_file)
+            mem_init_file => ram_init_file,
+            chip_addr => ram_chip_addr,
+            block_count => ram_block_count)
         port map(
             clock => clock,
-            chip_addr => slice_chip_addr(ram_chip_addr(addr_range), ram_block_count),
             d_bus_in => d_bus_mosi,
             d_bus_out => ram_d_bus_out,
             i_bus_in => i_bus_mosi,
             i_bus_out => i_bus_miso);
             
     GPIO : entity work.gpio
+        generic map(
+            chip_addr => gpio_chip_addr)
         port map(
             clock => clock,
-            chip_addr => gpio_chip_addr(addr_range),
             d_bus_in => d_bus_mosi,
             d_bus_out => gpio_d_bus_out,
             input => gpio_input,

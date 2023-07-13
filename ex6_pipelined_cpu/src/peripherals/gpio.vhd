@@ -14,9 +14,10 @@ use work.utils.ALL;
 use work.rv32i_defs.ALL;
 
 entity gpio is
+    Generic(
+        chip_addr : std_logic_vector(xlen_range));
     Port(
         clock : IN std_logic;
-        chip_addr : IN std_logic_vector(addr_range);
         d_bus_in : IN d_bus_mosi_rec;
         d_bus_out : OUT d_bus_miso_rec;
         input : IN std_logic_vector(xlen_range);
@@ -25,10 +26,13 @@ end gpio;
 
 architecture bh of gpio is
 begin
+    -- check if the chip_addr is aligned with 4
+    assert vec2ui(chip_addr(addr_range'low - 1 downto 0)) = 0 report "GPIO origin must be aligned with 4 bytes" severity FAILURE;
+
     process(clock)
     begin
         if (rising_edge(clock)) then
-            if (is_selected(chip_addr, d_bus_in.addr)) then
+            if (is_selected(chip_addr(addr_range), d_bus_in.addr)) then
                 d_bus_out.data <= input;
                 for i in d_bus_in.write_enable'range loop
                     if (d_bus_in.write_enable(i) = '1') then

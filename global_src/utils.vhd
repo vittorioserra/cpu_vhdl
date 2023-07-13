@@ -18,7 +18,6 @@ package utils is
     function bool2vec(value : boolean; width : positive) return std_logic_vector;
     function ends_with(haystack : string; needle : string) return boolean;
     function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean;
-    function slice_chip_addr(chip_addr : std_logic_vector; block_count : positive) return std_logic_vector;
     function sel(selector : boolean; res_true, res_false : std_logic_vector) return std_logic_vector;
     function sel(selector : boolean; res_true, res_false : std_logic) return std_logic;
     function sel(selector : boolean; res_true, res_false : integer) return integer;
@@ -68,10 +67,6 @@ package body utils is
     function is_selected(chip_addr : std_logic_vector; addr : std_logic_vector) return boolean is
     begin
         return addr(addr'high downto addr'high - chip_addr'length + 1) = chip_addr;
-    end function;
-    function slice_chip_addr(chip_addr : std_logic_vector; block_count : positive) return std_logic_vector is
-    begin
-        return chip_addr(chip_addr'high downto chip_addr'low + get_bit_count(block_count));
     end function;
     function sel(selector : boolean; res_true, res_false : std_logic_vector) return std_logic_vector is
     begin
