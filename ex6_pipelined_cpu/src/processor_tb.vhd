@@ -26,7 +26,8 @@ architecture tb of processor_tb is
 begin
     DUT : entity work.processor_top
         generic map(
-            project_path => project_path)
+            project_path => project_path,
+			debounce => false)
         port map(
             clock => clock,
             switch => switch,
@@ -49,13 +50,10 @@ begin
 	begin
 		-- general reset
 		switch <= (others => '0');
-		for i in 0 to 130 loop
-			wait for CLOCK_PERIOD;
-		end loop;
+		wait for CLOCK_PERIOD;
+		
 		switch <= "10000001";
-		for i in 0 to 130 loop
-			wait for CLOCK_PERIOD;
-		end loop;
+		wait for CLOCK_PERIOD;
 		
 		-- run
 		wait;
