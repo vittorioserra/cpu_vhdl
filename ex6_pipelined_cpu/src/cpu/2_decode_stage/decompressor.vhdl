@@ -81,7 +81,7 @@ begin
 
         -- decompress instructions
         case? iin(15 downto 0) & imm_nez_CIW & imm_nez_CI & rd_nesp_CI & rd_rs1_nez_CI_CR & rs2_nez_CR is
-            when "0000000000000000-----" => iout <= "00000000000000000000000000000000";                                                                       -- illegal instruction         => illegal instruction
+            when "000--------000000----" => iout <= "00000000000000000000000000000000";                                                                       -- illegal instruction         => illegal instruction
             when "000-----------001----" => iout <= imm_z4_CIW_I & reg_sp & "000" & rd_CIW_CL & "0010011";                                                    -- CIW.ADDI4SPN (imm != 0)     => I.addi rd',  sp, zimm4
             when "001-----------00-----" => iout <= imm_z8_CL_CS_I_S & rs1_CL_CS & "011" & rd_CIW_CL & "0000111";                                             -- CL.FLD                      => I.fld  rd',  zimm8(rs1')
             when "010-----------00-----" => iout <= imm_z4_CL_CS_I_S & rs1_CL_CS & "010" & rd_CIW_CL & "0000011";                                             -- CL.LW                       => I.lw   rd',  zimm4(rs1')

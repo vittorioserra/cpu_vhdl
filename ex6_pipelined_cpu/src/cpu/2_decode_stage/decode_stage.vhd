@@ -47,6 +47,7 @@ end decode_stage;
 
 architecture bh of decode_stage is
     signal fe_pc_now_reg, fe_pc_next_reg : std_logic_vector(xlen_range);
+    signal fe_decompr_instr : std_logic_vector(instr_range);
     signal de_enable, de_ready, fwd_ready : std_logic;
     signal de_fwd_rs1_select, de_fwd_rs2_select : std_logic_vector(reg_range);
     signal de_jump_mode : jump_mode_type;
@@ -106,13 +107,18 @@ begin
         end case;
         ex_addr_offset <= de_imm_value;
     end process;
+    
+    DCOMPR : entity work.decompressor
+        port map(
+            instr_in => fe_instr,
+            instr_out => fe_decompr_instr);
 
     DE : entity work.decoder
         port map(
             clock => clock,
             reset_n => reset_n,
             enable => de_enable,
-            instr => fe_instr,
+            instr => fe_decompr_instr,
             rs1_select => de_fwd_rs1_select,
             rs2_select => de_fwd_rs2_select,
             imm_value => de_imm_value,

@@ -2,7 +2,7 @@
 -- Company: FAU Erlangen - Nuernberg
 -- Engineer: Vittorio Serra and Cedric Donges
 --
--- Description: Instruction Decoder for RV32IC
+-- Description: Instruction Decoder for RV32I
 ----------------------------------------------------------------------------------
 
 library IEEE;
@@ -80,7 +80,7 @@ begin
 
         -- decode instructions
         case? instr_reg is
-            --   "f7     rs2  rs1  f3 rd   opcode "             imm op1  op2  addr_base
+            --   "f7     rs2  rs1  f3 rd   opcode "             imm op1 op2 a_base
             when "-------------------------0110111" => ir_type := u_zero_imm;      func <= f_add;                   -- LUI
             when "-------------------------0010111" => ir_type := u_pc_imm;        func <= f_add;                   -- AUIPC
             when "-------------------------1101111" => ir_type := j_pc_n_zero_pc;  func <= f_add;  j_mode <= j_y;   -- JAL
@@ -122,7 +122,6 @@ begin
             when "-----------------001-----0001111" => ir_type := i_zero_zero;     func <= f_add;                   -- FENCE.I (jump to fence.i handler) TODO jump and save mret, handler should execute some nops and jump back
             when "-------------------------1110011" => ir_type := i_zero_zero;     func <= f_add;                   -- SYSTEM, ECALL, EBREAK, CSR (jump to system handler) TODO jump and save mret
             when others                             => ir_type := i_zero_zero;     func <= f_add;                   -- ILLEGAL (jump to illegal instruction handler) TODO jump to handler
-                                                                                                                    -- TODO compressed instructions
         end case?;
 
         -- route operands
