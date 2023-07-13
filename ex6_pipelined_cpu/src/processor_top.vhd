@@ -27,7 +27,7 @@ end processor_top;
 architecture bh of processor_top is
     constant pc_of_entry : std_logic_vector(xlen_range) := si2vec(0, xlen);
 
-    constant ram_init_file : string := "../src/x_software/prime_search.hex";
+    constant ram_init_file : string := "../src/software/bootloader/bootloader.hex";
     constant ram_chip_addr : std_logic_vector(xlen_range) := x"00000000";
     constant ram_block_count : positive := 512;
     
