@@ -15,7 +15,8 @@ use work.rv32i_defs.ALL;
 
 entity processor_top is
     Generic(
-        project_path : string);
+        project_path : string;
+        debounce : boolean := true);
     Port(
         clock : IN std_logic;
         switch : IN std_logic_vector(7 downto 0);
@@ -82,7 +83,7 @@ begin
     DEB : entity work.debouncer
         generic map(
             port_width => 13,
-            stable_count => 100000) -- 1 ms
+            stable_count => sel(debounce, 100000, 1)) -- 1 ms @ 100 MHz
         port map(
             clock => clock,
             input(12) => btn_c,
