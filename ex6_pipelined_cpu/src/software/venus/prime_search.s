@@ -1,3 +1,4 @@
+_start:
 	# step through the numbers 0 to 255 with button up and down
 	li a0, 0
 	li s0, 0x77770000
