@@ -125,7 +125,7 @@ begin
         end if;
     end process;
 
-    D_BUS_IN_PROCESSING : process (d_bus_in, last_d_bus_in_data_reg, subaddr_reg, mode_reg, data_in_reg)
+    D_BUS_IN_PROCESSING : process (d_bus_in, last_d_bus_in_data_reg, subaddr_reg, mode_reg, data_in_reg, combine_second_access_reg)
         variable temp_data : std_logic_vector(xlen * 2 - 1 downto 0);
     begin
         temp_data := d_bus_in.data & sel(combine_second_access_reg = '1', last_d_bus_in_data_reg, d_bus_in.data);
