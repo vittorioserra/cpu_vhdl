@@ -168,3 +168,7 @@ delete_fileset -quiet sim_1
 # disable incremental compilation (because this cause problems with files which get loaded during init methods of vhdl code)
 set_property -name "AUTO_INCREMENTAL_CHECKPOINT" -value "0" -objects [get_runs synth_1]
 set_property -name "AUTO_INCREMENTAL_CHECKPOINT" -value "0" -objects [get_runs impl_1]
+
+# enable performance optimization
+set_property -name "strategy" -value "Flow_PerfOptimized_high" -objects [get_runs synth_1]
+set_property -name "strategy" -value "Performance_ExploreWithRemap" -objects [get_runs impl_1]
