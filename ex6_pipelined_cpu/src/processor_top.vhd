@@ -25,11 +25,11 @@ entity processor_top is
 end processor_top;
 
 architecture bh of processor_top is
-    constant pc_of_entry : std_logic_vector(xlen_range) := si2vec(0, xlen);
+    constant pc_of_entry : std_logic_vector(xlen_range) := x"00000000";
 
     constant ram_init_file : string := "../src/software/bootloader/bootloader.hex";
     constant ram_chip_addr : std_logic_vector(xlen_range) := x"00000000";
-    constant ram_block_count : positive := 512;
+    constant ram_block_count : positive := 4096;
     
     constant gpio_chip_addr : std_logic_vector(xlen_range) := x"77770000";
     signal gpio_input : std_logic_vector(xlen_range);
@@ -84,7 +84,7 @@ begin
     DEB : entity work.debouncer
         generic map(
             port_width => 13,
-            stable_count => sel(debounce, 100000, 1)) -- 1 ms @ 100 MHz
+            stable_count => sel(debounce, 100000, 0)) -- 1 ms @ 100 MHz
         port map(
             clock => clock,
             input(12) => btn_c,
@@ -99,5 +99,4 @@ begin
             output(9) => deb_btn_r,
             output(8) => deb_btn_u,
             output(7 downto 0) => deb_switch);
-
 end bh;
