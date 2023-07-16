@@ -7,11 +7,6 @@
 --              The data bytes in a block, that will be written are selectable.
 ----------------------------------------------------------------------------------
 
--- TODO we can buildin a shadow-rom which holds the contents of the init-file
---      during reset this rom could be copied in the memory.
---      a copy_done signal should report the end of copying
---      IS THIS POSSIBLE WITH AN RESET PIN ON THE BRAM?
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -40,7 +35,7 @@ architecture bh of mem is
         := chip_addr(addr_range'high downto addr_range'low + get_bit_count(block_count));
     type mem_block_t is array (0 to block_count - 1) of std_logic_vector(xlen_range);
 
-    procedure readHexByte(row : inout line; cursor : inout integer; value : out std_logic_vector) is
+    procedure readHexByte(row : in string; cursor : inout integer; value : out std_logic_vector) is
         variable char : character;
         variable nibble : std_logic_vector(3 downto 0);
     begin
@@ -83,7 +78,7 @@ architecture bh of mem is
         addr := addr + 1;
     end procedure;
     
-    procedure parseIntelHex(row : inout line; rowCursor : inout integer; baseAddr : inout integer; mem : inout mem_block_t) is
+    procedure parseIntelHex(row : in string; rowCursor : inout integer; baseAddr : inout integer; mem : inout mem_block_t) is
         variable dataLength : integer;
         variable memAddr : integer;
         variable tempByte : std_logic_vector(7 downto 0);
@@ -133,8 +128,10 @@ architecture bh of mem is
         variable ret : mem_block_t;
         variable memAddr : integer;
         variable rowCursor : integer;
-        variable row : line;
+        variable rowLine : line;
+        variable rowString : string(1 to 64);
         variable tempByte : std_logic_vector(7 downto 0);
+        variable tempChar : character;
     begin
         ret := (others => (others => '0'));
         
@@ -149,19 +146,25 @@ architecture bh of mem is
             -- reads Intel Hex and Simple Hex
             memAddr := 0;
             while not endfile(file_handler) loop
-                readline(file_handler, row);
+                -- read the line and convert it to string
+                readline(file_handler, rowLine);
+                for i in 1 to rowLine'length - 1 loop
+                    read(rowLine, tempChar);
+                    rowString(i) := tempChar;
+                end loop;
+                
                 rowCursor := 1;
-                if (row'length = 0) then
-                    -- row is empty -> skip
+                if (rowLine'length = 0) then
+                    -- rowLine is empty -> skip
                     next;
-                elsif (row(rowCursor) = ':') then
+                elsif (rowString(rowCursor) = ':') then
                     -- Intel Hex Format
                     rowCursor := rowCursor + 1;
-                    parseIntelHex(row, rowCursor, memAddr, ret);
+                    parseIntelHex(rowString, rowCursor, memAddr, ret);
                 else
                     -- Simple Hex Format
-                    while rowCursor < row'length loop
-                        readHexByte(row, rowCursor, tempByte);
+                    while rowCursor < rowLine'length loop
+                        readHexByte(rowString, rowCursor, tempByte);
                         writeByte(tempByte, memAddr, ret);
                     end loop;
                 end if;
