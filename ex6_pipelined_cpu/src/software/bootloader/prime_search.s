@@ -1,4 +1,5 @@
-_start:
+.global main
+main:
 	# step through the numbers 0 to 255 with button up and down
 	li a0, 0
 	li s0, 0x77770000
@@ -6,19 +7,19 @@ _start:
 	# clear the leds
 	sb zero, 0(s0)
 main_loop:
-	# check if button is toggled on
+	# calc if buttons are toggled on
 	lb t0, 1(s0)
 	xor t1, t0, s1
 	mv s1, t0
 	and t0, t1, t0
 
 	li s2, 0 # search direction
-	# check if button up is pressed
+	# check if button up (gpio bit 9) is toggled on
 	andi t1, t0, 1
 	beqz t1, main_test_btn_d
 	addi s2, s2, 1
 main_test_btn_d:
-	# check if button down is pressed
+	# check if button down (gpio bit 11) is toggled on
 	andi t1, t0, 8
 	beqz t1, main_test_prime
 	addi s2, s2, -1
@@ -36,7 +37,6 @@ main_search_next:
 main_search_end:
 	sb a0, 0(s0)
 	j main_loop
-
 
 	# a0 contains the number to test
 	# returns a1 = 1 if the number is prime otherwise 0
