@@ -4,7 +4,7 @@ SOURCES += $(wildcard *.s)
 OBJECTS := $(patsubst %.cpp,%.o,$(SOURCES))
 OBJECTS := $(patsubst %.s,%.o,$(OBJECTS))
 
-COMPILEFLAGS := -march=rv32i -mabi=ilp32 -O0
+COMPILEFLAGS := -march=rv32gc -mabi=ilp32 -O0
 
 $(TARGET) : $(TARGET).elf
 	riscv64-unknown-elf-objcopy -O ihex $^ $@.hex

@@ -93,7 +93,7 @@ begin
             when "001-----------01-----" => iout <= imm_s_CJ_J & reg_ra & "1101111";                                                                          -- CJ.JAL                      => J.jal ra, simm
             when "010-----------01-----" => iout <= imm_s_CI_CB_I_U & reg_zero & "000" & rd_rs1_CR_CI & "0010011";                                            -- CI.LI                       => I.addi rd, zero, simm
             when "011-----------01-10--" => iout <= imm_s16_CI_I & reg_sp & "000" & reg_sp & "0010011";                                                       -- CI.ADDI16SP (imm != 0)      => I.addi sp, sp, simm16
-            when "011-----------01-11--" => iout <= (31 downto 24 => imm_s_CI_CB_I_U(11)) & imm_s_CI_CB_I_U & rd_rs1_CR_CI & "0110111";                        -- CI.LUI (imm != 0, rd != sp) => U.lui rd, simm
+            when "011-----------01-11--" => iout <= (31 downto 24 => imm_s_CI_CB_I_U(11)) & imm_s_CI_CB_I_U & rd_rs1_CR_CI & "0110111";                       -- CI.LUI (imm != 0, rd != sp) => U.lui rd, simm
             when "100000--------01-----" => iout <= "0000000" & imm_s_CI_CB_I_U(4 downto 0) & rd_rs1_CA_CB & "101" & rd_rs1_CA_CB & "0010011";                -- CB.SRLI                     => I.srli rd', rd', simm
             when "100001--------01-----" => iout <= "0100000" & imm_s_CI_CB_I_U(4 downto 0) & rd_rs1_CA_CB & "101" & rd_rs1_CA_CB & "0010011";                -- CB.SRAI                     => I.srai rd', rd', simm
             when "100-10--------01-----" => iout <= imm_s_CI_CB_I_U & rd_rs1_CA_CB & "111" & rd_rs1_CA_CB & "0010011";                                        -- CB.ANDI                     => I.andi rd', rd', simm
@@ -116,7 +116,7 @@ begin
             when "101-----------10-----" => iout <= imm_z8_CSS_S(11 downto 5) & rs2_CR_CSS & reg_sp & "011" & imm_z8_CSS_S(4 downto 0) & "0100111";           -- CSS.FSDSP                   => S.fsd rs2, zimm8(sp)
             when "110-----------10-----" => iout <= imm_z4_CSS_S(11 downto 5) & rs2_CR_CSS & reg_sp & "010" & imm_z4_CSS_S(4 downto 0) & "0100011";           -- CSS.SWSP                    => S.sw rs2, zimm4(sp)
             when "111-----------10-----" => iout <= imm_z4_CSS_S(11 downto 5) & rs2_CR_CSS & reg_sp & "010" & imm_z4_CSS_S(4 downto 0) & "0100111";           -- CSS.FSWSP                   => S.fsw rs2, zimm4(sp)
-            when others                   => iout <= iin;                                                                                                      -- uncompressed or unknown     => passthrough
+            when others                  => iout <= iin;                                                                                                      -- uncompressed or unknown     => passthrough
         end case?;
     end process;
 end bh;
