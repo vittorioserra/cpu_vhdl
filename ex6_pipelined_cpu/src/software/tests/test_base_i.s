@@ -1,4 +1,5 @@
-setup:
+.global main
+main:
 	addi t0, zero, 1
 	addi t1, zero, 1849
 	xor t1, t1, t1

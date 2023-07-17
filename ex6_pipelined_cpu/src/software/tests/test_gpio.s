@@ -1,3 +1,5 @@
+.global main
+main:
 	li s0, 0x77770000
 main_loop:
 	lw t0, 0(s0)
