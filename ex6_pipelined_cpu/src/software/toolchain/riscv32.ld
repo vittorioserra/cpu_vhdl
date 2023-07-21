@@ -3,7 +3,7 @@ OUTPUT_ARCH(riscv)
 
 MEMORY
 {
-    RAM (rwx)  : ORIGIN = 0x00000000, LENGTH = 512
+    RAM (rwx)  : ORIGIN = 0x00000000, LENGTH = 4096 * 4
 }
 
 ENTRY(_start)
@@ -31,6 +31,11 @@ SECTIONS
     {
        *(.bss)
     } > RAM
+
+    /DISCARD/ :
+    {
+	     *(.eh_frame .eh_frame.*)
+    }
 
     PROVIDE(__stack_top = ORIGIN(RAM) + LENGTH(RAM));
 }
