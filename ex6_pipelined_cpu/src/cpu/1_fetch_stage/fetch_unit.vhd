@@ -36,7 +36,7 @@ entity fetch_unit is
 end fetch_unit;
 
 architecture bh of fetch_unit is
-    signal combine_this_low_half_with_last_high_half_reg, misaligned, instr_prefetched_reg : std_logic;
+    signal combine_this_low_half_with_last_high_half_reg, misaligned, ready_int : std_logic;
 	signal pc_now_reg : std_logic_vector(xlen_range);
 	signal pc_next_int : std_logic_vector(xlen_range);
 	signal i_bus_out_pc_reg : std_logic_vector(xlen_range);
@@ -47,6 +47,7 @@ architecture bh of fetch_unit is
 begin
 	pc_now <= pc_now_reg;
 	pc_next <= pc_next_int;
+    ready <= ready_int;
 
     pc_plus_2 <= std_logic_vector(unsigned(pc_now_reg) + 2);
     pc_plus_4 <= std_logic_vector(unsigned(pc_now_reg) + 4);
@@ -59,7 +60,7 @@ begin
             -- the second half of an misaligned 32bit instruction was loaded
             pc_next_int <= pc_plus_4;
             instr <= i_bus_in.data(15 downto 0) & last_i_bus_data_high_half_reg;
-            ready <= '1';
+            ready_int <= '1';
 
             -- check if the next instruction is misaligned
             misaligned <= sel(i_bus_in.data(17 downto 16) = "11", '1', '0');
@@ -68,12 +69,12 @@ begin
                 -- instruction is 32 bit long and aligned
                 pc_next_int <= pc_plus_4;
                 instr <= i_bus_in.data;
-                ready <= '1';
+                ready_int <= '1';
                 misaligned <= '0';
             else
                 -- instruction is 16 bit long and in low half
                 pc_next_int <= pc_plus_2;
-                ready <= '1';
+                ready_int <= '1';
                 instr <= (31 downto 16 => '0') & i_bus_in.data(15 downto 0);
 
                 -- when the next instruction is 32 bit long, it is misaligned
@@ -84,19 +85,19 @@ begin
                 -- instruction is 32 bit long and misaligned
                 pc_next_int <= pc_plus_4;
                 instr <= "00000000000000000000000000010011"; -- nop (addi x0, x0, 0)
-                ready <= '0';
+                ready_int <= '0';
                 misaligned <= '1';
             else
                 -- instruction is 16 bit long and in high half
                 pc_next_int <= pc_plus_2;
-                ready <= '1';
+                ready_int <= '1';
                 instr <= (31 downto 16 => '0') & i_bus_in.data(31 downto 16);
                 misaligned <= '0';
             end if;
         end if;
     end process;
 
-	fetch_control : process(clock, reset_n, enable)
+	fetch_control : process(clock, reset_n, enable, ready_int)
 	begin
 		if (rising_edge(clock)) then
             if (reset_n = '0') then
@@ -104,7 +105,6 @@ begin
                 last_i_bus_data_high_half_reg <= (others => '0');
                 pc_now_reg <= pc_of_entry(xlen - 1 downto 1) & '0';
                 i_bus_out_pc_reg <= pc_of_entry(xlen - 1 downto 1) & '0';
-                instr_prefetched_reg <= '0';
                 combine_this_low_half_with_last_high_half_reg <= '0';
             elsif (enable = '1') then
                 -- remember the high half of the current instruction for misaligned 32 bit access
@@ -113,24 +113,20 @@ begin
                     -- jump to the target address
                     pc_now_reg <= jump_target(xlen - 1 downto 1) & '0';
                     i_bus_out_pc_reg <= jump_target(xlen - 1 downto 1) & '0';
-                    instr_prefetched_reg <= '0';
                     combine_this_low_half_with_last_high_half_reg <= '0';
                 elsif (misaligned = '1') then
                     -- the current 32 bit instruction is misaligned
+                    -- if we arent ready, we dont output the current instruction in this cycle
+                    -- so we should not advance the program counter
+                    pc_now_reg <= sel(ready_int = '0', pc_now_reg, pc_next_int);
+
                     -- fetch the second half of the current instruction and combine the instruction
                     i_bus_out_pc_reg <= i_bus_out_pc_plus_4;
                     combine_this_low_half_with_last_high_half_reg <= '1';
-                    instr_prefetched_reg <= '1';
-
-                    -- when the high half of the current instruction was not fetched in the last cycle
-                    -- we were not able to output the current instruction in this cycle
-                    -- so we should not advance the program counter
-                    pc_now_reg <= sel(instr_prefetched_reg = '0', pc_now_reg, pc_next_int);
                 else
                     -- the current instruction (16 or 32 bit) is not misaligned, so operate normal
                     pc_now_reg <= pc_next_int;
                     i_bus_out_pc_reg <= pc_next_int;
-                    instr_prefetched_reg <= '1';
                     combine_this_low_half_with_last_high_half_reg <= '0';
                 end if;
             end if;
