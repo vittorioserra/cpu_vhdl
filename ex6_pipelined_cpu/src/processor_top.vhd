@@ -34,24 +34,28 @@ architecture bh of processor_top is
     constant gpio_chip_addr : std_logic_vector(xlen_range) := x"77770000";
     signal gpio_input : std_logic_vector(xlen_range);
     signal gpio_output : std_logic_vector(xlen_range);
+    
+    constant timer_chip_addr : std_logic_vector(xlen_range) := x"CCCC0000";
 
     signal i_bus_miso : i_bus_miso_rec;
     signal i_bus_mosi : i_bus_mosi_rec;
-    signal d_bus_miso, ram_d_bus_out, gpio_d_bus_out : d_bus_miso_rec;
+    signal d_bus_miso, ram_d_bus_out, gpio_d_bus_out, timer_d_bus_out : d_bus_miso_rec;
     signal d_bus_mosi : d_bus_mosi_rec;
 
     signal deb_switch : std_logic_vector(7 downto 0);
     signal deb_btn_c, deb_btn_d, deb_btn_l, deb_btn_r, deb_btn_u : std_logic;
+
+    signal virtual_clock : std_logic;
 begin
     gpio_input <= (31 downto 13 => '0') & deb_btn_c & deb_btn_d & deb_btn_l & deb_btn_r & deb_btn_u & deb_switch;
     leds <= gpio_output(7 downto 0);
-    d_bus_miso.data <= ram_d_bus_out.data or gpio_d_bus_out.data;
+    d_bus_miso.data <= ram_d_bus_out.data or gpio_d_bus_out.data or timer_d_bus_out.data;
 
     CPU : entity work.pipelined_cpu
         generic map(
             pc_of_entry => pc_of_entry)
         port map(
-            clock => clock,
+            clock => virtual_clock,
             reset_n => deb_switch(0),
             i_bus_miso => i_bus_miso,
             i_bus_mosi => i_bus_mosi,
@@ -65,7 +69,7 @@ begin
             chip_addr => ram_chip_addr,
             block_count => ram_block_count)
         port map(
-            clock => clock,
+            clock => virtual_clock,
             d_bus_in => d_bus_mosi,
             d_bus_out => ram_d_bus_out,
             i_bus_in => i_bus_mosi,
@@ -75,18 +79,26 @@ begin
         generic map(
             chip_addr => gpio_chip_addr)
         port map(
-            clock => clock,
+            clock => virtual_clock,
             d_bus_in => d_bus_mosi,
             d_bus_out => gpio_d_bus_out,
             input => gpio_input,
             output => gpio_output);
+            
+    TIMER : entity work.timer
+        generic map(
+            chip_addr => timer_chip_addr)
+        port map(
+            clock => virtual_clock,
+            d_bus_in => d_bus_mosi,
+            d_bus_out => timer_d_bus_out);
             
     DEB : entity work.debouncer
         generic map(
             port_width => 13,
             stable_count => sel(debounce, 100000, 0)) -- 1 ms @ 100 MHz
         port map(
-            clock => clock,
+            clock => virtual_clock,
             input(12) => btn_c,
             input(11) => btn_d,
             input(10) => btn_l,
@@ -99,4 +111,10 @@ begin
             output(9) => deb_btn_r,
             output(8) => deb_btn_u,
             output(7 downto 0) => deb_switch);
+    
+    virtual_clock <= clock;
+    --MMCM : entity work.clk_wiz_0
+    --    port map(
+    --        clk_in1 => clock,
+    --        clk_out1 => virtual_clock);
 end bh;
