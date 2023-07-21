@@ -3,3 +3,4 @@
 _start:
     la sp, __stack_top
     j main
+    

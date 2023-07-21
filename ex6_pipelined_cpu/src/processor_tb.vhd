@@ -23,6 +23,11 @@ architecture tb of processor_tb is
     signal clock : std_logic;
     signal switch : std_logic_vector(7 downto 0);
     signal leds : std_logic_vector(7 downto 0);
+	signal btn_c : std_logic;
+	signal btn_d : std_logic;
+	signal btn_l : std_logic;
+	signal btn_r : std_logic;
+	signal btn_u : std_logic;
 begin
     DUT : entity work.processor_top
         generic map(
@@ -32,11 +37,11 @@ begin
             clock => clock,
             switch => switch,
             leds => leds,
-			btn_c => '1',
-			btn_d => '0',
-			btn_l => '1',
-			btn_r => '0',
-			btn_u => '1');
+			btn_c => btn_c,
+			btn_d => btn_d,
+			btn_l => btn_l,
+			btn_r => btn_r,
+			btn_u => btn_u);
 
     gen_clk : process
 	begin
@@ -50,11 +55,25 @@ begin
 	begin
 		-- general reset
 		switch <= (others => '0');
+		btn_c <= '0';
+		btn_d <= '0';
+		btn_l <= '0';
+		btn_r <= '0';
+		btn_u <= '0';
 		wait for CLOCK_PERIOD;
 		
-		switch <= "10000001";
+		switch(0) <= '1';
 		wait for CLOCK_PERIOD;
-		
+
+		for i in 0 to 2000 loop
+			btn_u <= '1';
+			wait for CLOCK_PERIOD * 1000;
+			btn_u <= '0';
+			wait for CLOCK_PERIOD * 1000;
+		end loop;
+
+		btn_l <= '1';
+
 		-- run
 		wait;
 	end process;

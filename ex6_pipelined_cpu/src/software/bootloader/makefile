@@ -4,7 +4,7 @@ SOURCES += $(wildcard *.s)
 OBJECTS := $(patsubst %.cpp,%.o,$(SOURCES))
 OBJECTS := $(patsubst %.s,%.o,$(OBJECTS))
 
-COMPILEFLAGS := -march=rv32gc -mabi=ilp32 -O0
+COMPILEFLAGS := -march=rv32ic -mabi=ilp32 -O3
 
 $(TARGET) : $(TARGET).elf
 	riscv64-unknown-elf-objcopy -O ihex $^ $@.hex
@@ -14,7 +14,6 @@ $(TARGET) : $(TARGET).elf
 
 $(TARGET).elf : $(OBJECTS)
 	riscv64-unknown-elf-ld -o $@ -T ../toolchain/riscv32.ld $^
-	riscv64-unknown-elf-objcopy --remove-section .eh_frame $@
 
 %.o : %.s
 	riscv64-unknown-elf-gcc $(COMPILEFLAGS) -c -o $@ $<

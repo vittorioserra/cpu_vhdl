@@ -1,6 +1,6 @@
 .global main
 main:                       # @ 0x00000008
-    addi a1,  sp, -64       # helper fc010593
+    addi a1,  sp, -64       # helper fc010593 TODO this should be also an c instr, check it if it is correctly decompressed
     fld  fa4,  16(a1)       # 2998   0105b707
     lw   a4,  8(a1)         # 4598   0085a703
     flw  fa4,  8(a1)        # 6598   0085a707
