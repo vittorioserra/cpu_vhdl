@@ -4,21 +4,23 @@ SOURCES += $(wildcard *.s)
 OBJECTS := $(patsubst %.cpp,%.o,$(SOURCES))
 OBJECTS := $(patsubst %.s,%.o,$(OBJECTS))
 
-COMPILEFLAGS := --target=riscv32 -march=rv32ic -mabi=ilp32 -O3
+LLVM := "C:\Program Files\LLVM\bin\"
+
+COMPILEFLAGS := -march=rv32ic -mabi=ilp32 -O3
 LINKFLAGS := -T ../toolchain/riscv32.ld --gc-sections
 
 $(TARGET).hex : $(TARGET).elf
-	llvm-objcopy -O ihex $^ $@
-#	llvm-objdump -C -d --arch-name=riscv32 $^ > $(TARGET)-disasm.S
+	riscv64-unknown-elf-objcopy -O ihex $^ $@
+#	$(LLVM)llvm-objdump -C -d --arch-name=riscv32 $^ > $(TARGET)-disasm.S
 	riscv64-unknown-elf-objdump -D -m riscv $@ > $(TARGET)-disasm.S
 	del -rf $^
 
 $(TARGET).elf : $(OBJECTS)
-	ld.lld $(LINKFLAGS) -o $@ $^
+	riscv64-unknown-elf-ld $(LINKFLAGS) -o $@ $^
 	del -rf $^
 
 %.o : %.s
-	clang $(COMPILEFLAGS) -c -o $@ $<
+	riscv64-unknown-elf-gcc $(COMPILEFLAGS) -c -o $@ $<
 	
 %.o : %.cpp
-	clang++ $(COMPILEFLAGS) -fdata-sections -ffunction-sections -c -o $@ $<
+	riscv64-unknown-elf-gcc $(COMPILEFLAGS) -fdata-sections -ffunction-sections -c -o $@ $<

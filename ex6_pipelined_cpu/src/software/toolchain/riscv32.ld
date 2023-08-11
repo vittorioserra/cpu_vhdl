@@ -12,22 +12,22 @@ SECTIONS
 {
     . = ORIGIN(RAM);
 
-    .init BLOCK(4):
+    .init ALIGN(4):
     {
        KEEP(*(.init))
     } > RAM
 
-    .text BLOCK(4):
+    .text ALIGN(4):
     {
        *(.text)
     } > RAM
 
-    .data BLOCK(4):
+    .data ALIGN(4):
     {
        *(.data)
     } > RAM
 
-    .bss BLOCK(4):
+    .bss ALIGN(4):
     {
        *(.bss)
     } > RAM

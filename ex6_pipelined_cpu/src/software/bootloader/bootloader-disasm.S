@@ -1,0 +1,160 @@
+
+bootloader.hex:     file format ihex
+
+
+Disassembly of section .sec1:
+
+0000000000000000 <.sec1>:
+   0:	00004117          	auipc	sp,0x4
+   4:	00010113          	mv	sp,sp
+   8:	0040006f          	j	0xc
+   c:	1101                	addi	sp,sp,-32
+   e:	ce22                	sw	s0,28(sp)
+  10:	cc26                	sw	s1,24(sp)
+  12:	ca4a                	sw	s2,20(sp)
+  14:	c84e                	sw	s3,16(sp)
+  16:	c652                	sw	s4,12(sp)
+  18:	c456                	sw	s5,8(sp)
+  1a:	c25a                	sw	s6,4(sp)
+  1c:	c05e                	sw	s7,0(sp)
+  1e:	4581                	li	a1,0
+  20:	4e01                	li	t3,0
+  22:	4881                	li	a7,0
+  24:	4281                	li	t0,0
+  26:	cccc0a37          	lui	s4,0xcccc0
+  2a:	000a2783          	lw	a5,0(s4) # 0xffffffffcccc0000
+  2e:	004a2a83          	lw	s5,4(s4)
+  32:	00100837          	lui	a6,0x100
+  36:	187d                	addi	a6,a6,-1
+  38:	00000eb7          	lui	t4,0x0
+  3c:	1d5eaa23          	sw	s5,468(t4) # 0x1d4
+  40:	1cfea823          	sw	a5,464(t4)
+  44:	777703b7          	lui	t2,0x77770
+  48:	00bec537          	lui	a0,0xbec
+  4c:	c2150993          	addi	s3,a0,-991 # 0xbebc21
+  50:	4319                	li	t1,6
+  52:	00000937          	lui	s2,0x0
+  56:	a039                	j	0x64
+  58:	0115d533          	srl	a0,a1,a7
+  5c:	0ff57513          	andi	a0,a0,255
+  60:	00a3a023          	sw	a0,0(t2) # 0x77770000
+  64:	0003a503          	lw	a0,0(t2)
+  68:	054e                	slli	a0,a0,0x13
+  6a:	fff2c613          	not	a2,t0
+  6e:	01b55293          	srli	t0,a0,0x1b
+  72:	00c2ff33          	and	t5,t0,a2
+  76:	001f7f93          	andi	t6,t5,1
+  7a:	01cf1513          	slli	a0,t5,0x1c
+  7e:	857d                	srai	a0,a0,0x1f
+  80:	9faa                	add	t6,t6,a0
+  82:	0c0f8963          	beqz	t6,0x154
+  86:	01f58533          	add	a0,a1,t6
+  8a:	01057433          	and	s0,a0,a6
+  8e:	4589                	li	a1,2
+  90:	0cb40263          	beq	s0,a1,0x154
+  94:	00243593          	sltiu	a1,s0,2
+  98:	8905                	andi	a0,a0,1
+  9a:	00153513          	seqz	a0,a0
+  9e:	8d4d                	or	a0,a0,a1
+  a0:	e14d                	bnez	a0,0x142
+  a2:	0a646863          	bltu	s0,t1,0x152
+  a6:	00145b93          	srli	s7,s0,0x1
+  aa:	458d                	li	a1,3
+  ac:	8b5e                	mv	s6,s7
+  ae:	0175e363          	bltu	a1,s7,0xb4
+  b2:	4b0d                	li	s6,3
+  b4:	4681                	li	a3,0
+  b6:	004a2503          	lw	a0,4(s4)
+  ba:	000a2603          	lw	a2,0(s4)
+  be:	00f63733          	sltu	a4,a2,a5
+  c2:	41550533          	sub	a0,a0,s5
+  c6:	8d19                	sub	a0,a0,a4
+  c8:	8e1d                	sub	a2,a2,a5
+  ca:	00153513          	seqz	a0,a0
+  ce:	01363633          	sltu	a2,a2,s3
+  d2:	8e69                	and	a2,a2,a0
+  d4:	852e                	mv	a0,a1
+  d6:	ea15                	bnez	a2,0x10a
+  d8:	000a2783          	lw	a5,0(s4)
+  dc:	004a2a83          	lw	s5,4(s4)
+  e0:	1d892583          	lw	a1,472(s2) # 0x1d8
+  e4:	1d5eaa23          	sw	s5,468(t4)
+  e8:	1cfea823          	sw	a5,464(t4)
+  ec:	00b3a023          	sw	a1,0(t2)
+  f0:	1d892603          	lw	a2,472(s2)
+  f4:	00161593          	slli	a1,a2,0x1
+  f8:	08067613          	andi	a2,a2,128
+  fc:	1cb92c23          	sw	a1,472(s2)
+ 100:	c609                	beqz	a2,0x10a
+ 102:	0015e593          	ori	a1,a1,1
+ 106:	1cb92c23          	sw	a1,472(s2)
+ 10a:	4601                	li	a2,0
+ 10c:	02000593          	li	a1,32
+ 110:	8722                	mv	a4,s0
+ 112:	01f75493          	srli	s1,a4,0x1f
+ 116:	0606                	slli	a2,a2,0x1
+ 118:	8e45                	or	a2,a2,s1
+ 11a:	0706                	slli	a4,a4,0x1
+ 11c:	00a634b3          	sltu	s1,a2,a0
+ 120:	14fd                	addi	s1,s1,-1
+ 122:	8ce9                	and	s1,s1,a0
+ 124:	15fd                	addi	a1,a1,-1
+ 126:	8e05                	sub	a2,a2,s1
+ 128:	f5ed                	bnez	a1,0x112
+ 12a:	ca11                	beqz	a2,0x13e
+ 12c:	00150593          	addi	a1,a0,1
+ 130:	01753633          	sltu	a2,a0,s7
+ 134:	00164693          	xori	a3,a2,1
+ 138:	f7651fe3          	bne	a0,s6,0xb6
+ 13c:	a819                	j	0x152
+ 13e:	8a85                	andi	a3,a3,1
+ 140:	ea89                	bnez	a3,0x152
+ 142:	01f40533          	add	a0,s0,t6
+ 146:	01057433          	and	s0,a0,a6
+ 14a:	4589                	li	a1,2
+ 14c:	f4b414e3          	bne	s0,a1,0x94
+ 150:	a011                	j	0x154
+ 152:	85a2                	mv	a1,s0
+ 154:	002f7513          	andi	a0,t5,2
+ 158:	00153513          	seqz	a0,a0
+ 15c:	001e3613          	seqz	a2,t3
+ 160:	8d51                	or	a0,a0,a2
+ 162:	157d                	addi	a0,a0,-1
+ 164:	9961                	andi	a0,a0,-8
+ 166:	9572                	add	a0,a0,t3
+ 168:	004f7613          	andi	a2,t5,4
+ 16c:	00163613          	seqz	a2,a2
+ 170:	ff050693          	addi	a3,a0,-16
+ 174:	0016b693          	seqz	a3,a3
+ 178:	8e55                	or	a2,a2,a3
+ 17a:	167d                	addi	a2,a2,-1
+ 17c:	8a21                	andi	a2,a2,8
+ 17e:	9532                	add	a0,a0,a2
+ 180:	010f3613          	sltiu	a2,t5,16
+ 184:	40c00633          	neg	a2,a2
+ 188:	00a67e33          	and	t3,a2,a0
+ 18c:	edc886e3          	beq	a7,t3,0x58
+ 190:	004a2503          	lw	a0,4(s4)
+ 194:	000a2603          	lw	a2,0(s4)
+ 198:	00f636b3          	sltu	a3,a2,a5
+ 19c:	41550533          	sub	a0,a0,s5
+ 1a0:	8d15                	sub	a0,a0,a3
+ 1a2:	8e1d                	sub	a2,a2,a5
+ 1a4:	00153513          	seqz	a0,a0
+ 1a8:	01363633          	sltu	a2,a2,s3
+ 1ac:	8d71                	and	a0,a0,a2
+ 1ae:	ea0515e3          	bnez	a0,0x58
+ 1b2:	000a2783          	lw	a5,0(s4)
+ 1b6:	004a2a83          	lw	s5,4(s4)
+ 1ba:	1d5eaa23          	sw	s5,468(t4)
+ 1be:	1cfea823          	sw	a5,464(t4)
+ 1c2:	01c8b533          	sltu	a0,a7,t3
+ 1c6:	157d                	addi	a0,a0,-1
+ 1c8:	00156513          	ori	a0,a0,1
+ 1cc:	98aa                	add	a7,a7,a0
+ 1ce:	b569                	j	0x58
+ 1d0:	0001                	nop
+ 1d2:	0000                	unimp
+ 1d4:	0000                	unimp
+ 1d6:	0000                	unimp
+ 1d8:	00000007          	0x7
