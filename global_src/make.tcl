@@ -4,13 +4,22 @@
 # 
 #  Description: Universal Project Creation Script for CPU_VHDL Project.
 #               Copy this file into the project directory and execute it from vivado.
-#               CAUTION: This script will delete an existing vivado project folder.
+#               CAUTION: This script will delete an existing vivado project folder in its directory.
 #               Imports only .xdc, .wcfg, .vhd and .vhdl files from local and global src folder.
+#               Executes after its config steps all .tcl files from local src folder.
 #               Files with ending .vhdl will be imported as VHDL 2008 file.
 #               Fileformat: *_tb.vhd(l) is Top of Simulation
 #               Fileformat: *_top.vhd(l) is Top of Synthesis
-#               Fileformat: *_old.* will not be added to the project
+#               Fileformat: *_old.* will not be added to the project or executed.
 # --------------------------------------------------------------------------------
+
+# Call the script itself with notrace
+if { ![info exists called_with_notrace] } {
+    set ::called_with_notrace 1
+    source [info script] -notrace
+    return
+}
+unset ::called_with_notrace
 
 # Set User Output Strings
 set textFileSourceSimTop   "Add source file as sim-top:  "
@@ -165,10 +174,12 @@ foreach file $simWaveFiles {
 # delete the unneccesary simset sim_1
 delete_fileset -quiet sim_1
 
-# disable incremental compilation (because this cause problems with files which get loaded during init methods of vhdl code)
-set_property -name "AUTO_INCREMENTAL_CHECKPOINT" -value "0" -objects [get_runs synth_1]
-set_property -name "AUTO_INCREMENTAL_CHECKPOINT" -value "0" -objects [get_runs impl_1]
+# Execute all TCL files inside the local src folder
+puts "Executing TCL files found in the local src folder..."
+set tclFiles [list {*}[findFilesRecursive $localSrcPath/ *.tcl*]]
+foreach file $tclFiles {
+    puts [concat ">" $file]
+    source $file -notrace
+}
 
-# enable performance optimization
-set_property -name "strategy" -value "Flow_PerfOptimized_high" -objects [get_runs synth_1]
-set_property -name "strategy" -value "Performance_ExploreWithRemap" -objects [get_runs impl_1]
+puts ">>> Done with creating your Vivado Project. <<<"
