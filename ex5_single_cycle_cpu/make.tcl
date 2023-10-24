@@ -31,18 +31,18 @@ file delete -force -- $projectPath
 
 # Create Vivado Project
 file mkdir $projectPath
-create_project ${projectName} ${projectPath} -part xc7z020clg484-1
+create_project ${projectName} ${projectPath} -part xc7a35ticsg324-1L
 
 # Set project properties
 set obj [current_project]
-set_property -name "board_part" -value "avnet.com:zedboard:part0:1.4" -objects $obj
+#set_property -name "board_part" -value "avnet.com:zedboard:part0:1.4" -objects $obj
 set_property -name "default_lib" -value "xil_defaultlib" -objects $obj
 set_property -name "enable_vhdl_2008" -value "1" -objects $obj
 set_property -name "ip_cache_permissions" -value "read write" -objects $obj
 set_property -name "ip_output_repo" -value "$projectPath/${projectName}.cache/ip" -objects $obj
 set_property -name "mem.enable_memory_map_generation" -value "1" -objects $obj
 set_property -name "platform.board_id" -value "zedboard" -objects $obj
-set_property -name "revised_directory_structure" -value "1" -objects $obj
+#set_property -name "revised_directory_structure" -value "1" -objects $obj
 set_property -name "sim.central_dir" -value "$projectPath/${projectName}.ip_user_files" -objects $obj
 set_property -name "sim.ip.auto_export_scripts" -value "1" -objects $obj
 set_property -name "simulator_language" -value "VHDL" -objects $obj
